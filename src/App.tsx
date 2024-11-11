@@ -4,7 +4,7 @@ import './App.css';
 function App() {
   const [isRecording, setIsRecording] = useState(false);
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
-  const [photoUrl, setPhotoUrl] = useState<string | null>(null);
+ // const [photoUrl, setPhotoUrl] = useState<string | null>(null);
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -55,7 +55,7 @@ function App() {
     }
 
     // Сделать фото (сохранить кадр с видео)
-    if (canvasRef.current && videoRef.current) {
+    /*if (canvasRef.current && videoRef.current) {
       canvasRef.current.width = videoRef.current.videoWidth;
       canvasRef.current.height = videoRef.current.videoHeight;
       const context = canvasRef.current.getContext('2d');
@@ -64,7 +64,7 @@ function App() {
         const photoUrl = canvasRef.current.toDataURL('image/jpeg');
         setPhotoUrl(photoUrl);
       }
-    }
+    }*/
 
     setIsRecording(false);
   };
@@ -80,20 +80,24 @@ function App() {
 
         <div>
           {/* Видео с камеры */}
-          <video ref={videoRef} autoPlay muted style={{ width: '100%', marginTop: '20px' }} />
+          {isRecording && (
+              <video ref={videoRef} autoPlay muted style={{width: '100%', marginTop: '20px'}}/>
+          )}
+
 
           {/* Для сохранения снимка */}
-          {photoUrl && (
+          {/*{photoUrl && (
               <div>
                 <h3>Фото:</h3>
                 <img src={photoUrl} alt="Фото верификации" style={{ width: '200px', marginTop: '20px' }} />
               </div>
-          )}
+          )}*/}
 
           {/* Для сохранения видео */}
           {videoUrl && (
               <div>
                 <h3>Видео:</h3>
+                <h3>{videoUrl}</h3>
                 <video controls src={videoUrl} style={{ width: '100%', marginTop: '20px' }} />
               </div>
           )}
