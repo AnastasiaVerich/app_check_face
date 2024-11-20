@@ -33,7 +33,7 @@ function App() {
       };
 
       mediaRecorder.onstop = () => {
-        const videoBlob = new Blob(chunksRef.current, { type: 'video/webm' });
+        const videoBlob = new Blob(chunksRef.current, { type: 'video/mp4' });
         const videoUrl = URL.createObjectURL(videoBlob);
         setVideoUrl(videoUrl);
       };
@@ -80,9 +80,14 @@ function App() {
 
         <div>
           {/* Видео с камеры */}
-          {isRecording && (
-              <video ref={videoRef} autoPlay muted style={{width: '100%', marginTop: '20px'}}/>
-          )}
+
+          <video className={'video_online'} ref={videoRef} playsInline autoPlay muted style={{
+            width: '100%',
+            height: 'auto',
+            marginTop: '20px',
+            display: isRecording ? '' : 'none',
+            objectFit: 'cover'
+          }} controls={false}/>
 
 
           {/* Для сохранения снимка */}
@@ -98,13 +103,14 @@ function App() {
               <div>
                 <h3>Видео:</h3>
                 <h3>{videoUrl}</h3>
-                <video controls src={videoUrl} style={{ width: '100%', marginTop: '20px' }} />
+                <video controls src={videoUrl} style={{width: '250px',
+                  height: 'auto', marginTop: '20px'}}/>
               </div>
           )}
         </div>
 
         {/* Скрытый канвас для рисования фото */}
-        <canvas ref={canvasRef} style={{ display: 'none' }} />
+        <canvas ref={canvasRef} style={{display: 'none'}}/>
       </div>
   );
 };
