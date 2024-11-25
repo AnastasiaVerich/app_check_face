@@ -89,7 +89,7 @@ function App() {
 
     const savePhoto = ()=>{
         fetch_request(
-            'upload-photo',
+            'api/photos/upload-photo',
             'POST',
             JSON.stringify({ image: photoUrl }),
             setError
