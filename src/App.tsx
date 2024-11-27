@@ -1,15 +1,13 @@
-import React, {useRef, useState} from 'react';
+import React, { useRef, useState } from 'react';
 import './App.css';
 
-
-const fetch_request = async  (url: string, method:'POST'|'GET', body:any,setError:any) => {
+const URL_=' http://localhost:5000/' // 'https://green-apple.io/'
+// Функция для отправки запроса
+const fetch_request = async (url: string, method: 'POST' | 'GET', body: FormData, setError: any) => {
     try {
-        const response = await fetch(`https://green-apple.io/${url}`, {
+        const response = await fetch(`${URL_}${url}`, {
             method: method,
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: body, // Отправляем фото в формате Base64
+            body: body, // Отправляем FormData
         });
 
         if (!response.ok) {
@@ -22,52 +20,50 @@ const fetch_request = async  (url: string, method:'POST'|'GET', body:any,setErro
         console.log(result);
         setError(null); // Очистить ошибку, если запрос успешен
     } catch (err: any) {
-        setError(err.message || 'Произошла ошибка при отправке фото');
+        console.log(err)
+        setError(err.error || 'Произошла ошибка при отправке фото');
     }
-}
-
+};
 
 function App() {
-    const [error, setError] = useState(null);
-
+    const [error, setError] = useState<string | null>(null);
     const [isCameraOn, setIsCameraOn] = useState(false);
-    const [photoUrl,setPhotoUrl ] = useState<string | null>(null);
+    const [photoUrl, setPhotoUrl] = useState<string | null>(null);
 
     const videoRef = useRef<HTMLVideoElement | null>(null);
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const streamRef = useRef<MediaStream | null>(null);
 
-
-    // Функция для начала верификации
+    // Включение камеры
     const startVerification = async () => {
         try {
-            // Получаем поток с камеры
             const stream = await navigator.mediaDevices.getUserMedia({
-                video: {facingMode: 'user'} // Предпочтительно передняя камера
+                video: { facingMode: 'user' },
             });
             streamRef.current = stream;
 
             if (videoRef.current) {
                 videoRef.current.srcObject = stream;
-                //videoRef.current.play()
             }
             setIsCameraOn(true);
         } catch (err) {
             console.error('Ошибка доступа к камере:', err);
+            setError('Не удалось получить доступ к камере.');
         }
     };
+
+    // Перезагрузка камеры
     const reStartVerification = async () => {
-        setPhotoUrl(null)
-        startVerification()
+        setPhotoUrl(null);
+        startVerification();
     };
 
-    // Функция для остановки верификации
+    // Остановка камеры
     const stopVerification = () => {
-        takePhoto()
+        takePhoto();
         if (streamRef.current) {
-            streamRef.current.getTracks().forEach(track => track.stop());
+            streamRef.current.getTracks().forEach((track) => track.stop());
         }
-
         setIsCameraOn(false);
     };
 
@@ -75,7 +71,6 @@ function App() {
     const takePhoto = () => {
         if (canvasRef.current && videoRef.current) {
             const canvas = canvasRef.current;
-            console.log(canvas)
             const context = canvas.getContext('2d');
             if (context) {
                 canvas.width = videoRef.current.videoWidth;
@@ -87,53 +82,112 @@ function App() {
         }
     };
 
-    const savePhoto = ()=>{
+    // Сохранить фото
+    const find_user = () => {
+        if (!photoUrl) {
+            setError('Фото не сделано! Попробуйте снова.');
+            return;
+        }
+
+        // Преобразуем Base64 в Blob
+        const byteString = atob(photoUrl.split(',')[1]);
+        const arrayBuffer = new ArrayBuffer(byteString.length);
+        const uint8Array = new Uint8Array(arrayBuffer);
+        for (let i = 0; i < byteString.length; i++) {
+            uint8Array[i] = byteString.charCodeAt(i);
+        }
+        const blob = new Blob([uint8Array], { type: 'image/jpeg' });
+
+        // Создаём объект FormData
+        const formData = new FormData();
+        formData.append('photo', blob); // Добавляем Blob с именем файла
+        formData.append('location', 'Минск');
+
+        // Отправляем FormData
         fetch_request(
-            'api/photos/upload-photo',
+            'api/photos/find_user_by_photo',
             'POST',
-            JSON.stringify({ image: photoUrl }),
+            formData,
             setError
-            )
-    }
+        );
+    };
+
+    // Сохранить фото
+    const saveUserPhoto = () => {
+        if (!photoUrl) {
+            setError('Фото не сделано! Попробуйте снова.');
+            return;
+        }
+
+        // Преобразуем Base64 в Blob
+        const byteString = atob(photoUrl.split(',')[1]);
+        const arrayBuffer = new ArrayBuffer(byteString.length);
+        const uint8Array = new Uint8Array(arrayBuffer);
+        for (let i = 0; i < byteString.length; i++) {
+            uint8Array[i] = byteString.charCodeAt(i);
+        }
+        const blob = new Blob([uint8Array], { type: 'image/jpeg' });
+
+        // Создаём объект FormData
+        const formData = new FormData();
+        formData.append('photo', blob); // Добавляем Blob с именем файла
+        formData.append('location', 'Минск');
+
+        // Отправляем FormData
+        fetch_request(
+            'api/photos/save_user_photo',
+            'POST',
+            formData,
+            setError
+        );
+    };
 
     return (
         <div>
             <h1>Фото с камеры</h1>
-            {!isCameraOn
-                ? photoUrl === null
-                    ? (
-                        <button onClick={startVerification}>Включить камеру</button>
-                    )
-                    : (<>
+            {!isCameraOn ? (
+                photoUrl === null ? (
+                    <button onClick={startVerification}>Включить камеру</button>
+                ) : (
+                    <>
                         <button onClick={reStartVerification}>Переснять фото</button>
-                        <button onClick={savePhoto}>Отправить фото</button>
-                            {error && <p>{error}</p>}
-                        </>
-                    )
-                : (
-                    <button onClick={stopVerification}>Сделать фото</button>
-                )}
+                        <button onClick={find_user}>Найти пользователя</button>
+                        <button onClick={saveUserPhoto}>Сохранить новое фото</button>
+                        {error && <p style={{ color: 'red' }}>{error}</p>}
+                    </>
+                )
+            ) : (
+                <button onClick={stopVerification}>Сделать фото</button>
+            )}
 
             <div>
-                <video className={'video_online'} ref={videoRef} playsInline autoPlay muted style={{
-                    width: '100%',
-                    height: 'auto',
-                    marginTop: '20px',
-                    display: isCameraOn ? '' : 'none',
-                    objectFit: 'cover'
-                }} controls={false}/>
+                <video
+                    className={'video_online'}
+                    ref={videoRef}
+                    playsInline
+                    autoPlay
+                    muted
+                    style={{
+                        width: '100%',
+                        height: 'auto',
+                        marginTop: '20px',
+                        display: isCameraOn ? '' : 'none',
+                        objectFit: 'cover',
+                    }}
+                    controls={false}
+                />
 
-                {/* Для сохранения видео */}
+                {/* Для отображения фото */}
                 {photoUrl && (
                     <div>
                         <h3>Фото:</h3>
-                        <h3>{photoUrl}</h3>
                         <img
                             src={photoUrl}
+                            alt="Сделанное фото"
                             style={{
                                 width: '250px',
                                 height: 'auto',
-                                marginTop: '20px'
+                                marginTop: '20px',
                             }}
                         />
                     </div>
@@ -141,9 +195,9 @@ function App() {
             </div>
 
             {/* Скрытый канвас для рисования фото */}
-            <canvas ref={canvasRef} style={{display: 'none'}}/>
+            <canvas ref={canvasRef} style={{ display: 'none' }} />
         </div>
     );
-};
+}
 
 export default App;
