@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import './App.css';
-
-const URL_=' http://localhost:5000/' // 'https://green-apple.io/'
+const isDev = true
+const URL_= isDev?'http://localhost:5000/': 'https://green-apple.io/'
 // Функция для отправки запроса
 const fetch_request = async (url: string, method: 'POST' | 'GET', body: FormData, setError: any) => {
     try {
