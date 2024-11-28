@@ -13,15 +13,15 @@ const fetch_request = async (url: string, method: 'POST' | 'GET', body: FormData
         if (!response.ok) {
             // Если сервер вернул ошибку, выбрасываем исключение
             const errorData = await response.json();
-            throw new Error(errorData.error || 'Неизвестная ошибка');
+            setError(errorData.error || 'Произошла ошибка при отправке фото');
+            throw new Error( 'Неизвестная ошибка');
         }
 
         const result = await response.json();
         console.log(result);
-        setError(null); // Очистить ошибку, если запрос успешен
+        setError('Это не ошибка!'+result); // Очистить ошибку, если запрос успешен
     } catch (err: any) {
         console.log(err)
-        setError(err.error || 'Произошла ошибка при отправке фото');
     }
 };
 
