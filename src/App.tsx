@@ -1,32 +1,47 @@
 import React, { useRef, useState } from 'react';
 import './App.css';
-const isDev = false
-//const URL_= isDev?'http://localhost:5000/': 'https://green-apple.io/'
+
+
 // Функция для отправки запроса
-const fetch_request = async (url: string, method: 'POST' | 'GET', body: FormData, setError: any) => {
+const fetch_request = async (url: string, method: 'POST' | 'GET', body: FormData, setIsFetch: any, setError: any, setRes: any) => {
     try {
+        const Telegram:any = 'Telegram' in window ? window.Telegram:undefined;
         const response = await fetch(`${process.env.REACT_APP_API_URL}${url}`, {
             method: method,
             body: body, // Отправляем FormData
         });
-
+        setIsFetch(false)
         if (!response.ok) {
             // Если сервер вернул ошибку, выбрасываем исключение
             const errorData = await response.json();
+
             setError(errorData.error || 'Произошла ошибка при отправке фото');
             throw new Error( 'Неизвестная ошибка');
         }
 
         const result = await response.json();
         console.log(result);
-        setError('Это не ошибка!'+result); // Очистить ошибку, если запрос успешен
+
+        setRes('Найдено!'); // Очистить ошибку, если запрос успешен
+
+        if(Telegram){
+            if(result ==='Совпадений не найдено.'){
+                Telegram.WebApp.sendData(JSON.stringify({ result: "new_face" }));
+            }
+            if(Array.isArray(result)) {
+                Telegram.WebApp.sendData(JSON.stringify({ result: 'user_exist' }));
+            }
+        }
     } catch (err: any) {
         console.log(err)
     }
 };
 
 function App() {
+    const [isFetch, setIsFetch] = useState<boolean>(false);
+
     const [error, setError] = useState<string | null>(null);
+    const [res, setRes] = useState<string | null>(null);
     const [isCameraOn, setIsCameraOn] = useState(false);
     const [photoUrl, setPhotoUrl] = useState<string | null>(null);
 
@@ -46,6 +61,7 @@ function App() {
                 videoRef.current.srcObject = stream;
             }
             setIsCameraOn(true);
+            setPhotoUrl(null);
         } catch (err) {
             console.error('Ошибка доступа к камере:', err);
             setError('Не удалось получить доступ к камере.');
@@ -54,7 +70,9 @@ function App() {
 
     // Перезагрузка камеры
     const reStartVerification = async () => {
-        setPhotoUrl(null);
+
+        setError(null);
+        setRes(null);
         startVerification();
     };
 
@@ -84,6 +102,7 @@ function App() {
 
     // Сохранить фото
     const find_user = () => {
+        setIsFetch(true)
         if (!photoUrl) {
             setError('Фото не сделано! Попробуйте снова.');
             return;
@@ -108,7 +127,9 @@ function App() {
             'api/photos/find_user_by_photo',
             'POST',
             formData,
-            setError
+            setIsFetch,
+            setError,
+            setRes
         );
     };
 
@@ -138,61 +159,54 @@ function App() {
             'api/photos/save_user_photo',
             'POST',
             formData,
-            setError
+            setIsFetch,
+            setError,
+            setRes
         );
     };
 
     return (
-        <div>
-            <h1>Фото с камеры</h1>
-            {!isCameraOn ? (
-                photoUrl === null ? (
-                    <button onClick={startVerification}>Включить камеру</button>
-                ) : (
-                    <>
-                        <button onClick={reStartVerification}>Переснять фото</button>
-                        <button onClick={find_user}>Найти пользователя</button>
-                        <button onClick={saveUserPhoto}>Сохранить новое фото</button>
-                        {error && <p style={{ color: 'red' }}>{error}</p>}
-                    </>
-                )
-            ) : (
-                <button onClick={stopVerification}>Сделать фото</button>
-            )}
+        <div className={'app'}>
 
-            <div>
+
+            <div className={'video_box'} style={{
+                display:isCameraOn?'':'none',
+            }}>
                 <video
                     className={'video_online'}
                     ref={videoRef}
                     playsInline
                     autoPlay
                     muted
-                    style={{
-                        width: '100%',
-                        height: 'auto',
-                        marginTop: '20px',
-                        display: isCameraOn ? '' : 'none',
-                        objectFit: 'cover',
-                    }}
                     controls={false}
                 />
-
-                {/* Для отображения фото */}
-                {photoUrl && (
-                    <div>
-                        <h3>Фото:</h3>
-                        <img
-                            src={photoUrl}
-                            alt="Сделанное фото"
-                            style={{
-                                width: '250px',
-                                height: 'auto',
-                                marginTop: '20px',
-                            }}
-                        />
-                    </div>
-                )}
             </div>
+
+            {/* Для отображения фото */}
+            {photoUrl && (
+                <div className={'photo_box'}>
+                    <img
+                        src={photoUrl}
+                        alt="Сделанное фото"
+                    />
+                </div>
+            )}
+
+            {!isCameraOn ? (
+                photoUrl === null ? (
+                    <button className={'button'} onClick={startVerification}>Включить камеру</button>
+                ) : (
+                    <div className={'btn_box'}>
+                        <button disabled={isFetch} onClick={find_user}>Отправить</button>
+                        <button disabled={isFetch} onClick={reStartVerification}>Переснять фото</button>
+                        {/*  <button onClick={saveUserPhoto}>Сохранить новое фото</button>*/}
+                        {error && <div className={'response'} style={{color: 'red'}}>{error}</div>}
+                        {res && <div className={'response'} style={{color: 'rgb(100, 202, 102)'}}>{res}</div>}
+                    </div>
+                )
+            ) : (
+                <button onClick={stopVerification}>Сфотографировать</button>
+            )}
 
             {/* Скрытый канвас для рисования фото */}
             <canvas ref={canvasRef} style={{ display: 'none' }} />
