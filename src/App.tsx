@@ -22,14 +22,16 @@ const fetch_request = async (url: string, method: 'POST' | 'GET', body: FormData
         const result = await response.json();
         console.log(result);
 
-        setRes('Найдено!'); // Очистить ошибку, если запрос успешен
+
 
         if(Telegram){
             if(result ==='Совпадений не найдено.'){
                 Telegram.WebApp.sendData(JSON.stringify({ result: "new_face" }));
+                setRes('Совпадений не найдено!');
             }
             if(Array.isArray(result)) {
                 Telegram.WebApp.sendData(JSON.stringify({ result: 'user_exist' }));
+                setRes('Найдено!');
             }
         }
     } catch (err: any) {
