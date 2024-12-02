@@ -23,8 +23,10 @@ function App() {
     const handleSendPhoto = () => {
         const tg : any = 'Telegram' in window ? window.Telegram : undefined;
         if(tg){
-            const chatId = tg.WebApp.initDataUnsafe?.user?.id;
-            console.log(tg)
+            const urlParams = new URLSearchParams(window.location.search);
+            const data = JSON.parse(decodeURIComponent(urlParams?.get('data')??''));
+            const chatId = data?.chat_id
+            console.log(chatId)
             if (!chatId) {
                 setError('Не удалось получить chat_id');
                 return;
