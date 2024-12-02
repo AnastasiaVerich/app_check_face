@@ -23,11 +23,6 @@ function App() {
     const handleSendPhoto = () => {
         const tg : any = 'Telegram' in window ? window.Telegram : undefined;
         if(tg){
-            const chatId = tg.initDataUnsafe?.user?.id;
-            if (!chatId) {
-                setError('Не удалось получить chat_id');
-                return;
-            }
 
             if (!photoUrl) {
                 setError("Фото не сделано! Попробуйте снова.");
@@ -38,7 +33,6 @@ function App() {
 
             // Создаем formData для отправки медиа
             const formData = new FormData();
-            formData.append('chat_id', chatId);
             formData.append('photo', blob);
             api.send_photo_to_bot(
                 formData,
