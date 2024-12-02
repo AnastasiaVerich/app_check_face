@@ -49,8 +49,10 @@ function App() {
                 setError,
                 setResult
             )
+        }else {
+
+            setError("Приложение было открыто НЕ в Телеграмме");
         }
-        setError("Приложение было открыто НЕ в Телеграмме");
     };
 
     return (
