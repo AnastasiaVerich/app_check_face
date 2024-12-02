@@ -22,12 +22,12 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build_dev": "cross-env PUBLIC_URL=https://AnastasiaVerich.github.io/app_check_face react-scripts build",
+    "build": "cross-env PUBLIC_URL=https://AnastasiaVerich.github.io/app_check_face react-scripts build",
     "build_prod": "react-scripts build && cp -r build/* /var/www/green-apple/",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predeploy": "npm run build_dev",
-    "deploy": "gh-pages -d build_dev"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
