@@ -25,6 +25,7 @@ function App() {
         if(tg){
             const chatId = tg.WebApp.initDataUnsafe?.user?.id;
             console.log(tg.WebApp.initDataUnsafe.user.id)
+            console.log(tg)
             if (!chatId) {
                 setError('Не удалось получить chat_id');
                 return;
