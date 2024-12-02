@@ -9,7 +9,7 @@ export const api = {
         const tg: any = 'Telegram' in window ? window.Telegram : undefined;
 
         axios
-            .post(`${URL}api/photos/registration`, data)
+            .post(`${URL}api/users/registration`, data)
             .then(res => {
                 setIsFetch(false);
                 const result = res.data;
@@ -22,7 +22,6 @@ export const api = {
                     setError(result.text);
                     tg.WebApp.sendData(JSON.stringify({result: "user_exist"}));
                 }
-
 
                 if (result.status === 1) {
                     setError(result.text);
@@ -44,20 +43,28 @@ export const api = {
         const tg: any = 'Telegram' in window ? window.Telegram : undefined;
 
         axios
-            .post(`${URL}api/photos/find_user_by_photo`, data)
+            .post(`${URL}api/embeddings/verification`, data)
             .then(res => {
                 setIsFetch(false);
                 const result = res.data;
 
-                if (tg) {
-                    if (result === "Совпадений не найдено.") {
-                        tg.WebApp.sendData(JSON.stringify({result: "new_face"}));
-                        setRes("Совпадений не найдено!");
-                    }
-                    if (Array.isArray(result)) {
-                        tg.WebApp.sendData(JSON.stringify({result: "user_exist"}));
-                        setRes("Найдено!");
-                    }
+
+                if (result.status === 2) {
+                    setError(result.text);
+                }
+                if (result.status === 0) {
+                    setError(result.text);
+                    tg.WebApp.sendData(JSON.stringify({result: "different_face"}));
+                }
+
+                if (result.status === 3) {
+                    setError(result.text);
+                    tg.WebApp.sendData(JSON.stringify({result: "none_face_db"}));
+                }
+
+                if (result.status === 1) {
+                    setError(result.text);
+                    tg.WebApp.sendData(JSON.stringify({result: "similar_face"}));
                 }
 
             })
