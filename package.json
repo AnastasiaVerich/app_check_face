@@ -22,7 +22,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build_dev": "PUBLIC_URL=https://AnastasiaVerich.github.io/app_check_face react-scripts build",
+    "build_dev": "cross-env PUBLIC_URL=https://AnastasiaVerich.github.io/app_check_face react-scripts build",
     "build_prod": "react-scripts build && cp -r build/* /var/www/green-apple/",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -48,6 +48,7 @@
     ]
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "gh-pages": "^6.2.0"
   }
 }
