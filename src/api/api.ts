@@ -9,7 +9,7 @@ export const api = {
 
     registration(data:FormData,setIsFetch:any,setError:any,setRes:any){
         axios
-            .post(`${URL}'api/photos/find_user_by_photo'`,data)
+            .post(`${URL}api/photos/find_user_by_photo`,data)
             .then(res=>{
                 setIsFetch(false);
                 const result = res.data;
