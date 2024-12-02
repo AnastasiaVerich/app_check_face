@@ -15,16 +15,16 @@ export const api = {
                 const result = res.data;
 
 
-                if (result.satus === 2) {
+                if (result.status === 2) {
                     setError(result.text);
                 }
-                if (result.satus === 0) {
+                if (result.status === 0) {
                     setError(result.text);
                     tg.WebApp.sendData(JSON.stringify({result: "user_exist"}));
                 }
 
 
-                if (result.satus === 1) {
+                if (result.status === 1) {
                     setError(result.text);
                     tg.WebApp.sendData(JSON.stringify({result: "new_face"}));
                 }
