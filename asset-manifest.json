@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/process.env.REACT_APP_API_URL/static/css/main.6b5895d2.css",
-    "main.js": "/process.env.REACT_APP_API_URL/static/js/main.58f5ca5c.js",
-    "static/js/453.fe601ad9.chunk.js": "/process.env.REACT_APP_API_URL/static/js/453.fe601ad9.chunk.js",
-    "index.html": "/process.env.REACT_APP_API_URL/index.html",
-    "main.6b5895d2.css.map": "/process.env.REACT_APP_API_URL/static/css/main.6b5895d2.css.map",
-    "main.58f5ca5c.js.map": "/process.env.REACT_APP_API_URL/static/js/main.58f5ca5c.js.map",
-    "453.fe601ad9.chunk.js.map": "/process.env.REACT_APP_API_URL/static/js/453.fe601ad9.chunk.js.map"
+    "main.css": "https://AnastasiaVerich.github.io/app_check_face/static/css/main.6b5895d2.css",
+    "main.js": "https://AnastasiaVerich.github.io/app_check_face/static/js/main.148e7560.js",
+    "static/js/453.fe601ad9.chunk.js": "https://AnastasiaVerich.github.io/app_check_face/static/js/453.fe601ad9.chunk.js",
+    "index.html": "https://AnastasiaVerich.github.io/app_check_face/index.html",
+    "main.6b5895d2.css.map": "https://AnastasiaVerich.github.io/app_check_face/static/css/main.6b5895d2.css.map",
+    "main.148e7560.js.map": "https://AnastasiaVerich.github.io/app_check_face/static/js/main.148e7560.js.map",
+    "453.fe601ad9.chunk.js.map": "https://AnastasiaVerich.github.io/app_check_face/static/js/453.fe601ad9.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.6b5895d2.css",
-    "static/js/main.58f5ca5c.js"
+    "static/js/main.148e7560.js"
   ]
 }
