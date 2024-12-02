@@ -25,12 +25,9 @@ function App() {
         if(tg){
             const urlParams = new URLSearchParams(window.location.search);
             const data = JSON.parse(decodeURIComponent(urlParams?.get('data')??''));
-            const chatId = data?.chat_id
-            console.log(chatId)
-            if (!chatId) {
-                setError('Не удалось получить chat_id');
-                return;
-            }
+            const userPhone = data?.userPhone
+            const userName = data?.userName
+
 
             if (!photoUrl) {
                 setError("Фото не сделано! Попробуйте снова.");
@@ -41,9 +38,10 @@ function App() {
 
             // Создаем formData для отправки медиа
             const formData = new FormData();
-            formData.append('chat_id', chatId);
+            formData.append('userPhone', userPhone);
+            formData.append('userName', userName);
             formData.append('photo', blob);
-            api.send_photo_to_bot(
+            api.registration(
                 formData,
                 setIsFetching,
                 setError,

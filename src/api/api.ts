@@ -37,7 +37,7 @@ export const api = {
                 }
             })
     },
-    send_photo_to_bot(data:FormData,setIsFetch:any,setError:any,setRes:any){
+  /*  send_photo_to_bot(data:FormData,setIsFetch:any,setError:any,setRes:any){
         axios
             .post(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`,data)
             .then(res=>{
@@ -48,7 +48,7 @@ export const api = {
                     setError('Ошибка при отправке медиа: ' + res.data.description);
                 }
 
-               /* if (Telegram) {
+               /!* if (Telegram) {
                     if (result === "Совпадений не найдено.") {
                         Telegram.WebApp.sendData(JSON.stringify({ result: "new_face" }));
                         setRes("Совпадений не найдено!");
@@ -57,7 +57,7 @@ export const api = {
                         Telegram.WebApp.sendData(JSON.stringify({ result: "user_exist" }));
                         setRes("Найдено!");
                     }
-                }*/
+                }*!/
 
             })
             .catch(err=>{
@@ -70,5 +70,5 @@ export const api = {
                     setError("Неизвестная ошибка");
                 }
             })
-    },
+    },*/
 }
