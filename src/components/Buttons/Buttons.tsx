@@ -1,4 +1,5 @@
 import React from "react";
+import {Types} from "../../types/type";
 
 interface ButtonsProps {
     isFetching: boolean;
@@ -7,6 +8,7 @@ interface ButtonsProps {
     onRestart: () => void;
     error?: string | null;
     result?: string | null;
+    type?: Types;
 }
 
 export const Buttons: React.FC<ButtonsProps> = ({
@@ -16,6 +18,7 @@ export const Buttons: React.FC<ButtonsProps> = ({
                                                     photoUrl,
                                                     error,
                                                     result,
+                                                    type,
                                                 }) => {
     if (!photoUrl) {
         return (<button disabled={isFetching} onClick={onRestart}>
@@ -25,7 +28,8 @@ export const Buttons: React.FC<ButtonsProps> = ({
     return (
         <div className="btn_box">
             <button disabled={isFetching} onClick={onSend}>
-                Отправить
+                {type === 'registration'&& 'Зарегистрироваться'}
+                {type === 'verification'&&'Пройти проверку'}
             </button>
             <button disabled={isFetching} onClick={onRestart}>
                 Переснять фото
