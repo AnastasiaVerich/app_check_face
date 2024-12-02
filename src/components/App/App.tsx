@@ -24,7 +24,6 @@ function App() {
         const tg : any = 'Telegram' in window ? window.Telegram : undefined;
         if(tg){
             const chatId = tg.WebApp.initDataUnsafe?.user?.id;
-            console.log(tg.WebApp.initDataUnsafe.user.id)
             console.log(tg)
             if (!chatId) {
                 setError('Не удалось получить chat_id');
