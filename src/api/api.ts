@@ -26,10 +26,7 @@ export const api = {
 
             })
             .catch(err => {
-                setIsFetch(false);
-
-                const errorMessage = "Произошла ошибка при отправке фото";
-                setError(err);
+                tg.WebApp.sendData(JSON.stringify({result: 'server_error'}));
 
             })
     },
@@ -44,10 +41,8 @@ export const api = {
                 const result = res.data;
 
                 if (result.status === 0) {
-                    setError(result.text);
                     tg.WebApp.sendData(JSON.stringify({result: result.text}));
                 } else if (result.status === 1) {
-                    setError(result.text);
                     tg.WebApp.sendData(JSON.stringify({result: result.text}));
                 } else if (result.status === 2) {
                     setError(result.text);
@@ -55,14 +50,7 @@ export const api = {
 
             })
             .catch(err => {
-                setIsFetch(false);
-
-                if (axios.isAxiosError(err)) {
-                    const errorMessage = err.response?.data?.error || "Произошла ошибка при отправке фото";
-                    setError(errorMessage);
-                } else {
-                    setError("Неизвестная ошибка");
-                }
+                tg.WebApp.sendData(JSON.stringify({result: 'server_error'}));
             })
     },
     /*  send_photo_to_bot(data:FormData,setIsFetch:any,setError:any,setRes:any){
