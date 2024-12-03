@@ -30,10 +30,10 @@ function App() {
         setParams(data)
 
         const tg: any = 'Telegram' in window ? window.Telegram : undefined;
-        tg.ready();
-        tg.expand();
+        tg.WebApp.ready();
+        tg.WebApp.expand();
 
-        document.body.style.backgroundColor = tg.themeParams.bg_color || '#ffffff';
+        document.body.style.backgroundColor = tg.WebApp.themeParams.bg_color || '#ffffff';
 
         const handleResize = () => {
             document.body.style.height = `${window.innerHeight}px`;
