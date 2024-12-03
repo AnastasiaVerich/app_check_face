@@ -1,4 +1,4 @@
-export type  Types = 'registration' | 'verification'
+export type  Types = 'registration' | 'identification'
 
 type ParamsRegistration = {
     userPhone: string,

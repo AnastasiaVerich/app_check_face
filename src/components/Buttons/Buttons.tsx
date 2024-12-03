@@ -29,7 +29,7 @@ export const Buttons: React.FC<ButtonsProps> = ({
         <div className="btn_box">
             <button disabled={isFetching} onClick={onSend}>
                 {type === 'registration'&& 'Зарегистрироваться'}
-                {type === 'verification'&&'Пройти проверку'}
+                {type === 'identification'&&'Пройти проверку'}
             </button>
             <button disabled={isFetching} onClick={onRestart}>
                 Переснять фото

@@ -33,12 +33,12 @@ export const api = {
 
             })
     },
-    verification(data: FormData, setIsFetch: any, setError: any, setRes: any) {
+    identification(data: FormData, setIsFetch: any, setError: any, setRes: any) {
 
         const tg: any = 'Telegram' in window ? window.Telegram : undefined;
 
         axios
-            .post(`${URL}api/embeddings/verification`, data)
+            .post(`${URL}api/embeddings/identification`, data)
             .then(res => {
                 setIsFetch(false);
                 const result = res.data;

@@ -62,7 +62,7 @@ function App() {
 
                 setError("Приложение было открыто НЕ в Телеграмме");
             }
-        } else if (params?.type === 'verification') {
+        } else if (params?.type === 'identification') {
             if (tg) {
 
                 const userId = params?.userId ?? ''
@@ -79,7 +79,7 @@ function App() {
                 const formData = new FormData();
                 formData.append('userId', userId);
                 formData.append('photo', blob);
-                api.verification(
+                api.identification(
                     formData,
                     setIsFetching,
                     setError,
