@@ -28,7 +28,7 @@ export const Buttons: React.FC<ButtonsProps> = ({
     return (
         <div className="btn_box">
             <button disabled={isFetching} onClick={onSend}>
-                {type === 'registration'&& 'Зарегистрироваться'}
+                {type === 'registration'&& 'Зарегистрироваться!'}
                 {type === 'identification'&&'Пройти проверку'}
             </button>
             <button disabled={isFetching} onClick={onRestart}>
