@@ -29,7 +29,7 @@ export const api = {
                 setIsFetch(false);
 
                 const errorMessage = "Произошла ошибка при отправке фото";
-                setError(errorMessage);
+                setError(err);
 
             })
     },
