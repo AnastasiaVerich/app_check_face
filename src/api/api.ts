@@ -15,17 +15,12 @@ export const api = {
                 const result = res.data;
 
 
-                if (result.status === 2) {
-                    setError(result.text);
-                }
                 if (result.status === 0) {
+                    tg.WebApp.sendData(JSON.stringify({result: result.text}));
+                } else if (result.status === 1) {
+                    tg.WebApp.sendData(JSON.stringify({result: result.text}));
+                } else if (result.status === 2) {
                     setError(result.text);
-                    tg.WebApp.sendData(JSON.stringify({result: "user_exist"}));
-                }
-
-                if (result.status === 1) {
-                    setError(result.text);
-                    tg.WebApp.sendData(JSON.stringify({result: "new_face"}));
                 }
 
 
@@ -48,23 +43,14 @@ export const api = {
                 setIsFetch(false);
                 const result = res.data;
 
-
-                if (result.status === 2) {
-                    setError(result.text);
-                }
                 if (result.status === 0) {
                     setError(result.text);
-                    tg.WebApp.sendData(JSON.stringify({result: "different_face"}));
-                }
-
-                if (result.status === 3) {
+                    tg.WebApp.sendData(JSON.stringify({result: result.text}));
+                } else if (result.status === 1) {
                     setError(result.text);
-                    tg.WebApp.sendData(JSON.stringify({result: "none_face_db"}));
-                }
-
-                if (result.status === 1) {
+                    tg.WebApp.sendData(JSON.stringify({result: result.text}));
+                } else if (result.status === 2) {
                     setError(result.text);
-                    tg.WebApp.sendData(JSON.stringify({result: "similar_face"}));
                 }
 
             })
