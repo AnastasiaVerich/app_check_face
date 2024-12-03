@@ -17,6 +17,7 @@ function App() {
         videoRef,
         canvasRef
     } = useCamera();
+
     const [isFetching, setIsFetching] = useState(false);
     const [params, setParams] = useState<ParamsType>(null);
     const [error, setError] = useState<string | null>(null);
@@ -27,6 +28,23 @@ function App() {
         const urlParams = new URLSearchParams(window.location.search);
         const data = JSON.parse(decodeURIComponent(urlParams?.get('data') ?? ''));
         setParams(data)
+
+        const tg: any = 'Telegram' in window ? window.Telegram : undefined;
+        tg.ready();
+        tg.expand();
+
+        document.body.style.backgroundColor = tg.themeParams.bg_color || '#ffffff';
+
+        const handleResize = () => {
+            document.body.style.height = `${window.innerHeight}px`;
+        };
+
+        handleResize();
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
     }, [])
 
     const handleSendPhoto = () => {
