@@ -15,12 +15,13 @@ function App() {
         stopCamera,
         photoUrl,
         videoRef,
-        canvasRef
+        canvasRef,
+        error,
+        setError
     } = useCamera();
 
     const [isFetching, setIsFetching] = useState(false);
     const [params, setParams] = useState<ParamsType>(null);
-    const [error, setError] = useState<string | null>(null);
     const [result, setResult] = useState<string | null>(null);
 
 

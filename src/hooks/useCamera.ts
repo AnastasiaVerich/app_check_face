@@ -6,8 +6,10 @@ export const useCamera = () => {
     const videoRef = useRef<HTMLVideoElement | null>(null);
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const streamRef = useRef<MediaStream | null>(null);
+    const [error, setError] = useState<string | null>(null);
 
     const startCamera = async () => {
+
         try {
             const stream = await navigator.mediaDevices.getUserMedia({
                 video: { facingMode: "user" },
@@ -19,6 +21,7 @@ export const useCamera = () => {
             }
             setIsCameraOn(true);
             setPhotoUrl(null)
+            setError(null)
         } catch (err) {
             console.error("Ошибка доступа к камере:", err);
         }
@@ -48,5 +51,5 @@ export const useCamera = () => {
         setPhotoUrl(null)
     };
 
-    return { isCameraOn, startCamera, stopCamera, videoRef, canvasRef,photoUrl };
+    return { isCameraOn, startCamera, stopCamera, videoRef, canvasRef,photoUrl,error, setError };
 };
