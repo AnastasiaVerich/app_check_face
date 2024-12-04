@@ -70,25 +70,25 @@ export const useCamera = () => {
                         )) {
                             faceInCircle = true; // Лицо внутри овала
                         }
-                        // Рисуем рамку
+                   /*     // Рисуем рамку
                         ctx.lineWidth = 4;
                         ctx.lineCap = 'square';
                         ctx.lineJoin = 'bevel';
                         ctx.strokeStyle = '#5199d9';
 
 
-                        ctx.strokeRect(x, y, width, height);
+                        ctx.strokeRect(x, y, width, height);*/
                     });
                     setIsFaceDetected(faceInCircle);
 
-                    // Рисуем круг (красный или зеленый в зависимости от состояния)
+                   /* // Рисуем круг (красный или зеленый в зависимости от состояния)
                     ctx.beginPath();
                     ctx.arc(circleX, circleY, circleRadius, 0, 2 * Math.PI); // Рисуем круг
                     ctx.fillStyle = faceInCircle ? 'transparent' : 'transparent'; // Зеленый если лицо внутри круга, красный если нет
                     ctx.fill();
                     ctx.lineWidth = 4;
                     ctx.strokeStyle = faceInCircle ? 'green' : 'red';
-                    ctx.stroke();
+                    ctx.stroke();*/
 
 
                 }
@@ -186,7 +186,6 @@ export const useCamera = () => {
             }
         }
         startVideo()
-        /* loadModels().then(startVideo);*/
     };
 
     const stopCamera = () => {
