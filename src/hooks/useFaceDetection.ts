@@ -12,7 +12,7 @@ export const useFaceDetection = (
 
     useEffect(() => {
         const loadModels = async () => {
-            const MODEL_URL = "app_check_face/ia_models";
+            const MODEL_URL = "ia_models";
             await Promise.all([
                 faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
             ]);
