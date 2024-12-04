@@ -78,6 +78,7 @@ function App() {
                 formData.append('userId', userId);
                 formData.append('photo', blob);
                 formData.append('isSavePhoto', isSavePhoto);
+                setIsFetching(true)
                 api.registration(
                     formData,
                     setIsFetching,
@@ -105,6 +106,7 @@ function App() {
                 const formData = new FormData();
                 formData.append('userId', userId);
                 formData.append('photo', blob);
+                setIsFetching(true)
                 api.identification(
                     formData,
                     setIsFetching,

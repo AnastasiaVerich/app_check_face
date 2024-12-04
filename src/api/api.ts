@@ -5,13 +5,13 @@ const URL = process.env.REACT_APP_API_URL
 
 export const api = {
 
-    registration(data: FormData, setIsFetch: any, setError: any, setRes: any) {
+    registration(data: FormData, setIsFetching: any, setError: any, setRes: any) {
         const tg: any = 'Telegram' in window ? window.Telegram : undefined;
 
         axios
             .post(`${URL}api/users/registration`, data)
             .then(res => {
-                setIsFetch(false);
+                setIsFetching(false);
                 const result = res.data;
 
 
@@ -26,18 +26,19 @@ export const api = {
 
             })
             .catch(err => {
+                setIsFetching(false);
                 tg.WebApp.sendData(JSON.stringify({result: 'server_error'}));
 
             })
     },
-    identification(data: FormData, setIsFetch: any, setError: any, setRes: any) {
+    identification(data: FormData, setIsFetching: any, setError: any, setRes: any) {
 
         const tg: any = 'Telegram' in window ? window.Telegram : undefined;
 
         axios
             .post(`${URL}api/embeddings/identification`, data)
             .then(res => {
-                setIsFetch(false);
+                setIsFetching(false);
                 const result = res.data;
 
                 if (result.status === 0) {
@@ -50,6 +51,7 @@ export const api = {
 
             })
             .catch(err => {
+                setIsFetching(false);
                 tg.WebApp.sendData(JSON.stringify({result: 'server_error'}));
             })
     },

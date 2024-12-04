@@ -42,7 +42,10 @@ export const Buttons: React.FC<ButtonsProps> = (props) => {
     if (!photoUrl && !isCameraOn) {
         return (
             <div className="btn_box">
-                <button disabled={isFetching} onClick={onStart}>
+                <button
+                    disabled={isFetching}
+                    onClick={onStart}
+                >
                     Включить камеру
                 </button>
             </div>
