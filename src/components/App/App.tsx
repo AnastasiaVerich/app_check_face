@@ -17,7 +17,8 @@ function App() {
         videoRef,
         canvasRef,
         error,
-        setError
+        setError,
+        isFaceDetected
     } = useCamera();
 
     const [isFetching, setIsFetching] = useState(false);
@@ -26,11 +27,11 @@ function App() {
 
 
     useEffect(() => {
+        const tg: any = 'Telegram' in window ? window.Telegram : undefined;
         const urlParams = new URLSearchParams(window.location.search);
-        const data = JSON.parse(decodeURIComponent(urlParams?.get('data') ?? ''));
+        const data = JSON.parse(decodeURIComponent(urlParams?.get('data') ?? '{}'));
         setParams(data)
 
-        const tg: any = 'Telegram' in window ? window.Telegram : undefined;
         tg.WebApp.ready();
         tg.WebApp.expand();
 
@@ -113,7 +114,7 @@ function App() {
 
     return (
         <div className="app">
-            <Camera videoRef={videoRef} isShow={isCameraOn}/>
+            <Camera videoRef={videoRef} isShow={isCameraOn} isFaceDetected={isFaceDetected}/>
             <Img photoUrl={photoUrl} isShow={!isCameraOn}/>
             {isCameraOn ? (
                 <>
