@@ -118,7 +118,11 @@ function App() {
             <Img photoUrl={photoUrl} isShow={!isCameraOn}/>
             {isCameraOn ? (
                 <>
-                    <button onClick={stopCamera}>Сфотографировать</button>
+                    <button
+                        onClick={stopCamera}
+                        disabled={!isFaceDetected}
+                    >Сфотографировать
+                    </button>
                 </>
             ) : (
                 <Buttons
