@@ -2,11 +2,12 @@ import React from "react";
 
 interface CameraProps {
     videoRef: React.RefObject<HTMLVideoElement>;
+    canvasBorderRef: React.RefObject<HTMLCanvasElement>;
     isShow:Boolean,
     isFaceDetected:Boolean,
 }
 
-export const Camera: React.FC<CameraProps> = ({ videoRef, isShow,isFaceDetected }) => {
+export const Camera: React.FC<CameraProps> = ({ videoRef, isShow,isFaceDetected,canvasBorderRef }) => {
     return (
         <div className="video_box" style={{
             display: isShow ? '' : 'none',
@@ -19,6 +20,17 @@ export const Camera: React.FC<CameraProps> = ({ videoRef, isShow,isFaceDetected 
                 muted
                 controls={false}
 
+            />
+            <canvas
+                ref={canvasBorderRef}
+                style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    pointerEvents: 'none', // Чтобы клики проходили на видео
+                }}
             />
             <div
                 className="video_border"

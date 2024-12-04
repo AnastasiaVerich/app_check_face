@@ -18,7 +18,8 @@ function App() {
         canvasRef,
         error,
         setError,
-        isFaceDetected
+        isFaceDetected,
+        canvasBorderRef
     } = useCamera();
 
     const [isFetching, setIsFetching] = useState(false);
@@ -114,7 +115,7 @@ function App() {
 
     return (
         <div className="app">
-            <Camera videoRef={videoRef} isShow={isCameraOn} isFaceDetected={isFaceDetected}/>
+            <Camera isFaceDetected={isFaceDetected} videoRef={videoRef} isShow={isCameraOn}  canvasBorderRef={canvasBorderRef}/>
             <Img photoUrl={photoUrl} isShow={!isCameraOn}/>
             {isCameraOn ? (
                 <>
