@@ -1,33 +1,38 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {api} from "../../api/api";
-import {useCamera} from "../../hooks/useCamera";
 import {Buttons} from "../Buttons/Buttons";
 import {base64ToBlob} from "../../utils/photoUtils";
 import {Camera} from "../Camera/Camera";
 import './App.css'
+import '../../styles/variables.css'
 import {Img} from "../Img/Img";
 import {ParamsType} from "../../types/type";
+import {useCamera} from "../../hooks/useCamera";
+import {useFaceDetection} from "../../hooks/useFaceDetection";
 
 function App() {
+
+    const videoRef = useRef<HTMLVideoElement | null>(null);
+    const canvasRef = useRef<HTMLCanvasElement | null>(null);
+    const streamRef = useRef<MediaStream | null>(null);
+    const [isFetching, setIsFetching] = useState(false);
+    const [params, setParams] = useState<ParamsType>(null);
+    const [result, setResult] = useState<string | null>(null);
+    const [photoUrl, setPhotoUrl] = useState<string | null>(null);
+    const [error, setError] = useState<string | null>(null);
+
     const {
         isCameraOn,
         startCamera,
         stopCamera,
-        photoUrl,
-        videoRef,
-        canvasRef,
-        error,
-        setError,
+    }=useCamera(setPhotoUrl,setError,videoRef,canvasRef, streamRef)
+    const {
         isFaceDetected,
-        canvasBorderRef
-    } = useCamera();
-
-    const [isFetching, setIsFetching] = useState(false);
-    const [params, setParams] = useState<ParamsType>(null);
-    const [result, setResult] = useState<string | null>(null);
-
+    } = useFaceDetection(isCameraOn,videoRef,canvasRef)
 
     useEffect(() => {
+        // синхронизация стилей юзера из телеграма с веб прил
+        // записываем данные юзера, которые пришли в url
         const tg: any = 'Telegram' in window ? window.Telegram : undefined;
         const urlParams = new URLSearchParams(window.location.search);
         const data = JSON.parse(decodeURIComponent(urlParams?.get('data') ?? '{}'));
@@ -52,7 +57,7 @@ function App() {
 
     const handleSendPhoto = () => {
         const tg: any = 'Telegram' in window ? window.Telegram : undefined;
-        if(params?.type === 'registration') {
+        if (params?.type === 'registration') {
             if (tg) {
 
                 const userPhone = params?.userPhone ?? ''
@@ -115,27 +120,35 @@ function App() {
 
     return (
         <div className="app">
-            <Camera isFaceDetected={isFaceDetected} videoRef={videoRef} isShow={isCameraOn}  canvasBorderRef={canvasBorderRef}/>
-            <Img photoUrl={photoUrl} isShow={!isCameraOn}/>
-            {isCameraOn ? (
-                <>
-                    <button
-                        onClick={stopCamera}
-                        disabled={!isFaceDetected}
-                    >Сфотографировать
-                    </button>
-                </>
-            ) : (
-                <Buttons
-                    type={params?.type}
-                    isFetching={isFetching}
-                    onSend={handleSendPhoto}
-                    onRestart={startCamera}
-                    photoUrl={photoUrl}
-                    error={error}
-                    result={result}
-                />
-            )}
+            <Camera
+                isFaceDetected={isFaceDetected}
+                videoRef={videoRef}
+                isShow={isCameraOn}
+                canvasRef={canvasRef}
+            />
+            <Img
+                photoUrl={photoUrl}
+                isShow={!isCameraOn}
+            />
+
+            <Buttons
+                isFetching={isFetching}
+                isFaceDetected={isFaceDetected}
+                isCameraOn={isCameraOn}
+
+                photoUrl={photoUrl}
+
+                onStart={startCamera}
+                onStop={stopCamera}
+                onRestart={startCamera}
+                onSend={handleSendPhoto}
+
+                error={error}
+                result={result}
+
+                type={params?.type}
+            />
+
             <canvas ref={canvasRef} style={{display: "none"}}/>
         </div>
     );

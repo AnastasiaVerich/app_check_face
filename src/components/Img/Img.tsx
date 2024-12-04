@@ -1,4 +1,5 @@
 import React from "react";
+import './Img.css'
 
 interface ImgProps {
     photoUrl:string | null;
@@ -11,7 +12,7 @@ export const Img: React.FC<ImgProps> = ({ photoUrl, isShow }) => {
         return <></>
     }
     return (
-        <div className="img_box" style={{
+        <div className={`img_box ${isShow?'':'hide'}`} style={{
             display: isShow ? '' : 'none',
         }}>
             <img

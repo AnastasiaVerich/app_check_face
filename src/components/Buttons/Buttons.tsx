@@ -1,41 +1,75 @@
 import React from "react";
 import {Types} from "../../types/type";
+import './Buttons.css'
 
 interface ButtonsProps {
     isFetching: boolean;
-    onSend: () => void;
+    isFaceDetected: boolean;
+    isCameraOn: boolean;
+
     photoUrl: string | null;
+
+    onStart: () => void;
+    onStop: () => void;
     onRestart: () => void;
+    onSend: () => void;
+
     error?: string | null;
     result?: string | null;
+
     type?: Types;
 }
 
-export const Buttons: React.FC<ButtonsProps> = ({
-                                                    isFetching,
-                                                    onSend,
-                                                    onRestart,
-                                                    photoUrl,
-                                                    error,
-                                                    result,
-                                                    type,
-                                                }) => {
-    if (!photoUrl) {
-        return (<button disabled={isFetching} onClick={onRestart}>
-            Включить камеру
-        </button>)
+export const Buttons: React.FC<ButtonsProps> = (props) => {
+    const {
+        isFetching,
+        isFaceDetected,
+        isCameraOn,
+
+        photoUrl,
+
+        onStart,
+        onStop,
+        onRestart,
+        onSend,
+
+        error,
+        result,
+
+        type,
+    } = props
+
+    if (!photoUrl && !isCameraOn) {
+        return (
+            <div className="btn_box">
+                <button disabled={isFetching} onClick={onStart}>
+                    Включить камеру
+                </button>
+            </div>
+        )
     }
     return (
         <div className="btn_box">
-            <button disabled={isFetching} onClick={onSend}>
-                {type === 'registration'&& 'Зарегистрироваться!'}
-                {type === 'identification'&&'Пройти проверку'}
-            </button>
-            <button disabled={isFetching} onClick={onRestart}>
-                Переснять фото
-            </button>
-            {error && <div className="response" style={{color: "red"}}>{error}</div>}
-            {result && <div className="response" style={{color: "green"}}>{result}</div>}
+            {isCameraOn && (
+                <button
+                    onClick={onStop}
+                    disabled={!isFaceDetected}>
+                    Сфотографировать
+                </button>
+            )}
+            {!isCameraOn && (
+                <>
+                    <button disabled={isFetching} onClick={onSend}>
+                        {type === 'registration' && 'Зарегистрироваться'}
+                        {type === 'identification' && 'Пройти фотоконтроль'}
+                    </button>
+                    <button disabled={isFetching} onClick={onRestart}>
+                        Переснять фото
+                    </button>
+                </>
+            )}
+            {error && <div className="error">{error}</div>}
+            {result && <div className="response">{result}</div>}
         </div>
     );
 };

@@ -1,17 +1,16 @@
 import React from "react";
+import './Camera.css'
 
 interface CameraProps {
     videoRef: React.RefObject<HTMLVideoElement>;
-    canvasBorderRef: React.RefObject<HTMLCanvasElement>;
+    canvasRef: React.RefObject<HTMLCanvasElement>;
     isShow:Boolean,
     isFaceDetected:Boolean,
 }
 
-export const Camera: React.FC<CameraProps> = ({ videoRef, isShow,isFaceDetected,canvasBorderRef }) => {
+export const Camera: React.FC<CameraProps> = ({ videoRef, isShow,isFaceDetected,canvasRef }) => {
     return (
-        <div className="video_box" style={{
-            display: isShow ? '' : 'none',
-        }}>
+        <div className={`video_box ${isShow?'':'hide'}`}>
             <video
                 className="video_online"
                 ref={videoRef}
@@ -22,22 +21,12 @@ export const Camera: React.FC<CameraProps> = ({ videoRef, isShow,isFaceDetected,
 
             />
             <canvas
-                ref={canvasBorderRef}
-                style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    pointerEvents: 'none', // Чтобы клики проходили на видео
-                }}
+                ref={canvasRef}
+                className={'canvas'}
             />
             <div
-                className="video_border"
-                style={{
-                    border: `4px solid ${isFaceDetected ? 'green' : 'red'}`,
-                    boxShadow: `0 0 20px ${isFaceDetected ? 'green' : 'red'}`,
-                }}
+                className={`face_overlay ${isFaceDetected?'ok':'err'}`}
+
             />
         </div>
     );
