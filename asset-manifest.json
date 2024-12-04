@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "https://AnastasiaVerich.github.io/app_check_face/static/css/main.82fa9534.css",
-    "main.js": "https://AnastasiaVerich.github.io/app_check_face/static/js/main.3908433d.js",
+    "main.js": "https://AnastasiaVerich.github.io/app_check_face/static/js/main.88ebedcd.js",
     "index.html": "https://AnastasiaVerich.github.io/app_check_face/index.html",
     "main.82fa9534.css.map": "https://AnastasiaVerich.github.io/app_check_face/static/css/main.82fa9534.css.map",
-    "main.3908433d.js.map": "https://AnastasiaVerich.github.io/app_check_face/static/js/main.3908433d.js.map"
+    "main.88ebedcd.js.map": "https://AnastasiaVerich.github.io/app_check_face/static/js/main.88ebedcd.js.map"
   },
   "entrypoints": [
     "static/css/main.82fa9534.css",
-    "static/js/main.3908433d.js"
+    "static/js/main.88ebedcd.js"
   ]
 }
