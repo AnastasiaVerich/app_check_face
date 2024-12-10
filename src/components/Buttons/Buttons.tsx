@@ -3,21 +3,21 @@ import {Types} from "../../types/type";
 import './Buttons.css'
 
 interface ButtonsProps {
-    isFetching: boolean;
-    isFaceDetected: boolean;
-    isCameraOn: boolean;
+    isFetching: boolean; // Флаг загрузки: кнопки должны блокироваться во время выполнения запросов
+    isFaceDetected: boolean; // Флаг распознавания лица: доступность кнопки "Сфотографировать"
+    isCameraOn: boolean; // Флаг включения камеры: для отображения соответствующих кнопок
 
-    photoUrl: string | null;
+    photoUrl: string | null; // URL фотографии: определяет, сделано ли фото
 
-    onStart: () => void;
-    onStop: () => void;
-    onRestart: () => void;
-    onSend: () => void;
+    onStart: () => void; // Обработчик нажатия на кнопку "Включить камеру"
+    onStop: () => void; // Обработчик нажатия на кнопку "Сфотографировать"
+    onRestart: () => void; // Обработчик нажатия на кнопку "Переснять фото"
+    onSend: () => void; // Обработчик нажатия на кнопку отправки
 
-    error?: string | null;
-    result?: string | null;
+    error?: string | null; // Сообщение об ошибке: отображается под кнопками
+    result?: string | null; // Результат выполнения действия: отображается под кнопками
 
-    type?: Types;
+    type?: Types; // Тип действия: регистрация или идентификация
 }
 
 export const Buttons: React.FC<ButtonsProps> = (props) => {
@@ -39,6 +39,7 @@ export const Buttons: React.FC<ButtonsProps> = (props) => {
         type,
     } = props
 
+    // Если нет фото и камера выключена, отображается кнопка "Включить камеру"
     if (!photoUrl && !isCameraOn) {
         return (
             <div className="btn_box">
@@ -51,8 +52,11 @@ export const Buttons: React.FC<ButtonsProps> = (props) => {
             </div>
         )
     }
+    // Основной рендеринг кнопок в зависимости от состояния
+
     return (
         <div className="btn_box">
+            {/* Если камера включена, показывается кнопка "Сфотографировать" */}
             {isCameraOn && (
                 <button
                     onClick={onStop}
@@ -60,6 +64,8 @@ export const Buttons: React.FC<ButtonsProps> = (props) => {
                     Сфотографировать
                 </button>
             )}
+            {/* Если камера выключена, отображаются кнопки "Отправить" и "Переснять фото" */}
+
             {!isCameraOn && (
                 <>
                     <button disabled={isFetching} onClick={onSend}>
