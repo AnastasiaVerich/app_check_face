@@ -1,6 +1,6 @@
 .img_box {
     width: 100%;
-    height: calc((var(--tg-viewport-height) / 2 ));
+    height: calc(var(--tg-viewport-height) / 2 );
     position: relative;
 }
 .img_box.hide {
