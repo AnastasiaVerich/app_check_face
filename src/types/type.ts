@@ -16,7 +16,11 @@ export interface Telegram {
         expand: () => void;
         themeParams: {
             bg_color?: string;
+            text_color?: string;
+            button_color?: string;
+            button_text_color?: string;
         };
+        onEvent:(event:string, func:()=>void)=>void
     };
 }
 

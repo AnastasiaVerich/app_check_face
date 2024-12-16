@@ -7,9 +7,7 @@ interface ButtonsProps {
     isFaceDetected: boolean; // Флаг распознавания лица: доступность кнопки "Сфотографировать"
     isCameraOn: boolean; // Флаг включения камеры: для отображения соответствующих кнопок
 
-    photoUrl: string | null; // URL фотографии: определяет, сделано ли фото
 
-    onStart: () => void; // Обработчик нажатия на кнопку "Включить камеру"
     onStop: () => void; // Обработчик нажатия на кнопку "Сфотографировать"
     onRestart: () => void; // Обработчик нажатия на кнопку "Переснять фото"
     onSend: () => void; // Обработчик нажатия на кнопку отправки
@@ -26,21 +24,17 @@ export const Buttons: React.FC<ButtonsProps> = (props) => {
         isFaceDetected,
         isCameraOn,
 
-        photoUrl,
 
-        onStart,
         onStop,
         onRestart,
         onSend,
 
-        error,
-        result,
 
         type,
     } = props
 
     // Если нет фото и камера выключена, отображается кнопка "Включить камеру"
-    if (!photoUrl && !isCameraOn) {
+/*    if (!photoUrl && !isCameraOn) {
         return (
             <div className="btn_box">
                 <button
@@ -51,19 +45,19 @@ export const Buttons: React.FC<ButtonsProps> = (props) => {
                 </button>
             </div>
         )
-    }
+    }*/
     // Основной рендеринг кнопок в зависимости от состояния
 
     return (
         <div className="btn_box">
             {/* Если камера включена, показывается кнопка "Сфотографировать" */}
-            {isCameraOn && (
+           {/* {isCameraOn && (
                 <button
                     onClick={onStop}
                     disabled={!isFaceDetected}>
                     Сфотографировать
                 </button>
-            )}
+            )}*/}
             {/* Если камера выключена, отображаются кнопки "Отправить" и "Переснять фото" */}
 
             {!isCameraOn && (
@@ -77,8 +71,6 @@ export const Buttons: React.FC<ButtonsProps> = (props) => {
                     </button>
                 </>
             )}
-            {error && <div className="error">{error}</div>}
-            {result && <div className="response">{result}</div>}
         </div>
     );
 };

@@ -1,0 +1,64 @@
+.VStack{
+    display: flex;
+    flex-direction: column;
+}
+
+.VStack.justifyStart {
+    justify-content: flex-start;
+}
+
+.VStack.justifyCenter {
+    justify-content: center;
+}
+
+.VStack.justifyEnd {
+    justify-content: flex-end;
+}
+
+.VStack.justifyBetween {
+    justify-content: space-between;
+}
+
+.VStack.alignStart {
+    align-items: flex-start;
+}
+
+.VStack.alignCenter {
+    align-items: center;
+}
+
+.VStack.alignEnd {
+    align-items: flex-end;
+}
+
+.VStack.gap5 {
+    gap: 5px;
+}
+
+.VStack.gap10 {
+    gap: 10px;
+}
+
+.VStack.gap15 {
+    gap: 15px;
+}
+
+.VStack.gap25 {
+    gap: 25px;
+}
+
+.VStack.gap30 {
+    gap: 30px;
+}
+
+.VStack.max {
+    width: 100%;
+}
+
+.VStack.wrap {
+    flex-wrap: wrap;
+}
+
+.VStack.nowrap {
+    flex-wrap: nowrap;
+}

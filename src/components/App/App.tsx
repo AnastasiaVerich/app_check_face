@@ -10,6 +10,26 @@ import {useCamera} from "../../hooks/useCamera";
 import {useFaceDetection} from "../../hooks/useFaceDetection";
 import {FormDataRegistration, registration} from "../../api/user/registration";
 import {FormDataCheckExist, identification} from "../../api/user/identification";
+import {Text} from "../../shared/ui/Text/Text";
+import {
+    IDENTIFICATION,
+    IS_CAMERA_OFF,
+    ON_CAMERA,
+    PLEASE_ON_CAMERA,
+    TAKE_PHOTO,
+    CAMERA_DESC,
+    REMAKE_PHOTO, SEND
+} from "../../types/const";
+import {Section} from "../../shared/ui/Section/Section";
+import {Svg} from "../../shared/ui/Svg/Svg";
+import {ReactComponent as CameraSvg} from '../../shared/assets/svg/Camea.svg'
+import {ReactComponent as ArrowSvg} from '../../shared/assets/svg/Arrow.svg'
+import {ReactComponent as DuckHelloSvg} from '../../shared/assets/svg/DuckHello.svg'
+import {HStack} from "../../shared/ui/HStack/HStack";
+import {CommonSection} from "../../shared/ui/CommonSection/CommonSection";
+import {VStack} from "../../shared/ui/VStack/VStack";
+import {Button} from "../../shared/ui/Button/Button";
+
 
 function App() {
 
@@ -18,7 +38,6 @@ function App() {
     const streamRef = useRef<MediaStream | null>(null); // Ссылка на поток видео
     const [isFetching, setIsFetching] = useState(false); // Флаг состояния загрузки
     const [params, setParams] = useState<ParamsType>(null); // Параметры приложения
-    const [result, setResult] = useState<string | null>(null);// Результат обработки
     const [photoUrl, setPhotoUrl] = useState<string | null>(null); // URL фото
     const [error, setError] = useState<string | null>(null);// Сообщение об ошибке
 
@@ -45,19 +64,7 @@ function App() {
         tg?.WebApp.ready(); // Уведомляем Telegram, что приложение готово
         tg?.WebApp.expand(); // Разворачиваем приложение
 
-        document.body.style.backgroundColor = tg?.WebApp.themeParams.bg_color || '#ffffff';
 
-        const handleResize = () => {
-            document.body.style.height = `${window.innerHeight}px`;
-        };
-
-        handleResize();
-        window.addEventListener('resize', handleResize);
-
-        return () => {
-            // Убираем обработчик при размонтировании
-            window.removeEventListener('resize', handleResize);
-        };
     }, [])
 
     const handleSendPhoto = () => {
@@ -77,11 +84,11 @@ function App() {
                 // Создаем formData для отправки медиа
                 const formData = new FormData();
 
-                const data:FormDataRegistration={
+                const data: FormDataRegistration = {
                     userPhone: params?.userPhone ?? '',
-                    userId:params?.userId ?? '',
+                    userId: params?.userId ?? '',
                     isSavePhoto: params?.isSavePhoto ?? '0',
-                    photo:blob
+                    photo: blob
                 }
 
                 formData.append('userPhone', data.userPhone);
@@ -113,9 +120,9 @@ function App() {
 
                 const formData = new FormData();
 
-                const data:FormDataCheckExist={
-                    userId:params?.userId ?? '',
-                    photo:blob
+                const data: FormDataCheckExist = {
+                    userId: params?.userId ?? '',
+                    photo: blob
                 }
 
                 formData.append('userId', data.userId);
@@ -135,38 +142,141 @@ function App() {
     };
 
     return (
-        <div className="app">
-            <Camera
-                isFaceDetected={isFaceDetected}
-                videoRef={videoRef}
-                isShow={isCameraOn}
-                canvasRef={canvasRef}
-            />
-            <Img
-                photoUrl={photoUrl}
-                isShow={!isCameraOn}
-            />
+        <VStack className="app">
 
-            <Buttons
-                isFetching={isFetching}
-                isFaceDetected={isFaceDetected}
-                isCameraOn={isCameraOn}
 
-                photoUrl={photoUrl}
+            <CommonSection
+                max
+                isHide={!(!photoUrl && !isCameraOn)}
+            >
+                <Section>
+                    <Text
+                        text={IDENTIFICATION}
+                        type={'hint'}
+                        align={'start'}
+                        max
+                    />
+                    <VStack
+                        gap={'15'}
+                        style={{padding: '56px 78px'}}
+                    >
+                        <tgs-player
+                            style={{
+                                width: '130px',
+                                height: '130px'
+                            }}
+                            width={'200px'}
+                            autoplay={true}
+                            loop={true}
+                            mode="normal"
+                            src="https://data.chpic.su/stickers/u/UtyaDuck/UtyaDuck_005.tgs"
+                            id="tgsPlayer__main__UtyaDuck"
+                        >
 
-                onStart={startCamera}
-                onStop={stopCamera}
-                onRestart={startCamera}
-                onSend={handleSendPhoto}
+                        </tgs-player>
+                        <Text
+                            text={IS_CAMERA_OFF}
+                            type={'text'}
+                            align={'center'}
+                            size={'l'}
+                            max
+                        />
+                        <Text
+                            text={PLEASE_ON_CAMERA}
+                            type={'text'}
+                            align={'center'}
+                            max
+                        />
 
-                error={error}
-                result={result}
+                    </VStack>
+                </Section>
 
-                type={params?.type}
-            />
+                <Section clickable max onClick={startCamera}>
+                    <HStack gap={'10'} max>
+                        <Svg Svg={CameraSvg}/>
+                        <Text
+                            text={ON_CAMERA}
+                            type={'text'}
+                            max
+                        />
+                        <Svg width={'12px'} height={'12px'} color={'subtitle'} Svg={ArrowSvg}/>
+                    </HStack>
+
+                </Section>
+
+            </CommonSection>
+
+
+            <CommonSection
+                max
+                isHide={!isCameraOn}
+            >
+                <Camera
+                    isFaceDetected={isFaceDetected}
+                    videoRef={videoRef}
+                    isShow={isCameraOn}
+                    canvasRef={canvasRef}
+                />
+                <Section max>
+                    <HStack max>
+                        <Text
+                            text={CAMERA_DESC}
+                            type={'text'}
+                            max
+                        />
+                    </HStack>
+                </Section>
+                <Section
+                    clickable
+                    max
+                    onClick={stopCamera}
+                    disabled={!isFaceDetected}
+                >
+                    <HStack gap={'10'} max>
+                        <Svg Svg={CameraSvg}/>
+                        <Text
+                            text={TAKE_PHOTO}
+                            type={'text'}
+                            max
+                        />
+                        <Svg width={'12px'} height={'12px'} color={'subtitle'} Svg={ArrowSvg}/>
+                    </HStack>
+
+                </Section>
+            </CommonSection>
+
+
+            {photoUrl && (
+                <VStack
+                    max
+                    gap={'15'}
+                >
+
+                    <Img
+                        photoUrl={photoUrl}
+                    />
+
+
+                    <Button
+                        max
+                        onClick={startCamera}
+                        text={REMAKE_PHOTO}
+                        disabled={isFetching}
+                    />
+                    <Button
+                        max
+                        onClick={handleSendPhoto}
+                        text={SEND}
+                        disabled={isFetching}
+                    />
+
+
+                </VStack>)
+
+            }
 
             <canvas ref={canvasRef} style={{display: "none"}}/>
-        </div>
+        </VStack>
     );
 }
 

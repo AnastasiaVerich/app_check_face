@@ -1,0 +1,15 @@
+.section{
+    position: relative;
+    padding: 10px 14px;
+    background: var(--tg-theme-section-bg-color);
+
+}
+.section.clickable:hover{
+    cursor: pointer;
+}
+.section.max {
+    width: 100%;
+}
+.section.disabled {
+    pointer-events: none;
+}

@@ -1,0 +1,30 @@
+.button {
+    border-radius: 12px;
+    line-height: 20px;
+
+    font-size: 16px;
+    font-weight: 400;
+    outline: none;
+    border: none;
+
+    min-width: fit-content;
+
+    padding: 10px 5px;
+    background-color: var(--tg-theme-button-color, #2481cc);
+    color: var(--tg-theme-button-text-color, #ffffff);
+    cursor: pointer;
+
+    display: flex;
+    align-content: center;
+    justify-content: center;
+
+}
+.button.disabled{
+    pointer-events: none;
+    cursor: auto;
+    background-color: rgb(60, 60, 62);
+    color: rgb(96, 96, 96);
+}
+.button.max{
+    width: 100%;
+}

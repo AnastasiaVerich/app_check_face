@@ -1,7 +1,5 @@
 button {
     border-radius: 5px;
-    background: #5199d9;
-    color: white;
     font-size: 16px;
     font-weight: bold;
     outline: none;
@@ -9,11 +7,11 @@ button {
     min-width: 100px;
     max-width: fit-content;
     padding: 10px 5px;
-
+    background-color: var(--tg-theme-button-color, #2481cc); /* Синий фон */
+    color: var(--tg-theme-button-text-color, #ffffff); /* Белый текст */
     cursor: pointer;
 
     &:disabled {
-        background: gainsboro;
         pointer-events: none;
         cursor: auto;
     }
@@ -30,8 +28,6 @@ button {
     font-weight: bold;
 }
 .response,.error {
- color:green
-}
-.error {
-    color:red
+    color: var(--tg-theme-hint-color, #6c757d); /* Серый цвет */
+
 }

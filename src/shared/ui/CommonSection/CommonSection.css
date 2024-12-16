@@ -1,0 +1,16 @@
+.common_section .section:not(:last-child)::after {
+    background: var(--tg-theme-secondary-bg-color, #ffffff);
+    bottom: 0;
+    right: 0;
+    content: "";
+    height: 1px;
+    position: absolute;
+    width: calc(100% - 64px);
+}
+
+.common_section.max {
+    width: 100%;
+}
+.common_section.hide {
+    display: none;
+}

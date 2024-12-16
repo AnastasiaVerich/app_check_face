@@ -1,0 +1,44 @@
+.text_box {
+    color: var(--tg-theme-text-color);
+    font-size: 16px;
+    line-height: 20px;
+}
+
+
+
+.text_box.max {
+    width: 100%;
+}
+
+
+
+.text_box.hint {
+    color: var(--tg-theme-hint-color);
+}
+.text_box.text {
+    color: var(--tg-theme-text-color);
+}
+
+
+
+.text_box.size_s {
+    font-size: 12px;
+    font-weight: 400;
+}
+.text_box.size_m {
+    font-size: 16px;
+    font-weight: 400;
+}
+.text_box.size_l {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+
+
+.text_box.start {
+    text-align: start;
+}
+.text_box.center {
+    text-align: center;
+}

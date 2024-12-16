@@ -1,5 +1,6 @@
 import React from "react";
 import './Camera.css'
+import {Section} from "../../shared/ui/Section/Section";
 
 interface CameraProps {
     videoRef: React.RefObject<HTMLVideoElement>; // Ссылка на элемент video, который будет показывать видео с камеры
@@ -10,7 +11,8 @@ interface CameraProps {
 
 export const Camera: React.FC<CameraProps> = ({ videoRef, isShow,isFaceDetected,canvasRef }) => {
     return (
-        <div className={`video_box ${isShow?'':'hide'}`}>
+        <Section className={`video_box ${isShow?'':'hide'}`}>
+
             <video
                 className="video_online"
                 ref={videoRef}
@@ -29,6 +31,6 @@ export const Camera: React.FC<CameraProps> = ({ videoRef, isShow,isFaceDetected,
                 className={`face_overlay ${isFaceDetected?'ok':'err'}`}
 
             />
-        </div>
+        </Section>
     );
 };

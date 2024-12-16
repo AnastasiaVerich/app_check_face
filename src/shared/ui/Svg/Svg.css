@@ -1,0 +1,13 @@
+.SvgContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.SvgContainer.accent .Svg {
+    color: var(--tg-theme-button-color);
+}
+
+.SvgContainer.subtitle .Svg {
+    color: var(--tg-theme-subtitle-text-color);
+}

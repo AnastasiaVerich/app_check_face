@@ -1,6 +1,27 @@
-.app{
-    --blue-color: #5199d9;
-    --green-color: rgb(100, 202, 102);
-    --red-color: #fd5a3e;
+body{
+  /*  --tg-color-scheme: dark;
+    --tg-theme-bg-color: #212121;
+    --tg-theme-text-color: #ffffff;
+    --tg-theme-hint-color: #aaaaaa;
+    --tg-theme-link-color: #8774e1;
+    --tg-theme-button-color: #8774e1;
+    --tg-theme-button-text-color: #ffffff;
+    --tg-theme-secondary-bg-color: #0f0f0f;
+    --tg-theme-header-bg-color: #212121;
+    --tg-theme-accent-text-color: #8774e1;
+    --tg-theme-section-bg-color: #212121;
+    --tg-theme-section-header-text-color: #aaaaaa;
+    --tg-theme-subtitle-text-color: #aaaaaa;
+    --tg-theme-destructive-text-color: #e53935;
+    --tg-viewport-height: 887px;
+    --tg-viewport-stable-height: 887px;
+    --tg-safe-area-inset-top: 0px;
+    --tg-safe-area-inset-bottom: 887px;
+    --tg-safe-area-inset-left: 0px;
+    --tg-safe-area-inset-right: 0px;
+    --tg-content-safe-area-inset-top: 0px;
+    --tg-content-safe-area-inset-bottom: 0px;
+    --tg-content-safe-area-inset-left: 0px;
+    --tg-content-safe-area-inset-right: 0px;*/
 }
 

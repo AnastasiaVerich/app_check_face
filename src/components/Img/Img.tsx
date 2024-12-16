@@ -2,19 +2,18 @@ import React from "react";
 import './Img.css'
 
 interface ImgProps {
-    photoUrl:string | null;
-    isShow:Boolean
+    photoUrl: string | null;
 }
 
-export const Img: React.FC<ImgProps> = ({ photoUrl, isShow }) => {
+export const Img: React.FC<ImgProps> = ({photoUrl}) => {
 
-    if(!photoUrl){
+    if (!photoUrl) {
         return <></>
     }
     return (
-        <div className={`img_box ${isShow?'':'hide'}`} style={{
-            display: isShow ? '' : 'none',
-        }}>
+        <div
+            className={`img_box`}
+        >
             <img
                 className="img"
                 src={photoUrl ?? ''}

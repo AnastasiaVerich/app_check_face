@@ -1,0 +1,68 @@
+.HStack{
+    display: flex;
+    flex-direction: row;
+}
+
+.HStack.justifyStart {
+    justify-content: flex-start;
+}
+
+.HStack.justifyCenter {
+    justify-content: center;
+}
+
+.HStack.justifyEnd {
+    justify-content: flex-end;
+}
+
+.HStack.justifyBetween {
+    justify-content: space-between;
+}
+
+.HStack.justifyAround {
+    justify-content: space-around;
+}
+
+.HStack.alignStart {
+    align-items: flex-start;
+}
+
+.HStack.alignCenter {
+    align-items: center;
+}
+
+.HStack.alignEnd {
+    align-items: flex-end;
+}
+
+.HStack.gap5 {
+    gap: 5px;
+}
+
+.HStack.gap10 {
+    gap: 10px;
+}
+
+.HStack.gap15 {
+    gap: 15px;
+}
+
+.HStack.gap25 {
+    gap: 25px;
+}
+
+.HStack.gap30 {
+    gap: 30px;
+}
+
+.HStack.max {
+    width: 100%;
+}
+
+.HStack.wrap {
+    flex-wrap: wrap;
+}
+
+.HStack.nowrap {
+    flex-wrap: nowrap;
+}
