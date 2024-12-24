@@ -6,6 +6,7 @@ interface ButtonProps {
     onClick: () => void;
     text: string,
     disabled: boolean,
+    width?: string,
     max?: boolean,
 }
 
@@ -14,6 +15,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
         onClick,
         text,
         disabled,
+        width,
         max,
     } = props
 
@@ -24,6 +26,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
 
     return (
         <div
+            style={{width:width}}
             className={classNames('button', mods, [])}
             onClick={onClick}
         >

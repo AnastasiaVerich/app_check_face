@@ -258,13 +258,13 @@ function App() {
 
 
                     <Button
-                        max
+                        width={'calc(100% - 20px)'}
                         onClick={startCamera}
                         text={REMAKE_PHOTO}
                         disabled={isFetching}
                     />
                     <Button
-                        max
+                        width={'calc(100% - 20px)'}
                         onClick={handleSendPhoto}
                         text={SEND}
                         disabled={isFetching}
