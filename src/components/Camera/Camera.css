@@ -6,9 +6,7 @@
     -moz-transform: scaleX(-1); /* Для Firefox */
 
 }
-.video_online.hide {
-    opacity: 0;
-}
+
 .video_online::-webkit-media-controls {
     display: none !important;
 }

@@ -21,7 +21,7 @@ export const Camera: React.FC<CameraProps> = ({size, videoRef, isShow,isFaceDete
         <Section className={`video_box`}>
 
             <video
-                className={`video_online ${isLoaded?'':'hide'}`}
+                className={`video_online`}
                 ref={videoRef}
                 width={`${size.w - 28}px`}
                 height={`${size.h - 20}px`}
