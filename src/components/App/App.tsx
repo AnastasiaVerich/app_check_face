@@ -32,6 +32,7 @@ import {Button} from "../../shared/ui/Button/Button";
 
 function App() {
 
+    const videoBorderRef = useRef<HTMLDivElement | null>(null); // Ссылка на элемент video, который будет показывать видео с камеры
     const videoRef = useRef<HTMLVideoElement | null>(null); // Ссылка на элемент video, который будет показывать видео с камеры
     const canvasRef = useRef<HTMLCanvasElement | null>(null); // Ссылка на элемент canvas, на котором будет отображаться сделанное фото
     const streamRef = useRef<MediaStream | null>(null); // Ссылка на поток видео
@@ -48,7 +49,7 @@ function App() {
 
     const {
         isFaceDetected,
-    } = useFaceDetection(isCameraOn, videoRef, canvasRef)
+    } = useFaceDetection(isCameraOn, videoRef, canvasRef,videoBorderRef)
 
     useEffect(() => {
 
@@ -215,6 +216,7 @@ function App() {
                     videoRef={videoRef}
                     isShow={isCameraOn}
                     canvasRef={canvasRef}
+                    videoBorderRef={videoBorderRef}
                 />
                 <Section max>
                     <HStack max>
@@ -274,7 +276,7 @@ function App() {
 
             }
 
-            <canvas ref={canvasRef} style={{display: "none"}}/>
+
         </VStack>
     );
 }

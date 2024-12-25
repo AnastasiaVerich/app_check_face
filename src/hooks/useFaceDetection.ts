@@ -5,10 +5,12 @@ import {Circle, isRectangleCoveredByCircle, Rectangle} from "../utils/faceUtils"
 export const useFaceDetection = (
     isCameraOn: boolean, // Пропс, который говорит, включена ли камера
     videoRef: React.RefObject<HTMLVideoElement>, // Ссылка на элемент video, который будет показывать видео с камеры
-    canvasRef: React.RefObject<HTMLCanvasElement> // Ссылка на элемент canvas, на котором будет отображаться сделанное фото
+    canvasRef: React.RefObject<HTMLCanvasElement>, // Ссылка на элемент canvas, на котором будет отображаться сделанное фото
+    videoBorderRef: React.RefObject<HTMLDivElement>
 ) => {
     const [isFaceDetected, setIsFaceDetected] = useState(false);// Состояние для отслеживания, было ли найдено лицо
     const [modelsLoaded, setModelsLoaded] = useState(false);// Состояние для отслеживания, загружены ли модели
+    const [isDraw] = useState(true);// Состояние для отслеживания, загружены ли модели
 
     // Загружаем модели детекции лиц при монтировании компонента
     useEffect(() => {
@@ -27,34 +29,72 @@ export const useFaceDetection = (
         // Если модели загружены и камера включена
         if (modelsLoaded && isCameraOn) {
             const detectFace = async () => {
-                if (videoRef.current && canvasRef.current) { // Если video и canvas элементы существуют
+                if (videoRef.current && canvasRef.current && videoBorderRef.current) { // Если video и canvas элементы существуют
                     const video = videoRef.current;
                     const canvas = canvasRef.current;
+                    const video_border = videoBorderRef.current;
 
                     // Настроим размеры канваса, чтобы он соответствовал размеру видео
-                    const displaySize = {width: video.clientWidth, height: video.clientHeight};
+                    const displaySize = {
+                        width: video_border.offsetWidth,
+                        height: video_border.offsetHeight
+                    };
                     // Настроим канвас для масштабирования детекций
                     faceapi.matchDimensions(canvas, displaySize);
 
                     // Детекция всех лиц с использованием опций для детектора
                     const options = new faceapi.TinyFaceDetectorOptions({inputSize: 416, scoreThreshold: 0.3});
                     const detections = await faceapi.detectAllFaces(video, options); // Получаем все обнаруженные лица на видео
-                    const resizedDetections = faceapi.resizeResults(detections, displaySize); // Масштабируем результаты детекции под размер видео
+                    const resizedDetections = faceapi.resizeResults(detections, {
+                        width: video_border.offsetWidth,
+                        height: video_border.offsetHeight
+                    }); // Масштабируем результаты детекции под размер видео
+
+                    let ctx: any = null
+                    if (isDraw) {
+                        ctx = canvas.getContext('2d');
+                        if (!ctx) return
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    }
+
 
                     // Проверяем, попадает ли лицо в оверлей
-                    const circle: Circle = {cx: video.clientWidth / 2, cy: video.clientHeight / 2, r: 150}; // Создаем круг в центре видео с радиусом 150px
+                    const circle: Circle = {cx: canvas.clientWidth / 2, cy: canvas.clientHeight / 2, r: 150}; // Создаем круг в центре видео с радиусом 150px
 
                     let faceDetected = false// Флаг для проверки, было ли найдено лицо в области круга
                     resizedDetections.forEach((detection) => {
-                        // Извлекаем информацию о прямоугольнике, в котором расположено лицо
-                        const {x, y, width, height} = detection.box;
-                        const rectangle:Rectangle = {x, y, width, height}
-                        // Проверяем, перекрывает ли прямоугольник (лицо) круг более чем на 80%
-                            faceDetected = isRectangleCoveredByCircle(circle, rectangle, 0.8)
-                        }
+                            // Извлекаем информацию о прямоугольнике, в котором расположено лицо
+                            const {x, y, width, height} = detection.box;
+                            // Если применен scaleX(-1), нужно скорректировать координаты
+                            const transformedX = canvas.clientWidth - (x + width);
+                            //const rectangle: Rectangle = {x: transformedX, y, width, height};
+                            const rectangle: Rectangle = {x:transformedX, y, width, height}
 
+                            // Проверяем, перекрывает ли прямоугольник (лицо) круг более чем на 80%
+                            faceDetected = isRectangleCoveredByCircle(circle, rectangle, 0.8)
+                            if (isDraw && ctx) {
+                                // Рисуем рамку
+                                ctx.lineWidth = 4;
+                                ctx.lineCap = 'square';
+                                ctx.lineJoin = 'bevel';
+                                ctx.strokeStyle = '#5199d9';
+
+
+                                //ctx.strokeRect(transformedX, y, width, height);
+                                ctx.strokeRect(transformedX, y, width, height);
+                            }
+                        }
                     );
                     setIsFaceDetected(faceDetected);
+                    if (isDraw && ctx) {
+                        ctx.beginPath();
+                        ctx.arc(circle.cx, circle.cy, circle.r, 0, 2 * Math.PI); // Рисуем круг
+                        ctx.fillStyle = faceDetected ? 'transparent' : 'transparent'; // Зеленый если лицо внутри круга, красный если нет
+                        ctx.fill();
+                        ctx.lineWidth = 4;
+                        ctx.strokeStyle = faceDetected ? 'green' : 'red';
+                        ctx.stroke();
+                    }
                 }
             };
 

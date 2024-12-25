@@ -1,4 +1,7 @@
 .video_box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     height: calc(var(--tg-viewport-height) / 2 );
     overflow: hidden;
@@ -11,11 +14,9 @@
 
 .video_online {
     position: absolute;
-    top: 10px;
-    left: 10px;
 
-    will-change:contents, transform, width, height; /* Оптимизация для Safari */
-    contain: layout paint;
+    min-width: 100%;
+    min-height: 100%;
     transform: scaleX(-1);
     -webkit-transform: scaleX(-1);
     -moz-transform: scaleX(-1);
@@ -54,8 +55,8 @@
 }
 
 .face_overlay.ok {
-    border: 4px solid var(--tg-theme-button-color, red);
-    box-shadow: 0 0 20px var(--tg-theme-button-color, red);
+    border: 4px solid var(--tg-theme-button-color, green);
+    box-shadow: 0 0 20px var(--tg-theme-button-color, green);
 }
 
 .face_overlay.err {
