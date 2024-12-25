@@ -194,7 +194,7 @@ function App() {
                     <HStack gap={'10'} max>
                         <Svg Svg={CameraSvg}/>
                         <Text
-                            text={ON_CAMERA+100500}
+                            text={ON_CAMERA+11}
                             type={'text'}
                             max
                         />
