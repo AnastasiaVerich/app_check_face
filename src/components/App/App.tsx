@@ -32,7 +32,6 @@ import {Button} from "../../shared/ui/Button/Button";
 
 function App() {
 
-    const containerRef = useRef<HTMLDivElement | null>(null); // Ссылка на элемент, у которого берем ширины и высоту для видео и фото
     const videoRef = useRef<HTMLVideoElement | null>(null); // Ссылка на элемент video, который будет показывать видео с камеры
     const canvasRef = useRef<HTMLCanvasElement | null>(null); // Ссылка на элемент canvas, на котором будет отображаться сделанное фото
     const streamRef = useRef<MediaStream | null>(null); // Ссылка на поток видео
@@ -40,7 +39,6 @@ function App() {
     const [params, setParams] = useState<ParamsType>(null); // Параметры приложения
     const [photoUrl, setPhotoUrl] = useState<string | null>(null); // URL фото
     const [error, setError] = useState<string | null>(null);// Сообщение об ошибке
-    const [size, setSize] = useState<{w:number, h:number}>({w:0,h:0});// Размеры для видео/фото
 
     const {
         isCameraOn,
@@ -68,17 +66,6 @@ function App() {
 
     }, [])
 
-    useEffect(() => {
-
-        if(containerRef.current){
-            setSize({
-                w:containerRef.current.clientWidth,
-                h:containerRef.current.clientHeight,
-            })
-        }
-
-
-    }, [containerRef])
 
     const handleSendPhoto = () => {
         const tg: any = 'Telegram' in window ? window.Telegram : undefined;
@@ -162,9 +149,7 @@ function App() {
                 max
                 isHide={!(!photoUrl && !isCameraOn)}
             >
-                <Section
-                    ref={containerRef}
-                >
+                <Section  >
                     <Text
                         text={IDENTIFICATION}
                         type={'hint'}
@@ -231,7 +216,6 @@ function App() {
                     videoRef={videoRef}
                     isShow={isCameraOn}
                     canvasRef={canvasRef}
-                    size={size}
                 />
                 <Section max>
                     <HStack max>
