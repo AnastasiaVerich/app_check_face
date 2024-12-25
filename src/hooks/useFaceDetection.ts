@@ -22,7 +22,7 @@ export const useFaceDetection = (
         loadModels(); // Вызываем функцию загрузки моделей
     }, []);
 
-    // Детекция лиц
+/*    // Детекция лиц
     useEffect(() => {
         // Если модели загружены и камера включена
         if (modelsLoaded && isCameraOn) {
@@ -61,7 +61,7 @@ export const useFaceDetection = (
             const interval = setInterval(detectFace, 100);// Запускаем детекцию лиц каждые 100 миллисекунд
             return () => clearInterval(interval); // Останавливаем детекцию при размонтировании компонента
         }
-    }, [modelsLoaded, isCameraOn]);
+    }, [modelsLoaded, isCameraOn]);*/
 
     return {isFaceDetected, modelsLoaded};
 };
