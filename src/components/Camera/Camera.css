@@ -16,6 +16,8 @@
     height: 200px /*calc(var(--tg-viewport-height) / 2  - 20px)*/;
     object-fit: cover;
     transform: scaleX(-1); /* Отражение по горизонтали */
+    will-change: transform, width, height; /* Оптимизация для Safari */
+    contain: layout paint;
     -webkit-transform: scaleX(-1); /* Для старых браузеров WebKit */
     -moz-transform: scaleX(-1); /* Для Firefox */
 
