@@ -66,7 +66,6 @@ function App() {
 
     }, [])
 
-
     const handleSendPhoto = () => {
         const tg: any = 'Telegram' in window ? window.Telegram : undefined;
         if (params?.type === 'registration') {
@@ -149,7 +148,7 @@ function App() {
                 max
                 isHide={!(!photoUrl && !isCameraOn)}
             >
-                <Section  >
+                <Section >
                     <Text
                         text={IDENTIFICATION}
                         type={'hint'}
@@ -195,7 +194,7 @@ function App() {
                     <HStack gap={'10'} max>
                         <Svg Svg={CameraSvg}/>
                         <Text
-                            text={ON_CAMERA}
+                            text={ON_CAMERA+0}
                             type={'text'}
                             max
                         />
