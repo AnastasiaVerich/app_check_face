@@ -1,27 +1,26 @@
-import React from "react";
-import './Section.css'
-import {classNames, Mods} from "../../../lib/classNames/classNames";
+import React, { forwardRef } from "react";
+import './Section.css';
+import { classNames, Mods } from "../../../lib/classNames/classNames";
 
 interface SectionProps {
-    children: any,
-    className?: string,
-    clickable?: boolean,
-    disabled?: boolean,
-    max?: boolean,
-    onClick?: () => void,
+    children: any;
+    className?: string;
+    clickable?: boolean;
+    disabled?: boolean;
+    max?: boolean;
+    onClick?: () => void;
 }
 
-export const Section: React.FC<SectionProps> = (props) => {
+// Используем forwardRef для передачи ref внутрь компонента
+export const Section = forwardRef<HTMLDivElement, SectionProps>((props, ref) => {
     const {
         children,
         className,
         clickable,
         disabled,
-        onClick = () => {
-        },
+        onClick = () => {},
         max,
-    } = props
-
+    } = props;
 
     const mods: Mods = {
         'max': max,
@@ -31,10 +30,11 @@ export const Section: React.FC<SectionProps> = (props) => {
 
     return (
         <div
+            ref={ref as React.Ref<HTMLDivElement>}
             className={classNames('section', mods, [className])}
             onClick={onClick}
         >
             {children}
         </div>
     );
-};
+});

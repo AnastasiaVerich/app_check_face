@@ -3,13 +3,14 @@ import './Camera.css'
 import {Section} from "../../shared/ui/Section/Section";
 
 interface CameraProps {
+    size:{w:number, h:number}
     videoRef: React.RefObject<HTMLVideoElement>; // Ссылка на элемент video, который будет показывать видео с камеры
     canvasRef: React.RefObject<HTMLCanvasElement>; // Ссылка на элемент canvas, на котором будет отображаться сделанное фото
     isShow:Boolean, // Признак того, нужно ли показывать камеру
     isFaceDetected:Boolean,    // Признак, что лицо было обнаружено на видео
 }
 
-export const Camera: React.FC<CameraProps> = ({ videoRef, isShow,isFaceDetected,canvasRef }) => {
+export const Camera: React.FC<CameraProps> = ({size, videoRef, isShow,isFaceDetected,canvasRef }) => {
     const [isLoaded, setIsLoaded] = useState(false);
 
     const handleVideoLoaded = () => {
@@ -22,6 +23,8 @@ export const Camera: React.FC<CameraProps> = ({ videoRef, isShow,isFaceDetected,
             <video
                 className={`video_online ${isLoaded?'':'hide'}`}
                 ref={videoRef}
+                width={`${size.w - 28}px`}
+                height={`${size.h - 20}px`}
                 playsInline
                 autoPlay
                 muted
