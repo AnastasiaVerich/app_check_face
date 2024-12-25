@@ -32,7 +32,6 @@ export const Camera: React.FC<CameraProps> = ({ videoRef, isShow,isFaceDetected,
                 ref={canvasRef}
                 className={'canvas'}
             />
-            1111
             {/* Оверлей для отображения информации о распознавании лица */}
             <div
                 className={`face_overlay ${isFaceDetected?'ok':'err'}`}
