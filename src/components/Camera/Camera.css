@@ -15,7 +15,7 @@
     width: 200px /*calc(100% - 20px)*/;
     height: 200px /*calc(var(--tg-viewport-height) / 2  - 20px)*/;
     object-fit: cover;
-    will-change: transform, width, height; /* Оптимизация для Safari */
+    will-change:contents, transform, width, height; /* Оптимизация для Safari */
     contain: layout paint;
   /*  transform: scaleX(-1); !* Отражение по горизонтали *!
     -webkit-transform: scaleX(-1); !* Для старых браузеров WebKit *!
