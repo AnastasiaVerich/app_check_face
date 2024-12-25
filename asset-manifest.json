@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "https://AnastasiaVerich.github.io/app_check_face/static/css/main.968730e0.css",
-    "main.js": "https://AnastasiaVerich.github.io/app_check_face/static/js/main.4a503292.js",
+    "main.css": "https://AnastasiaVerich.github.io/app_check_face/static/css/main.e608d10f.css",
+    "main.js": "https://AnastasiaVerich.github.io/app_check_face/static/js/main.4e5b86ea.js",
     "index.html": "https://AnastasiaVerich.github.io/app_check_face/index.html",
     "static/media/Camea.svg": "https://AnastasiaVerich.github.io/app_check_face/static/media/Camea.9f20b0db6505e8b7520a0e6122529d24.svg",
     "static/media/Arrow.svg": "https://AnastasiaVerich.github.io/app_check_face/static/media/Arrow.cb0a50c25f777dde5217b7f02c5409b3.svg",
-    "main.968730e0.css.map": "https://AnastasiaVerich.github.io/app_check_face/static/css/main.968730e0.css.map",
-    "main.4a503292.js.map": "https://AnastasiaVerich.github.io/app_check_face/static/js/main.4a503292.js.map"
+    "main.e608d10f.css.map": "https://AnastasiaVerich.github.io/app_check_face/static/css/main.e608d10f.css.map",
+    "main.4e5b86ea.js.map": "https://AnastasiaVerich.github.io/app_check_face/static/js/main.4e5b86ea.js.map"
   },
   "entrypoints": [
-    "static/css/main.968730e0.css",
-    "static/js/main.4a503292.js"
+    "static/css/main.e608d10f.css",
+    "static/js/main.4e5b86ea.js"
   ]
 }
