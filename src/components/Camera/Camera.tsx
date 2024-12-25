@@ -23,14 +23,14 @@ export const Camera: React.FC<CameraProps> = ({size, videoRef, isShow,isFaceDete
             <video
                 className={`video_online`}
                 ref={videoRef}
-                width={`${size.w - 28}px`}
-                height={`${size.h - 20}px`}
+
                 playsInline
                 autoPlay
                 muted
                 controls={false}
                 onLoadedMetadata={handleVideoLoaded}
             />
+            <div className={'border'}/>
             <canvas
                 ref={canvasRef}
                 className={'canvas'}

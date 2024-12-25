@@ -1,11 +1,40 @@
-.video_online {
+.video_box {
+    width: 100%;
+    height: calc(var(--tg-viewport-height) / 2 );
     position: relative;
-    object-fit: cover;
+    overflow: hidden;
+}
+
+.video_box.hide {
+    display: none;
+}
+
+.video_online {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    min-height: 100%;
+
     transform: scaleX(-1); /* Отражение по горизонтали */
-
-
     -webkit-transform: scaleX(-1); /* Для старых браузеров WebKit */
     -moz-transform: scaleX(-1); /* Для Firefox */
+
+}
+
+.border{
+    border-color: var(--tg-theme-section-bg-color );
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-top-width: 10px;
+    border-right-width: 14px;
+    border-bottom-width: 10px;
+    border-left-width: 14px;
+    border-style: solid;
+
 
 }
 
