@@ -1,5 +1,4 @@
 import React, {useEffect, useRef, useState} from "react";
-import {Buttons} from "../Buttons/Buttons";
 import {base64ToBlob} from "../../utils/photoUtils";
 import {Camera} from "../Camera/Camera";
 import './App.css'
@@ -12,19 +11,19 @@ import {FormDataRegistration, registration} from "../../api/user/registration";
 import {FormDataCheckExist, identification} from "../../api/user/identification";
 import {Text} from "../../shared/ui/Text/Text";
 import {
+    CAMERA_DESC,
     IDENTIFICATION,
     IS_CAMERA_OFF,
     ON_CAMERA,
     PLEASE_ON_CAMERA,
-    TAKE_PHOTO,
-    CAMERA_DESC,
-    REMAKE_PHOTO, SEND
+    REMAKE_PHOTO,
+    SEND,
+    TAKE_PHOTO
 } from "../../types/const";
 import {Section} from "../../shared/ui/Section/Section";
 import {Svg} from "../../shared/ui/Svg/Svg";
 import {ReactComponent as CameraSvg} from '../../shared/assets/svg/Camea.svg'
 import {ReactComponent as ArrowSvg} from '../../shared/assets/svg/Arrow.svg'
-import {ReactComponent as DuckHelloSvg} from '../../shared/assets/svg/DuckHello.svg'
 import {HStack} from "../../shared/ui/HStack/HStack";
 import {CommonSection} from "../../shared/ui/CommonSection/CommonSection";
 import {VStack} from "../../shared/ui/VStack/VStack";

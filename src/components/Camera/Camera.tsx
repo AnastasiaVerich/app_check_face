@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import './Camera.css'
 import {Section} from "../../shared/ui/Section/Section";
 
@@ -10,8 +10,14 @@ interface CameraProps {
 }
 
 export const Camera: React.FC<CameraProps> = ({ videoRef, isShow,isFaceDetected,canvasRef }) => {
+    const [isLoaded, setIsLoaded] = useState(false);
+
+    const handleVideoLoaded = () => {
+        setIsLoaded(true);
+    };
+
     return (
-        <Section className={`video_box ${isShow?'':'hide'}`}>
+        <Section className={`video_box ${isShow && isLoaded?'':'hide'}`}>
 
             <video
                 className="video_online"
@@ -20,7 +26,7 @@ export const Camera: React.FC<CameraProps> = ({ videoRef, isShow,isFaceDetected,
                 autoPlay
                 muted
                 controls={false}
-
+                onLoadedMetadata={handleVideoLoaded}
             />
             <canvas
                 ref={canvasRef}
