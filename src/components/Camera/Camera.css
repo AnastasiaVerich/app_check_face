@@ -4,9 +4,7 @@
     position: relative;
 }
 
-.video_box.hide {
-    display: none;
-}
+
 
 .video_online {
     position: absolute;
@@ -20,7 +18,9 @@
     -moz-transform: scaleX(-1); /* Для Firefox */
 
 }
-
+.video_online.hide {
+    opacity: 0;
+}
 .video_online::-webkit-media-controls {
     display: none !important;
 }

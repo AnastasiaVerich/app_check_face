@@ -17,10 +17,10 @@ export const Camera: React.FC<CameraProps> = ({ videoRef, isShow,isFaceDetected,
     };
 
     return (
-        <Section className={`video_box ${isShow && isLoaded?'':'hide'}`}>
+        <Section className={`video_box'}`}>
 
             <video
-                className="video_online"
+                className={`video_online ${isLoaded?'':'hide'}`}
                 ref={videoRef}
                 playsInline
                 autoPlay
