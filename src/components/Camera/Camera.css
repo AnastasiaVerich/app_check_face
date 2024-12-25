@@ -12,7 +12,7 @@
     left: 10px;
     width: calc(100% - 20px);
     height: calc(100% - 20px);
-    object-fit: cover;
+    /*object-fit: cover;*/
     transform: scaleX(-1); /* Отражение по горизонтали */
     -webkit-transform: scaleX(-1); /* Для старых браузеров WebKit */
     -moz-transform: scaleX(-1); /* Для Firefox */
