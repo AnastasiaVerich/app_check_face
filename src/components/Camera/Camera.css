@@ -1,6 +1,6 @@
 .video_online {
     position: relative;
-    /*object-fit: cover;*/
+    object-fit: cover;
     transform: scaleX(-1); /* Отражение по горизонтали */
 
 
