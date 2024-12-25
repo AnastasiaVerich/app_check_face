@@ -28,11 +28,10 @@ export const Camera: React.FC<CameraProps> = ({ videoRef, isShow,isFaceDetected,
                 playsInline
                 autoPlay
                 muted
-                width={'200px'}
-                height={'200px'}
                 controls={false}
                 onLoadedMetadata={handleVideoLoaded}
             />
+            <div className="video_box__wrapper"/>
             <canvas
                 ref={canvasRef}
                 className={'canvas'}
