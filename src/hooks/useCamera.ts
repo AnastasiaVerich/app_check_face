@@ -1,4 +1,4 @@
-import React, {useState, useRef} from "react";
+import React, {useState} from "react";
 
 // Хук для управления камерой: запуск камеры, остановка и создание снимков
 export const useCamera = (

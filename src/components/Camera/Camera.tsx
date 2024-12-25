@@ -13,10 +13,7 @@ export const Camera: React.FC<CameraProps> = ({ videoRef, isShow,isFaceDetected,
     const [isLoaded, setIsLoaded] = useState(false);
 
     const handleVideoLoaded = () => {
-        setTimeout(()=>{
-            setIsLoaded(true);
-        },5000)
-
+        setIsLoaded(true);
     };
 
     return (
