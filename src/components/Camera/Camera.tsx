@@ -17,7 +17,7 @@ export const Camera: React.FC<CameraProps> = ({ videoRef, isShow,isFaceDetected,
     };
 
     return (
-        <Section className={`video_box'}`}>
+        <Section className={`video_box`}>
 
             <video
                 className={`video_online ${isLoaded?'':'hide'}`}
