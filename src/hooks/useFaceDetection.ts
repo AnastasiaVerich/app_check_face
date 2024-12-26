@@ -1,5 +1,10 @@
 import {useState, useEffect} from "react";
-import * as faceapi from "@vladmandic/face-api";
+import {
+    nets, matchDimensions,
+    TinyFaceDetectorOptions,
+    detectAllFaces,
+    resizeResults
+} from "@vladmandic/face-api";
 import {Circle, isRectangleCoveredByCircle, Rectangle} from "../utils/faceUtils";
 
 export const useFaceDetection = (
@@ -17,7 +22,7 @@ export const useFaceDetection = (
         const loadModels = async () => {
             const MODEL_URL = "ia_models"; // Путь к моделям (например, на сервере)
             await Promise.all([
-                faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
+                nets.tinyFaceDetector.loadFromUri(MODEL_URL),
             ]);
             setModelsLoaded(true);
         };
@@ -26,7 +31,7 @@ export const useFaceDetection = (
 
     // Детекция лиц
     useEffect(() => {
-        let interval:any
+        let interval: any
         // Если модели загружены и камера включена
         if (modelsLoaded && isCameraOn) {
             const detectFace = async () => {
@@ -41,12 +46,12 @@ export const useFaceDetection = (
                         height: video_border.offsetHeight
                     };
                     // Настроим канвас для масштабирования детекций
-                    faceapi.matchDimensions(canvas, displaySize);
+                    matchDimensions(canvas, displaySize);
 
                     // Детекция всех лиц с использованием опций для детектора
-                    const options = new faceapi.TinyFaceDetectorOptions({inputSize: 416, scoreThreshold: 0.3});
-                    const detections = await faceapi.detectAllFaces(video, options); // Получаем все обнаруженные лица на видео
-                    const resizedDetections = faceapi.resizeResults(detections, displaySize); // Масштабируем результаты детекции под размер видео
+                    const options = new TinyFaceDetectorOptions({inputSize: 416, scoreThreshold: 0.3});
+                    const detections = await detectAllFaces(video, options); // Получаем все обнаруженные лица на видео
+                    const resizedDetections = resizeResults(detections, displaySize); // Масштабируем результаты детекции под размер видео
 
                     let ctx: any = null
                     if (isDraw) {
@@ -66,7 +71,7 @@ export const useFaceDetection = (
                             // Если применен scaleX(-1), нужно скорректировать координаты
                             const transformedX = canvas.clientWidth - (x + width);
                             //const rectangle: Rectangle = {x: transformedX, y, width, height};
-                            const rectangle: Rectangle = {x:transformedX, y, width, height}
+                            const rectangle: Rectangle = {x: transformedX, y, width, height}
 
                             // Проверяем, перекрывает ли прямоугольник (лицо) круг более чем на 80%
                             // И что бы круг был не больше чем в 5 раз больше прямоугольник , инчае слишко далеко лицо
@@ -97,7 +102,7 @@ export const useFaceDetection = (
                 }
             };
 
-             interval = setInterval(detectFace, 100);// Запускаем детекцию лиц каждые 100 миллисекунд
+            interval = setInterval(detectFace, 100);// Запускаем детекцию лиц каждые 100 миллисекунд
         }
         return () => clearInterval(interval); // Останавливаем детекцию при размонтировании компонента
 

@@ -4,15 +4,7 @@
   "private": true,
   "homepage": "",
   "dependencies": {
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.119",
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.1",
     "@vladmandic/face-api": "^1.7.14",
-    "ajv": "^8.17.1",
     "axios": "^1.7.8",
     "dotenv": "^16.4.5",
     "react": "^18.3.1",
@@ -23,11 +15,12 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "cross-env PUBLIC_URL=https://AnastasiaVerich.github.io/app_check_face react-scripts build",
+    "build_dev_git": "cross-env PUBLIC_URL=https://AnastasiaVerich.github.io/app_check_face react-scripts build",
     "build_prod": "react-scripts build && cp -r build/* /var/www/green-apple/",
+    "build_dev": "react-app-rewired build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predeploy": "npm run build",
+    "predeploy": "npm run build_dev_git",
     "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
@@ -50,7 +43,17 @@
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.18.119",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@types/webpack-bundle-analyzer": "^4.7.0",
     "cross-env": "^7.0.3",
-    "gh-pages": "^6.2.0"
+    "gh-pages": "^6.2.0",
+    "react-app-rewired": "^2.2.1",
+    "webpack-bundle-analyzer": "^4.10.2"
   }
 }
