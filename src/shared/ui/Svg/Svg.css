@@ -5,9 +5,9 @@
 }
 
 .SvgContainer.accent .Svg {
-    color: var(--tg-theme-button-color, red);
+    color: var(--tg-theme-button-color, #3390ec);
 }
 
 .SvgContainer.subtitle .Svg {
-    color: var(--tg-theme-subtitle-text-color);
+    color: var(--tg-theme-subtitle-text-color,#707579);
 }

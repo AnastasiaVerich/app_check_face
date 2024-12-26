@@ -1,7 +1,7 @@
 .section{
     position: relative;
     padding: 10px 14px;
-    background: var(--tg-theme-section-bg-color);
+    background: var(--tg-theme-section-bg-color,#ffffff);
 
 }
 .section.clickable:hover{

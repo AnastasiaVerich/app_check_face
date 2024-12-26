@@ -1,5 +1,5 @@
 .text_box {
-    color: var(--tg-theme-text-color);
+    color: var(--tg-theme-text-color,#000000);
     font-size: 16px;
     line-height: 20px;
 }
@@ -13,10 +13,10 @@
 
 
 .text_box.hint {
-    color: var(--tg-theme-hint-color);
+    color: var(--tg-theme-hint-color,#707579);
 }
 .text_box.text {
-    color: var(--tg-theme-text-color);
+    color: var(--tg-theme-text-color,#000000);
 }
 
 

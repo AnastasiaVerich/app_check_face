@@ -1,4 +1,4 @@
-import React, {Suspense, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import './CameraSection.css'
 import {Section} from "../../shared/ui/Section/Section";
 import {HStack} from "../../shared/ui/HStack/HStack";

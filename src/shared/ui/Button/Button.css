@@ -10,7 +10,7 @@
     min-width: fit-content;
 
     padding: 10px 5px;
-    background-color: var(--tg-theme-button-color, #2481cc);
+    background-color: var(--tg-theme-button-color, #3390ec);
     color: var(--tg-theme-button-text-color, #ffffff);
     cursor: pointer;
 

@@ -2,7 +2,7 @@ body {
   font-family: Roboto,system-ui,sans-serif;
   margin: 0;
   padding: 0;
-  background-color: var(--tg-theme-secondary-bg-color, #ffffff); /* Светлая тема */
+  background-color: var(--tg-theme-secondary-bg-color, #f4f4f5); /* Светлая тема */
 }
 
 #root{

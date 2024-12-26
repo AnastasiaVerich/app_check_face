@@ -13,6 +13,7 @@ import {CommonSection} from "../../shared/ui/CommonSection/CommonSection";
 import {VStack} from "../../shared/ui/VStack/VStack";
 import {CameraSectionAsync} from "../CameraSection/CameraSection.async";
 import {PhotoSendSectionAsync} from "../PhotoSendSection/PhotoSendSection.async";
+import {Skeleton} from "../../shared/ui/Skeleton/Skeleton";
 
 
 function App() {
@@ -108,7 +109,20 @@ function App() {
             </CommonSection>
 
             {isCameraOn &&
-                <Suspense fallback={<div>Loading...</div>}>
+                <Suspense fallback={<CommonSection max>
+                    <Skeleton
+                        width="100%"
+                        height={`calc(var(--tg-viewport-height) / 2 )`}
+                    />
+                    <Skeleton
+                        width="100%"
+                        height={`60px`}
+                    />
+                    <Skeleton
+                        width="100%"
+                        height={`65px`}
+                    />
+                </CommonSection>}>
                     <CameraSectionAsync
                         videoBorderRef={videoBorderRef}
                         videoRef={videoRef}
@@ -123,7 +137,20 @@ function App() {
 
             }
             {!isCameraOn && photoUrl && (
-                <Suspense fallback={<div>Loading...</div>}>
+                <Suspense fallback={<CommonSection max>
+                    <Skeleton
+                        width="100%"
+                        height={`calc(var(--tg-viewport-height) / 2 )`}
+                    />
+                    <Skeleton
+                        width="100%"
+                        height={`60px`}
+                    />
+                    <Skeleton
+                        width="100%"
+                        height={`65px`}
+                    />
+                </CommonSection>}>
                     <PhotoSendSectionAsync
                         photoUrl={photoUrl}
                         params={params}
