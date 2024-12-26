@@ -10,7 +10,7 @@ export const useFaceDetection = (
 ) => {
     const [isFaceDetected, setIsFaceDetected] = useState(false);// Состояние для отслеживания, было ли найдено лицо
     const [modelsLoaded, setModelsLoaded] = useState(false);// Состояние для отслеживания, загружены ли модели
-    const [isDraw] = useState(true);// Состояние для отслеживания, загружены ли модели
+    const [isDraw] = useState(false);// Состояние для отслеживания, загружены ли модели
 
     // Загружаем модели детекции лиц при монтировании компонента
     useEffect(() => {
