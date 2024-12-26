@@ -16,6 +16,13 @@ export function isRectangleCoveredByCircle(circle: Circle, rect: Rectangle, thre
 
     // Вычисляем площадь прямоугольника
     const rectArea = rect.width * rect.height;
+    // Вычисляем площадь круга
+    const circleArea = Math.PI * circle.r * circle.r;
+
+    // Проверяем, чтобы прямоугольник не был слишком маленьким ( в 5 раз и более)
+    if (rectArea*5 < circleArea) {
+        return false;
+    }
 
     // Вычисляем площадь пересечения прямоугольника и круга
     const intersectionArea = calculateIntersectionArea(circle, rect);

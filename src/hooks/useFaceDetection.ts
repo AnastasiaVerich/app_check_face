@@ -10,7 +10,7 @@ export const useFaceDetection = (
 ) => {
     const [isFaceDetected, setIsFaceDetected] = useState(false);// Состояние для отслеживания, было ли найдено лицо
     const [modelsLoaded, setModelsLoaded] = useState(false);// Состояние для отслеживания, загружены ли модели
-    const [isDraw] = useState(false);// Состояние для отслеживания, загружены ли модели
+    const [isDraw] = useState(true);// Состояние для отслеживания, загружены ли модели
 
     // Загружаем модели детекции лиц при монтировании компонента
     useEffect(() => {
@@ -26,6 +26,7 @@ export const useFaceDetection = (
 
     // Детекция лиц
     useEffect(() => {
+        let interval:any
         // Если модели загружены и камера включена
         if (modelsLoaded && isCameraOn) {
             const detectFace = async () => {
@@ -45,10 +46,7 @@ export const useFaceDetection = (
                     // Детекция всех лиц с использованием опций для детектора
                     const options = new faceapi.TinyFaceDetectorOptions({inputSize: 416, scoreThreshold: 0.3});
                     const detections = await faceapi.detectAllFaces(video, options); // Получаем все обнаруженные лица на видео
-                    const resizedDetections = faceapi.resizeResults(detections, {
-                        width: video_border.offsetWidth,
-                        height: video_border.offsetHeight
-                    }); // Масштабируем результаты детекции под размер видео
+                    const resizedDetections = faceapi.resizeResults(detections, displaySize); // Масштабируем результаты детекции под размер видео
 
                     let ctx: any = null
                     if (isDraw) {
@@ -71,6 +69,7 @@ export const useFaceDetection = (
                             const rectangle: Rectangle = {x:transformedX, y, width, height}
 
                             // Проверяем, перекрывает ли прямоугольник (лицо) круг более чем на 80%
+                            // И что бы круг был не больше чем в 5 раз больше прямоугольник , инчае слишко далеко лицо
                             faceDetected = isRectangleCoveredByCircle(circle, rectangle, 0.8)
                             if (isDraw && ctx) {
                                 // Рисуем рамку
@@ -98,9 +97,10 @@ export const useFaceDetection = (
                 }
             };
 
-            const interval = setInterval(detectFace, 100);// Запускаем детекцию лиц каждые 100 миллисекунд
-            return () => clearInterval(interval); // Останавливаем детекцию при размонтировании компонента
+             interval = setInterval(detectFace, 100);// Запускаем детекцию лиц каждые 100 миллисекунд
         }
+        return () => clearInterval(interval); // Останавливаем детекцию при размонтировании компонента
+
     }, [modelsLoaded, isCameraOn]);
 
     return {isFaceDetected, modelsLoaded};
