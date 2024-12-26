@@ -14,14 +14,12 @@ import {VStack} from "../../shared/ui/VStack/VStack";
 import {CameraSectionAsync} from "../CameraSection/CameraSection.async";
 import {PhotoSendSectionAsync} from "../PhotoSendSection/PhotoSendSection.async";
 import {Skeleton} from "../../shared/ui/Skeleton/Skeleton";
+import CameraSection from "../CameraSection/CameraSection";
+import PhotoSendSection from "../PhotoSendSection/PhotoSendSection";
 
 
 function App() {
 
-    const videoBorderRef = useRef<HTMLDivElement | null>(null); // Ссылка на элемент video, который будет показывать видео с камеры
-    const videoRef = useRef<HTMLVideoElement | null>(null); // Ссылка на элемент video, который будет показывать видео с камеры
-    const canvasRef = useRef<HTMLCanvasElement | null>(null); // Ссылка на элемент canvas, на котором будет отображаться сделанное фото
-    const streamRef = useRef<MediaStream | null>(null); // Ссылка на поток видео
     const [params, setParams] = useState<ParamsType>(null); // Параметры приложения
     const [photoUrl, setPhotoUrl] = useState<string | null>(null); // URL фото
     const [error, setError] = useState<string | null>(null);// Сообщение об ошибке
@@ -109,35 +107,23 @@ function App() {
             </CommonSection>
 
             {isCameraOn &&
-                <Suspense fallback={<CommonSection max>
+               /* <Suspense fallback={<CommonSection max>
                     <Skeleton
                         width="100%"
                         height={`calc(var(--tg-viewport-height) / 2 )`}
                     />
-                    <Skeleton
-                        width="100%"
-                        height={`60px`}
-                    />
-                    <Skeleton
-                        width="100%"
-                        height={`65px`}
-                    />
-                </CommonSection>}>
-                    <CameraSectionAsync
-                        videoBorderRef={videoBorderRef}
-                        videoRef={videoRef}
-                        canvasRef={canvasRef}
+                </CommonSection>}>*/
+                    <CameraSection
                         setError={setError}
                         setPhotoUrl={setPhotoUrl}
-                        streamRef={streamRef}
                         setIsCameraOn={setIsCameraOn}
                         isCameraOn={isCameraOn}
                     />
-                </Suspense>
+               /* </Suspense>*/
 
             }
             {!isCameraOn && photoUrl && (
-                <Suspense fallback={<CommonSection max>
+             /*   <Suspense fallback={<CommonSection max>
                     <Skeleton
                         width="100%"
                         height={`calc(var(--tg-viewport-height) / 2 )`}
@@ -150,14 +136,14 @@ function App() {
                         width="100%"
                         height={`65px`}
                     />
-                </CommonSection>}>
-                    <PhotoSendSectionAsync
+                </CommonSection>}>*/
+                    <PhotoSendSection
                         photoUrl={photoUrl}
                         params={params}
                         setIsCameraOn={setIsCameraOn}
                         setError={setError}
                     />
-                </Suspense>
+                /*</Suspense>*/
 
                 )
 

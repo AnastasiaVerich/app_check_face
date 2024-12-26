@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import './CameraSection.css'
 import {Section} from "../../shared/ui/Section/Section";
 import {HStack} from "../../shared/ui/HStack/HStack";
@@ -12,28 +12,24 @@ import {useFaceDetection} from "../../hooks/useFaceDetection";
 
 
 interface CameraProps {
-    videoBorderRef: React.RefObject<HTMLDivElement>;
-    videoRef: React.RefObject<HTMLVideoElement>; // Ссылка на элемент video, который будет показывать видео с камеры
-    canvasRef: React.RefObject<HTMLCanvasElement>; // Ссылка на элемент canvas, на котором будет отображаться сделанное фото
     setError: any,    // Признак, что лицо было обнаружено на видео
 
     setPhotoUrl: any, // Функция для установки URL снимка (состояние для изображения)
-    streamRef: any
     setIsCameraOn: any
     isCameraOn: any
 }
 
 const CameraSection: React.FC<CameraProps> = ({
                                                   setPhotoUrl,
-                                                  streamRef,
                                                   isCameraOn,
                                                   setIsCameraOn,
                                                   setError,
-                                                  videoBorderRef,
-                                                  videoRef,
-                                                  canvasRef
                                               }) => {
     const [isLoaded, setIsLoaded] = useState(false);
+    const videoBorderRef = useRef<HTMLDivElement | null>(null); // Ссылка на элемент video, который будет показывать видео с камеры
+    const videoRef = useRef<HTMLVideoElement | null>(null); // Ссылка на элемент video, который будет показывать видео с камеры
+    const canvasRef = useRef<HTMLCanvasElement | null>(null); // Ссылка на элемент canvas, на котором будет отображаться сделанное фото
+    const streamRef = useRef<MediaStream | null>(null); // Ссылка на поток видео
 
     const {
         isFaceDetected,
