@@ -1,4 +1,4 @@
-export const IDENTIFICATION = 'Идентификация'
+export const IDENTIFICATION = 'Идентификация.'
 
 export const ON_CAMERA = 'Включить камеру'
 export const IS_CAMERA_OFF = 'Камера выключена'
