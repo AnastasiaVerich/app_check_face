@@ -37,6 +37,7 @@ export const registration=(
         axios
             .post<RegistrationResponse>(`${URL}api/users/registration`, data)
             .then(res => {
+                console.log(res)
                 // Завершаем загрузку
                 setIsFetching(false);
                 const result = res.data;
