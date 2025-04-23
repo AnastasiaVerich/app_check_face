@@ -37,7 +37,6 @@ export const registration=(
         axios
             .post<RegistrationResponse>(`${URL}api/users/registration`, data)
             .then(res => {
-                alert(JSON.stringify(res.data))
                 // Завершаем загрузку
                 setIsFetching(false);
                 const result = res.data;
@@ -47,6 +46,7 @@ export const registration=(
                     case 0: // Пользователь существует
                     case 1: // Успешная регистрация
                         tg.WebApp.sendData(JSON.stringify(result));
+                        alert('send')
                         break;
 
                     case 2: // Ошибки валидации или системная ошибка
