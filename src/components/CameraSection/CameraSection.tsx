@@ -32,8 +32,8 @@ const CameraSection: React.FC<CameraProps> = ({
     const streamRef = useRef<MediaStream | null>(null); // Ссылка на поток видео
 
     const {
-        isFaceDetected, modelsLoaded, isLivenessVerified, blinkCount, blinkPrompt
-    } = useFaceDetection({isCameraOn, videoRef, canvasRef, videoBorderRef})
+        isFaceDetected,
+    } = useFaceDetection(isCameraOn, videoRef, canvasRef, videoBorderRef)
 
     const handleVideoLoaded = () => {
         setTimeout(() => {
@@ -120,23 +120,6 @@ const CameraSection: React.FC<CameraProps> = ({
                 />
             </Section>
             <Section max>
-                <HStack max>
-                    <Text
-                        text={blinkPrompt ? 'Пожалуйста, моргните дважды в течение 5 секунд.':''}
-                        type={'text'}
-                        max
-                    />
-                    <Text
-                        text={isLivenessVerified ? 'Проверка живости пройдена!.':''}
-                        type={'text'}
-                        max
-                    />
-                    <Text
-                        text={!blinkPrompt && !isLivenessVerified ? 'Проверка не пройдена. Попробуйте снова':''}
-                        type={'text'}
-                        max
-                    />
-                </HStack>
                 <HStack max>
                     <Text
                         text={CAMERA_DESC}
