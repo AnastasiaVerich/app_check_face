@@ -33,7 +33,7 @@ const CameraSection: React.FC<CameraProps> = ({
 
     const {
         isFaceDetected,
-    } = useFaceDetection(isCameraOn, videoRef, canvasRef, videoBorderRef)
+    } ={isFaceDetected:false}// useFaceDetection(isCameraOn, videoRef, canvasRef, videoBorderRef)
 
     useEffect(() => {
         const startVideo = async () => {
