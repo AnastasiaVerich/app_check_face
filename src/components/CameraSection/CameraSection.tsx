@@ -36,6 +36,7 @@ const CameraSection: React.FC<CameraProps> = ({
     } = useFaceDetection(isCameraOn, videoRef, canvasRef, videoBorderRef)
 
     const handleVideoLoaded = () => {
+        console.log(`handleVideoLoaded at: ${new Date().toLocaleTimeString()}`)
         setTimeout(() => {
             setIsLoaded(true);
         }, 0)
@@ -107,6 +108,13 @@ const CameraSection: React.FC<CameraProps> = ({
                     muted
                     controls={false}
                     onLoadedMetadata={handleVideoLoaded}
+                    onPlay={() => console.log(`Video started playing at: ${new Date().toLocaleTimeString()}`)}
+                    onPause={() => console.log(`Video paused at: ${new Date().toLocaleTimeString()}`)}
+                    onEnded={() => console.log(`Video ended at: ${new Date().toLocaleTimeString()}`)}
+                    onSeeking={() => console.log(`Video seeking started at: ${new Date().toLocaleTimeString()}`)}
+                    onSeeked={() => console.log(`Video seeking finished at: ${new Date().toLocaleTimeString()}`)}
+                    onTimeUpdate={() => console.log(`Video time updated at: ${new Date().toLocaleTimeString()}`)}
+                    onError={() => console.log(`Video error occurred at: ${new Date().toLocaleTimeString()}`)}
                 />
                 <div ref={videoBorderRef} className="video_box__wrapper"/>
                 <canvas
