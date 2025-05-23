@@ -40,7 +40,7 @@ const CameraSection: React.FC<CameraProps> = ({
             try {
                 // Получаем доступ к камере
                 const stream = await navigator.mediaDevices.getUserMedia({
-                    video: { facingMode: "user", width: { ideal: 640 }, height: { ideal: 480 } }, // Фронтальная камера
+                    video: { facingMode: "user"}, // Фронтальная камера
                 });
                 streamRef.current = stream;
 
