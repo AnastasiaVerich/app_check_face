@@ -21,10 +21,13 @@ export const useFaceDetection = (
     // Загружаем модели детекции лиц при монтировании компонента
     useEffect(() => {
         const loadModels = async () => {
+            console.log('start', new Date().toISOString());
             const MODEL_URL = "ia_models"; // Путь к моделям (например, на сервере)
             await Promise.all([
                 nets.tinyFaceDetector.loadFromUri(MODEL_URL),
             ]);
+            console.log('finish', new Date().toISOString());
+
             setModelsLoaded(true);
         };
         if(isLoaded){
