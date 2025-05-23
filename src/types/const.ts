@@ -1,7 +1,7 @@
 export const IDENTIFICATION = 'Идентификация'
 
 export const ON_CAMERA = 'Включить камеру'
-export const IS_CAMERA_OFF = 'Камера выключена'
+export const IS_CAMERA_OFF = 'Камера выключена =)'
 export const PLEASE_ON_CAMERA = 'Нажмите на кнопку ниже и разрешите доступ к камере'
 
 
