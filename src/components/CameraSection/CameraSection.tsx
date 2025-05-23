@@ -60,7 +60,20 @@ const CameraSection: React.FC<CameraProps> = ({
                     });
                     // Обрабатываем событие canplay для уверенности, что видео готово
                     videoRef.current.addEventListener('canplay', () => {
-                        setIsLoaded(true)
+                        // Явно вызываем play для надёжности
+                        if (videoRef.current){
+                            videoRef.current.play()
+                                .then(res=>{
+                                    setIsLoaded(true);
+                                    console.log(`Воспроизвели ${new Date().toLocaleTimeString()}`);
+
+                                })
+                                .catch(err => {
+                                console.error(`Ошибка воспроизведения видео ${new Date().toLocaleTimeString()}:`, err);
+                                setError("Не удалось воспроизвести видео");
+                            });
+                        }
+
                         console.log(`Видео готово к воспроизведению ${new Date().toLocaleTimeString()}`);
 
                     }, { once: true });
