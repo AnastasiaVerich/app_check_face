@@ -35,14 +35,6 @@ const CameraSection: React.FC<CameraProps> = ({
         isFaceDetected,
     } = useFaceDetection(isCameraOn, videoRef, canvasRef, videoBorderRef)
 
-    const handleVideoLoaded = () => {
-        console.log(`handleVideoLoaded at: ${new Date().toLocaleTimeString()}`)
-        setTimeout(() => {
-            setIsLoaded(true);
-        }, 0)
-
-    };
-
     useEffect(() => {
         const startVideo = async () => {
             try {
@@ -56,15 +48,11 @@ const CameraSection: React.FC<CameraProps> = ({
                     // Привязываем поток
                     videoRef.current.srcObject = stream;
 
-                    // Явно вызываем play для надёжности
-                    videoRef.current.play().catch(err => {
-                        console.error("Ошибка воспроизведения видео:", err);
-                        setError("Не удалось воспроизвести видео");
-                    });
-
                     // Обрабатываем событие canplay для уверенности, что видео готово
                     videoRef.current.addEventListener('canplay', () => {
                         console.log("Видео готово к воспроизведению");
+                        setIsLoaded(true);
+
                     }, { once: true });
 
                     setPhotoUrl(null);
@@ -134,7 +122,7 @@ const CameraSection: React.FC<CameraProps> = ({
                     autoPlay
                     muted
                     controls={false}
-                    onLoadedMetadata={handleVideoLoaded}
+                    onLoadedMetadata={() => console.log(`onLoadedMetadata: ${new Date().toLocaleTimeString()}`)}
                     onPlay={() => console.log(`Video started playing at: ${new Date().toLocaleTimeString()}`)}
                     onPause={() => console.log(`Video paused at: ${new Date().toLocaleTimeString()}`)}
                     onEnded={() => console.log(`Video ended at: ${new Date().toLocaleTimeString()}`)}
