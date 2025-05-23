@@ -142,6 +142,7 @@ const CameraSection: React.FC<CameraProps> = ({
                     ref={videoRef}
                     playsInline
                     webkit-playsinline="true"
+                    autoPlay
                     muted
                     controls={false}
                     onLoadedMetadata={() => console.log(`onLoadedMetadata: ${new Date().toLocaleTimeString()}`)}
