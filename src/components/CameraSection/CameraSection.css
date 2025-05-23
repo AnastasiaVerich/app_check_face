@@ -15,8 +15,8 @@
 .video_online {
     position: absolute;
 
-    min-width: 100%;
-    min-height: 100%;
+    /*min-width: 100%;*/
+    /*min-height: 100%;*/
     transform: scaleX(-1);
     -webkit-transform: scaleX(-1);
     -moz-transform: scaleX(-1);
