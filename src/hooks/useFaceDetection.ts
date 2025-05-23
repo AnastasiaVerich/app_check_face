@@ -38,9 +38,11 @@ export const useFaceDetection = (
         let interval: any
         // Если модели загружены и камера включена
         if (modelsLoaded && isCameraOn && isLoaded) {
+            let y = 1
             const detectFace = async () => {
+                const i = y
                 if (videoRef.current && canvasRef.current && videoBorderRef.current) { // Если video и canvas элементы существуют
-                    console.log('1', new Date().toISOString());
+                    console.log(i+') 1', new Date().toISOString());
 
                     const video = videoRef.current;
                     const canvas = canvasRef.current;
@@ -53,13 +55,13 @@ export const useFaceDetection = (
                     };
                     // Настроим канвас для масштабирования детекций
                     matchDimensions(canvas, displaySize);
-                    console.log('2', new Date().toISOString());
+                    console.log(i+') 2', new Date().toISOString());
 
                     // Детекция всех лиц с использованием опций для детектора
                     const options = new TinyFaceDetectorOptions({inputSize: 416, scoreThreshold: 0.3});
                     const detections = await detectAllFaces(video, options); // Получаем все обнаруженные лица на видео
                     const resizedDetections = resizeResults(detections, displaySize); // Масштабируем результаты детекции под размер видео
-                    console.log('3', new Date().toISOString());
+                    console.log(i+') 3', new Date().toISOString());
 
                     let ctx: any = null
                     if (isDraw) {
@@ -107,7 +109,8 @@ export const useFaceDetection = (
                         ctx.strokeStyle = faceDetected ? 'green' : 'red';
                         ctx.stroke();
                     }
-                    console.log('888', new Date().toISOString());
+                    console.log(i+') 888', new Date().toISOString());
+                    y++
 
                 }
             };
