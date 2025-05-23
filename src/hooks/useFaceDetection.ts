@@ -11,7 +11,8 @@ export const useFaceDetection = (
     isCameraOn: boolean, // Пропс, который говорит, включена ли камера
     videoRef: React.RefObject<HTMLVideoElement>, // Ссылка на элемент video, который будет показывать видео с камеры
     canvasRef: React.RefObject<HTMLCanvasElement>, // Ссылка на элемент canvas, на котором будет отображаться сделанное фото
-    videoBorderRef: React.RefObject<HTMLDivElement>
+    videoBorderRef: React.RefObject<HTMLDivElement>,
+    isLoaded: boolean
 ) => {
     const [isFaceDetected, setIsFaceDetected] = useState(false);// Состояние для отслеживания, было ли найдено лицо
     const [modelsLoaded, setModelsLoaded] = useState(false);// Состояние для отслеживания, загружены ли модели
@@ -26,14 +27,16 @@ export const useFaceDetection = (
             ]);
             setModelsLoaded(true);
         };
-        loadModels(); // Вызываем функцию загрузки моделей
-    }, []);
+        if(isLoaded){
+            loadModels();
+        }
+    }, [isLoaded]);
 
     // Детекция лиц
     useEffect(() => {
         let interval: any
         // Если модели загружены и камера включена
-        if (modelsLoaded && isCameraOn) {
+        if (modelsLoaded && isCameraOn && isLoaded) {
             const detectFace = async () => {
                 if (videoRef.current && canvasRef.current && videoBorderRef.current) { // Если video и canvas элементы существуют
                     const video = videoRef.current;
@@ -106,7 +109,7 @@ export const useFaceDetection = (
         }
         return () => clearInterval(interval); // Останавливаем детекцию при размонтировании компонента
 
-    }, [modelsLoaded, isCameraOn]);
+    }, [modelsLoaded, isCameraOn,isLoaded]);
 
     return {isFaceDetected, modelsLoaded};
 };
