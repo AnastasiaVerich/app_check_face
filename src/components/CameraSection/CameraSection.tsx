@@ -25,7 +25,7 @@ const CameraSection: React.FC<CameraProps> = ({
                                                   setIsCameraOn,
                                                   setError,
                                               }) => {
-    const [isLoaded, setIsLoaded] = useState(true);
+    const [isLoaded, setIsLoaded] = useState(false);
     const videoBorderRef = useRef<HTMLDivElement | null>(null); // Ссылка на элемент video, который будет показывать видео с камеры
     const videoRef = useRef<HTMLVideoElement | null>(null); // Ссылка на элемент video, который будет показывать видео с камеры
     const canvasRef = useRef<HTMLCanvasElement | null>(null); // Ссылка на элемент canvas, на котором будет отображаться сделанное фото
@@ -60,7 +60,7 @@ const CameraSection: React.FC<CameraProps> = ({
                     });
                     // Обрабатываем событие canplay для уверенности, что видео готово
                     videoRef.current.addEventListener('canplay', () => {
-
+                        setIsLoaded(true)
                         console.log(`Видео готово к воспроизведению ${new Date().toLocaleTimeString()}`);
 
                     }, { once: true });
