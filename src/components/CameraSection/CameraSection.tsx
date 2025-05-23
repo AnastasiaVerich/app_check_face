@@ -33,101 +33,37 @@ const CameraSection: React.FC<CameraProps> = ({
 
     const {
         isFaceDetected,
-    } ={isFaceDetected:false}// useFaceDetection(isCameraOn, videoRef, canvasRef, videoBorderRef)
+    } = {isFaceDetected: false}// useFaceDetection(isCameraOn, videoRef, canvasRef, videoBorderRef)
 
     useEffect(() => {
         const startVideo = async () => {
             try {
-                console.log(11111111)
-                console.log('videoHeight',videoRef.current?.videoHeight)
-                console.log('clientHeight',videoRef.current?.clientHeight)
-                console.log('offsetHeight',videoRef.current?.offsetHeight)
-                console.log('height',videoRef.current?.height)
-                console.log('width',videoRef.current?.width)
-                console.log('videoHeight',videoRef.current?.videoWidth)
-                console.log('clientWidth',videoRef.current?.clientWidth)
-                console.log('offsetWidth',videoRef.current?.offsetWidth)
+
                 // Получаем доступ к камере
                 const stream = await navigator.mediaDevices.getUserMedia({
-                    video: { facingMode: "user"}, // Фронтальная камера
+                    video: {facingMode: "user"}, // Фронтальная камера
                 });
                 streamRef.current = stream;
-                console.log(22222222)
 
-                console.log('videoHeight',videoRef.current?.videoHeight)
-                console.log('clientHeight',videoRef.current?.clientHeight)
-                console.log('offsetHeight',videoRef.current?.offsetHeight)
-                console.log('height',videoRef.current?.height)
-                console.log('width',videoRef.current?.width)
-                console.log('videoHeight',videoRef.current?.videoWidth)
-                console.log('clientWidth',videoRef.current?.clientWidth)
-                console.log('offsetWidth',videoRef.current?.offsetWidth)
                 if (videoRef.current) {
                     // Привязываем поток
                     videoRef.current.srcObject = stream;
-                    console.log(3333333)
 
-                    console.log('videoHeight',videoRef.current?.videoHeight)
-                    console.log('clientHeight',videoRef.current?.clientHeight)
-                    console.log('offsetHeight',videoRef.current?.offsetHeight)
-                    console.log('height',videoRef.current?.height)
-                    console.log('width',videoRef.current?.width)
-                    console.log('videoHeight',videoRef.current?.videoWidth)
-                    console.log('clientWidth',videoRef.current?.clientWidth)
-                    console.log('offsetWidth',videoRef.current?.offsetWidth)
-                    // Дополнительные события для диагностики
-                    videoRef.current.addEventListener('loadeddata', () => {
-                        console.log(`Данные видео загружены: ${new Date().toLocaleTimeString()}`);
-
-                        console.log('videoHeight',videoRef.current?.videoHeight)
-                        console.log('clientHeight',videoRef.current?.clientHeight)
-                        console.log('offsetHeight',videoRef.current?.offsetHeight)
-                        console.log('height',videoRef.current?.height)
-                        console.log('width',videoRef.current?.width)
-                        console.log('videoHeight',videoRef.current?.videoWidth)
-                        console.log('clientWidth',videoRef.current?.clientWidth)
-                        console.log('offsetWidth',videoRef.current?.offsetWidth)
-                    }, { once: true });
-                    videoRef.current.addEventListener('waiting', () => {
-                        console.log(`Видео ожидает данные: ${new Date().toLocaleTimeString()}`);
-                    });
-                    videoRef.current.addEventListener('stalled', () => {
-                        console.log(`Видео приостановлено: ${new Date().toLocaleTimeString()}`);
-                    });
                     // Обрабатываем событие canplay для уверенности, что видео готово
                     videoRef.current.addEventListener('canplay', () => {
                         // Явно вызываем play для надёжности
-                        if (videoRef.current){
+                        if (videoRef.current) {
                             videoRef.current.play()
-                                .then(res=>{
-                                    setIsLoaded(true);
-                                    console.log(`Воспроизвели ${new Date().toLocaleTimeString()}`);
-                                    console.log('videoHeight',videoRef.current?.videoHeight)
-                                    console.log('clientHeight',videoRef.current?.clientHeight)
-                                    console.log('offsetHeight',videoRef.current?.offsetHeight)
-                                    console.log('height',videoRef.current?.height)
-                                    console.log('width',videoRef.current?.width)
-                                    console.log('videoHeight',videoRef.current?.videoWidth)
-                                    console.log('clientWidth',videoRef.current?.clientWidth)
-                                    console.log('offsetWidth',videoRef.current?.offsetWidth)
-                                })
                                 .catch(err => {
-                                console.error(`Ошибка воспроизведения видео ${new Date().toLocaleTimeString()}:`, err);
-                                setError("Не удалось воспроизвести видео");
-                            });
+                                    console.error(`Ошибка воспроизведения видео ${new Date().toLocaleTimeString()}:`, err);
+                                    setError("Не удалось воспроизвести видео");
+                                });
                         }
-                        console.log(`Видео готово к воспроизведению ${new Date().toLocaleTimeString()}`);
 
-                        console.log('videoHeight',videoRef.current?.videoHeight)
-                        console.log('clientHeight',videoRef.current?.clientHeight)
-                        console.log('offsetHeight',videoRef.current?.offsetHeight)
-                        console.log('height',videoRef.current?.height)
-                        console.log('width',videoRef.current?.width)
-                        console.log('videoHeight',videoRef.current?.videoWidth)
-                        console.log('clientWidth',videoRef.current?.clientWidth)
-                        console.log('offsetWidth',videoRef.current?.offsetWidth)
-
-                    }, { once: true });
+                    }, {once: true});
+                    videoRef.current.addEventListener('onTimeUpdate', () => {
+                        setIsLoaded(true);
+                    }, {once: true});
 
                     setPhotoUrl(null);
                     setError(null);
@@ -195,14 +131,6 @@ const CameraSection: React.FC<CameraProps> = ({
                     webkit-playsinline="true"
                     muted
                     controls={false}
-                    onLoadedMetadata={() => console.log(`onLoadedMetadata: ${new Date().toLocaleTimeString()}`)}
-                    onPlay={() => console.log(`Video started playing at: ${new Date().toLocaleTimeString()}`)}
-                    onPause={() => console.log(`Video paused at: ${new Date().toLocaleTimeString()}`)}
-                    onEnded={() => console.log(`Video ended at: ${new Date().toLocaleTimeString()}`)}
-                    onSeeking={() => console.log(`Video seeking started at: ${new Date().toLocaleTimeString()}`)}
-                    onSeeked={() => console.log(`Video seeking finished at: ${new Date().toLocaleTimeString()}`)}
-                    onTimeUpdate={() => console.log(`Video time updated at: ${new Date().toLocaleTimeString()}`)}
-                    onError={() => console.log(`Video error occurred at: ${new Date().toLocaleTimeString()}`)}
                 />
                 <div ref={videoBorderRef} className="video_box__wrapper"/>
                 <canvas
