@@ -40,7 +40,7 @@ const CameraSection: React.FC<CameraProps> = ({
             try {
                 // Получаем доступ к камере
                 const stream = await navigator.mediaDevices.getUserMedia({
-                    video: { facingMode: "user" }, // Фронтальная камера
+                    video: { facingMode: "user", width: { ideal: 640 }, height: { ideal: 480 } }, // Фронтальная камера
                 });
                 streamRef.current = stream;
 
@@ -48,6 +48,16 @@ const CameraSection: React.FC<CameraProps> = ({
                     // Привязываем поток
                     videoRef.current.srcObject = stream;
 
+                    // Дополнительные события для диагностики
+                    videoRef.current.addEventListener('loadeddata', () => {
+                        console.log(`Данные видео загружены: ${new Date().toLocaleTimeString()}`);
+                    }, { once: true });
+                    videoRef.current.addEventListener('waiting', () => {
+                        console.log(`Видео ожидает данные: ${new Date().toLocaleTimeString()}`);
+                    });
+                    videoRef.current.addEventListener('stalled', () => {
+                        console.log(`Видео приостановлено: ${new Date().toLocaleTimeString()}`);
+                    });
                     // Обрабатываем событие canplay для уверенности, что видео готово
                     videoRef.current.addEventListener('canplay', () => {
                         // Явно вызываем play для надёжности
