@@ -25,7 +25,7 @@ const CameraSection: React.FC<CameraProps> = ({
                                                   setIsCameraOn,
                                                   setError,
                                               }) => {
-    const [isLoaded, setIsLoaded] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(true);
     const videoBorderRef = useRef<HTMLDivElement | null>(null); // Ссылка на элемент video, который будет показывать видео с камеры
     const videoRef = useRef<HTMLVideoElement | null>(null); // Ссылка на элемент video, который будет показывать видео с камеры
     const canvasRef = useRef<HTMLCanvasElement | null>(null); // Ссылка на элемент canvas, на котором будет отображаться сделанное фото
@@ -60,19 +60,6 @@ const CameraSection: React.FC<CameraProps> = ({
                     });
                     // Обрабатываем событие canplay для уверенности, что видео готово
                     videoRef.current.addEventListener('canplay', () => {
-                        // Явно вызываем play для надёжности
-                        if (videoRef.current){
-                            videoRef.current.play()
-                                .then(res=>{
-                                    setIsLoaded(true);
-                                    console.log(`Воспроизвели ${new Date().toLocaleTimeString()}`);
-
-                                })
-                                .catch(err => {
-                                console.error(`Ошибка воспроизведения видео ${new Date().toLocaleTimeString()}:`, err);
-                                setError("Не удалось воспроизвести видео");
-                            });
-                        }
 
                         console.log(`Видео готово к воспроизведению ${new Date().toLocaleTimeString()}`);
 
@@ -142,7 +129,6 @@ const CameraSection: React.FC<CameraProps> = ({
                     ref={videoRef}
                     playsInline
                     webkit-playsinline="true"
-                    autoPlay
                     muted
                     controls={false}
                     onLoadedMetadata={() => console.log(`onLoadedMetadata: ${new Date().toLocaleTimeString()}`)}
