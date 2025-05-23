@@ -61,10 +61,10 @@ const CameraSection: React.FC<CameraProps> = ({
                         }
 
                     }, {once: true});
+
                     videoRef.current.addEventListener('onTimeUpdate', () => {
                         setIsLoaded(true);
                     }, {once: true});
-
                     setPhotoUrl(null);
                     setError(null);
                 } else {
