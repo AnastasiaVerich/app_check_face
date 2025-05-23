@@ -38,19 +38,55 @@ const CameraSection: React.FC<CameraProps> = ({
     useEffect(() => {
         const startVideo = async () => {
             try {
+                console.log(11111111)
+                console.log('videoHeight',videoRef.current?.videoHeight)
+                console.log('clientHeight',videoRef.current?.clientHeight)
+                console.log('offsetHeight',videoRef.current?.offsetHeight)
+                console.log('height',videoRef.current?.height)
+                console.log('width',videoRef.current?.width)
+                console.log('videoHeight',videoRef.current?.videoWidth)
+                console.log('clientWidth',videoRef.current?.clientWidth)
+                console.log('offsetWidth',videoRef.current?.offsetWidth)
                 // Получаем доступ к камере
                 const stream = await navigator.mediaDevices.getUserMedia({
                     video: { facingMode: "user"}, // Фронтальная камера
                 });
                 streamRef.current = stream;
+                console.log(22222222)
 
+                console.log('videoHeight',videoRef.current?.videoHeight)
+                console.log('clientHeight',videoRef.current?.clientHeight)
+                console.log('offsetHeight',videoRef.current?.offsetHeight)
+                console.log('height',videoRef.current?.height)
+                console.log('width',videoRef.current?.width)
+                console.log('videoHeight',videoRef.current?.videoWidth)
+                console.log('clientWidth',videoRef.current?.clientWidth)
+                console.log('offsetWidth',videoRef.current?.offsetWidth)
                 if (videoRef.current) {
                     // Привязываем поток
                     videoRef.current.srcObject = stream;
+                    console.log(3333333)
 
+                    console.log('videoHeight',videoRef.current?.videoHeight)
+                    console.log('clientHeight',videoRef.current?.clientHeight)
+                    console.log('offsetHeight',videoRef.current?.offsetHeight)
+                    console.log('height',videoRef.current?.height)
+                    console.log('width',videoRef.current?.width)
+                    console.log('videoHeight',videoRef.current?.videoWidth)
+                    console.log('clientWidth',videoRef.current?.clientWidth)
+                    console.log('offsetWidth',videoRef.current?.offsetWidth)
                     // Дополнительные события для диагностики
                     videoRef.current.addEventListener('loadeddata', () => {
                         console.log(`Данные видео загружены: ${new Date().toLocaleTimeString()}`);
+
+                        console.log('videoHeight',videoRef.current?.videoHeight)
+                        console.log('clientHeight',videoRef.current?.clientHeight)
+                        console.log('offsetHeight',videoRef.current?.offsetHeight)
+                        console.log('height',videoRef.current?.height)
+                        console.log('width',videoRef.current?.width)
+                        console.log('videoHeight',videoRef.current?.videoWidth)
+                        console.log('clientWidth',videoRef.current?.clientWidth)
+                        console.log('offsetWidth',videoRef.current?.offsetWidth)
                     }, { once: true });
                     videoRef.current.addEventListener('waiting', () => {
                         console.log(`Видео ожидает данные: ${new Date().toLocaleTimeString()}`);
@@ -66,15 +102,30 @@ const CameraSection: React.FC<CameraProps> = ({
                                 .then(res=>{
                                     setIsLoaded(true);
                                     console.log(`Воспроизвели ${new Date().toLocaleTimeString()}`);
-
+                                    console.log('videoHeight',videoRef.current?.videoHeight)
+                                    console.log('clientHeight',videoRef.current?.clientHeight)
+                                    console.log('offsetHeight',videoRef.current?.offsetHeight)
+                                    console.log('height',videoRef.current?.height)
+                                    console.log('width',videoRef.current?.width)
+                                    console.log('videoHeight',videoRef.current?.videoWidth)
+                                    console.log('clientWidth',videoRef.current?.clientWidth)
+                                    console.log('offsetWidth',videoRef.current?.offsetWidth)
                                 })
                                 .catch(err => {
                                 console.error(`Ошибка воспроизведения видео ${new Date().toLocaleTimeString()}:`, err);
                                 setError("Не удалось воспроизвести видео");
                             });
                         }
-
                         console.log(`Видео готово к воспроизведению ${new Date().toLocaleTimeString()}`);
+
+                        console.log('videoHeight',videoRef.current?.videoHeight)
+                        console.log('clientHeight',videoRef.current?.clientHeight)
+                        console.log('offsetHeight',videoRef.current?.offsetHeight)
+                        console.log('height',videoRef.current?.height)
+                        console.log('width',videoRef.current?.width)
+                        console.log('videoHeight',videoRef.current?.videoWidth)
+                        console.log('clientWidth',videoRef.current?.clientWidth)
+                        console.log('offsetWidth',videoRef.current?.offsetWidth)
 
                     }, { once: true });
 
