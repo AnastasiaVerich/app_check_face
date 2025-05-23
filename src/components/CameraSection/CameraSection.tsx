@@ -46,22 +46,48 @@ const CameraSection: React.FC<CameraProps> = ({
     useEffect(() => {
         const startVideo = async () => {
             try {
-                // Получаем доступ к камере с использованием API getUserMedia
+                // Получаем доступ к камере
                 const stream = await navigator.mediaDevices.getUserMedia({
-                    video: {facingMode: "user"}, // Запрашиваем видео с камеры пользователя (фронтальная)
+                    video: { facingMode: "user" }, // Фронтальная камера
                 });
-                streamRef.current = stream; // Сохраняем поток для управления (для остановки камеры)
-                if (videoRef.current) videoRef.current.srcObject = stream;// Отображаем поток в элементе video
-                setPhotoUrl(null); // Обнуляем URL снимка (если камера включена, не показываем старое фото)
-                setError(null); // Очищаем ошибку, если она была
+                streamRef.current = stream;
+
+                if (videoRef.current) {
+                    // Привязываем поток
+                    videoRef.current.srcObject = stream;
+
+                    // Явно вызываем play для надёжности
+                    videoRef.current.play().catch(err => {
+                        console.error("Ошибка воспроизведения видео:", err);
+                        setError("Не удалось воспроизвести видео");
+                    });
+
+                    // Обрабатываем событие canplay для уверенности, что видео готово
+                    videoRef.current.addEventListener('canplay', () => {
+                        console.log("Видео готово к воспроизведению");
+                    }, { once: true });
+
+                    setPhotoUrl(null);
+                    setError(null);
+                } else {
+                    console.warn("videoRef не готов");
+                    setError("Ошибка инициализации видео");
+                }
             } catch (err) {
-                // Если не удалось получить доступ к камере, выводим ошибку
                 setError("Ошибка доступа к камере");
-                console.error(err);
+                console.error("Ошибка getUserMedia:", err);
             }
-        }
-        startVideo()
-    }, [])
+        };
+
+        startVideo();
+
+        // Очистка при размонтировании
+        return () => {
+            if (streamRef.current) {
+                streamRef.current.getTracks().forEach(track => track.stop());
+            }
+        };
+    }, []);
 
     const takePhoto = () => {
         if (canvasRef.current && videoRef.current) {
@@ -104,6 +130,7 @@ const CameraSection: React.FC<CameraProps> = ({
                     className="video_online"
                     ref={videoRef}
                     playsInline
+                    webkit-playsinline="true"
                     autoPlay
                     muted
                     controls={false}
