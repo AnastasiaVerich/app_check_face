@@ -21,12 +21,10 @@ export const useFaceDetection = (
     // Загружаем модели детекции лиц при монтировании компонента
     useEffect(() => {
         const loadModels = async () => {
-            console.log('start', new Date().toISOString());
             const MODEL_URL = "ia_models"; // Путь к моделям (например, на сервере)
             await Promise.all([
                 nets.tinyFaceDetector.loadFromUri(MODEL_URL),
             ]);
-            console.log('finish', new Date().toISOString());
 
             setModelsLoaded(true);
         };
@@ -42,6 +40,8 @@ export const useFaceDetection = (
         if (modelsLoaded && isCameraOn && isLoaded) {
             const detectFace = async () => {
                 if (videoRef.current && canvasRef.current && videoBorderRef.current) { // Если video и canvas элементы существуют
+                    console.log('1', new Date().toISOString());
+
                     const video = videoRef.current;
                     const canvas = canvasRef.current;
                     const video_border = videoBorderRef.current;
@@ -53,11 +53,13 @@ export const useFaceDetection = (
                     };
                     // Настроим канвас для масштабирования детекций
                     matchDimensions(canvas, displaySize);
+                    console.log('2', new Date().toISOString());
 
                     // Детекция всех лиц с использованием опций для детектора
                     const options = new TinyFaceDetectorOptions({inputSize: 416, scoreThreshold: 0.3});
                     const detections = await detectAllFaces(video, options); // Получаем все обнаруженные лица на видео
                     const resizedDetections = resizeResults(detections, displaySize); // Масштабируем результаты детекции под размер видео
+                    console.log('3', new Date().toISOString());
 
                     let ctx: any = null
                     if (isDraw) {
@@ -105,6 +107,8 @@ export const useFaceDetection = (
                         ctx.strokeStyle = faceDetected ? 'green' : 'red';
                         ctx.stroke();
                     }
+                    console.log('888', new Date().toISOString());
+
                 }
             };
 
