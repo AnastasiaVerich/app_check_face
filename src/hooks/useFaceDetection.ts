@@ -59,7 +59,11 @@ export const useFaceDetection = (
                         console.log(i + ') 2', new Date().toISOString());
 
                         // Детекция всех лиц с использованием опций для детектора
-                        const options = new TinyFaceDetectorOptions({inputSize: 416, scoreThreshold: 0.3});
+                        const options = new TinyFaceDetectorOptions({
+                                inputSize: 416,
+                                scoreThreshold: 0.3
+                            }
+                        );
                         console.log(i + ') 222', new Date().toISOString());
 
                         const detections = await detectAllFaces(video, options); // Получаем все обнаруженные лица на видео

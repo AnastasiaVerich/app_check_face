@@ -9,6 +9,7 @@ import {CommonSection} from "../../shared/ui/CommonSection/CommonSection";
 import {ReactComponent as CameraSvg} from '../../shared/assets/svg/Camea.svg'
 import {ReactComponent as ArrowSvg} from '../../shared/assets/svg/Arrow.svg'
 import {useFaceDetection} from "../../hooks/useFaceDetection";
+import {useFaceDetectionNew} from "../../hooks/useFaceDetectionNew";
 
 
 interface CameraProps {
