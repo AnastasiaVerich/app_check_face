@@ -84,6 +84,7 @@ function resizeResults<T extends FaceResult | FaceResult[]>(
     }
     return scaleFaceResult(results) as T;
 }
+
 export const useFaceDetectionNew = (
     isCameraOn: boolean, // Пропс, который говорит, включена ли камера
     videoRef: React.RefObject<HTMLVideoElement>, // Ссылка на элемент video, который будет показывать видео с камеры
@@ -94,7 +95,7 @@ export const useFaceDetectionNew = (
     const [isFaceDetected, setIsFaceDetected] = useState(false);// Состояние для отслеживания, было ли найдено лицо
     const [humanLoaded, setHumanLoaded] = useState(false);
     const [humanInstance, setHumanInstance] = useState<Human | null>(null);
-    const [isDraw] = useState(true);// Состояние для отслеживания, загружены ли модели
+    const [isDraw] = useState(false);// Состояние для отслеживания, загружены ли модели
 
 // Инициализация Human
     useEffect(() => {
