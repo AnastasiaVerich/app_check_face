@@ -7,7 +7,7 @@ const config: Partial<Config> = {
     modelBasePath: "https://cdn.jsdelivr.net/npm/@vladmandic/human/models/", // Путь к моделям
     face: {
         enabled: true, // Включаем детекцию лиц
-        detector: {rotation: false, maxDetected: 1}, // Ограничиваем до 1 лица для оптимизации
+        detector: {rotation: false, maxDetected: 1, minConfidence: 0.3}, // Ограничиваем до 1 лица для оптимизации
         mesh: {enabled: false}, // Отключаем 3D-сетку лица, если не нужна
         iris: {enabled: false}, // Отключаем детекцию радужки
         description: {
@@ -22,6 +22,68 @@ const config: Partial<Config> = {
     backend: "webgl", // Используем WebGL для ускорения (можно заменить на "wasm" или "cpu")
     cacheSensitivity: 0, // Отключаем кэширование для реального времени
 };
+// Интерфейс для размеров
+interface Dimensions {
+    width: number;
+    height: number;
+}
+
+// Интерфейс для масштабированного FaceResult
+interface ScaledFaceResult extends FaceResult {
+    box: [number, number, number, number]; // [x, y, width, height]
+}
+
+// Функция масштабирования
+function resizeResults<T extends FaceResult | FaceResult[]>(
+    results: T,
+    inputDimensions: Dimensions,
+    targetDimensions: Dimensions
+): T {
+    // Эмулируем inputSize: 416, как в TinyFaceDetector
+    const modelInputSize = 416;
+    const videoAspectRatio = inputDimensions.width / inputDimensions.height;
+    let modelWidth = modelInputSize;
+    let modelHeight = modelInputSize;
+
+    // Сохраняем пропорции видео
+    if (videoAspectRatio > 1) {
+        modelHeight = modelInputSize / videoAspectRatio;
+    } else {
+        modelWidth = modelInputSize * videoAspectRatio;
+    }
+
+    // Масштабируем от разрешения видео к modelInputSize
+    const scaleXModel = modelWidth / inputDimensions.width;
+    const scaleYModel = modelHeight / inputDimensions.height;
+
+    // Масштабируем от modelInputSize к канвасу
+    const scaleXCanvas = targetDimensions.width / modelWidth;
+    const scaleYCanvas = targetDimensions.height / modelHeight;
+
+    const scaleFaceResult = (face: FaceResult): ScaledFaceResult => {
+        const [x, y, width, height] = face.box;
+        // Сначала масштабируем к modelInputSize
+        const modelX = x * scaleXModel;
+        const modelY = y * scaleYModel;
+        const modelWidthScaled = width * scaleXModel;
+        const modelHeightScaled = height * scaleYModel;
+        // Затем масштабируем к канвасу
+        return {
+            ...face,
+            box: [
+                modelX * scaleXCanvas,
+                modelY * scaleYCanvas,
+                modelWidthScaled * scaleXCanvas,
+                modelHeightScaled * scaleYCanvas,
+            ],
+        };
+    };
+
+    if (Array.isArray(results)) {
+        return results.map(scaleFaceResult) as T;
+    }
+    return scaleFaceResult(results) as T;
+}
 export const useFaceDetectionNew = (
     isCameraOn: boolean, // Пропс, который говорит, включена ли камера
     videoRef: React.RefObject<HTMLVideoElement>, // Ссылка на элемент video, который будет показывать видео с камеры
@@ -72,7 +134,6 @@ export const useFaceDetectionNew = (
                 try {
                     if (videoRef.current && canvasRef.current && videoBorderRef.current) { // Если video и canvas элементы существуют
 
-
                         if (now - lastDetectionTime >= 200) { // Детекция каждые 200 мс
                             const video = videoRef.current;
                             const canvas = canvasRef.current;
@@ -87,10 +148,19 @@ export const useFaceDetectionNew = (
                             canvas.width = displaySize.width;
                             canvas.height = displaySize.height;
 
+                            const inputSize = {
+                                width: video.videoWidth,
+                                height: video.videoHeight,
+                            };
+
+                            if (!inputSize.width || !inputSize.height) return;
+
                             let faces: FaceResult[] = [];
                             const result = await humanInstance.detect(video); // Выполняем детекцию
                             faces = result.face || []; // Извлекаем массив лиц
                             lastDetectionTime = now;
+
+                            const resizedFaces = resizeResults(faces, inputSize, displaySize);
 
                             let ctx: any = null
                             if (isDraw) {
@@ -104,19 +174,14 @@ export const useFaceDetectionNew = (
                             const circle: Circle = {cx: canvas.clientWidth / 2, cy: canvas.clientHeight / 2, r: 150}; // Создаем круг в центре видео с радиусом 150px
 
                             let faceDetected = false// Флаг для проверки, было ли найдено лицо в области круга
-                            faces.forEach((face) => {
+                            resizedFaces.forEach((face) => {
                                     // Извлекаем координаты bounding box лица
-                                    const [x, y, width, height] = face.box;
-                                    console.log('x',x)
-                                    console.log(width)
-                                    console.log(canvas.clientWidth)
-                                    // Если применен scaleX(-1), нужно скорректировать координаты
-                                    const transformedX = canvas.clientWidth - (x + width)/2;
-                                    //const rectangle: Rectangle = {x: transformedX, y, width, height};
+                                    let [x, y, width, height] = face.box;
+
+                                    const transformedX = canvas.clientWidth - (x + width);
+
                                     const rectangle: Rectangle = {x: transformedX, y, width, height}
 
-                                    // Проверяем, перекрывает ли прямоугольник (лицо) круг более чем на 80%
-                                    // И что бы круг был не больше чем в 5 раз больше прямоугольник , инчае слишко далеко лицо
                                     faceDetected = isRectangleCoveredByCircle(circle, rectangle, 0.8)
                                     if (isDraw && ctx) {
                                         // Рисуем рамку

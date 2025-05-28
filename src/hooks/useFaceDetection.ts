@@ -16,7 +16,7 @@ export const useFaceDetection = (
 ) => {
     const [isFaceDetected, setIsFaceDetected] = useState(false);// Состояние для отслеживания, было ли найдено лицо
     const [modelsLoaded, setModelsLoaded] = useState(false);// Состояние для отслеживания, загружены ли модели
-    const [isDraw] = useState(false);// Состояние для отслеживания, загружены ли модели
+    const [isDraw] = useState(true);// Состояние для отслеживания, загружены ли модели
 
     // Загружаем модели детекции лиц при монтировании компонента
     useEffect(() => {
@@ -39,11 +39,8 @@ export const useFaceDetection = (
         if (modelsLoaded && isCameraOn && isLoaded) {
             let y = 0
             const detectFace = async () => {
-                y++
-                const i = y
                 try {
                     if (videoRef.current && canvasRef.current && videoBorderRef.current) { // Если video и canvas элементы существуют
-                        console.log(i + ') 1', new Date().toISOString());
 
                         const video = videoRef.current;
                         const canvas = canvasRef.current;
@@ -56,7 +53,6 @@ export const useFaceDetection = (
                         };
                         // Настроим канвас для масштабирования детекций
                         matchDimensions(canvas, displaySize);
-                        console.log(i + ') 2', new Date().toISOString());
 
                         // Детекция всех лиц с использованием опций для детектора
                         const options = new TinyFaceDetectorOptions({
@@ -64,13 +60,10 @@ export const useFaceDetection = (
                                 scoreThreshold: 0.3
                             }
                         );
-                        console.log(i + ') 222', new Date().toISOString());
 
                         const detections = await detectAllFaces(video, options); // Получаем все обнаруженные лица на видео
-                        console.log(i + ') 222/222', new Date().toISOString());
 
                         const resizedDetections = resizeResults(detections, displaySize); // Масштабируем результаты детекции под размер видео
-                        console.log(i + ') 3', new Date().toISOString());
 
                         let ctx: any = null
                         if (isDraw) {
@@ -87,6 +80,7 @@ export const useFaceDetection = (
                         resizedDetections.forEach((detection) => {
                                 // Извлекаем информацию о прямоугольнике, в котором расположено лицо
                                 const {x, y, width, height} = detection.box;
+                                
                                 // Если применен scaleX(-1), нужно скорректировать координаты
                                 const transformedX = canvas.clientWidth - (x + width);
                                 //const rectangle: Rectangle = {x: transformedX, y, width, height};
@@ -118,8 +112,6 @@ export const useFaceDetection = (
                             ctx.strokeStyle = faceDetected ? 'green' : 'red';
                             ctx.stroke();
                         }
-                        console.log(i + ') 888', new Date().toISOString());
-
 
                     }
                 } catch (error) {
