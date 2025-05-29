@@ -124,7 +124,7 @@ const CameraSection: React.FC<CameraProps> = ({
         <CommonSection
             max
         >
-            <Section className={`video_box ${isLoaded ? '' : 'hide'}`}>
+            <Section className={`video_box`}>
 
                 <video
                     className="video_online"
