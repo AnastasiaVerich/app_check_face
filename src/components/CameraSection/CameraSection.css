@@ -59,11 +59,27 @@
     border-bottom-color: #3498db;
     animation: spin 1s linear infinite; /* Spinning animation */
 }
-
+.face_overlay.detection_loaded::after {
+    content: "Загрузка..."; /* Loading text */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the text */
+    font-family: Arial, sans-serif; /* Customize font */
+    font-size: 24px; /* Text size */
+    color: #2c84bf; /* Text color */
+    text-align: center;
+    animation: unspin 1s linear infinite; /* Counteract the spin */
+}
 /* Keyframes for the spinning animation */
 @keyframes spin {
     0% { transform: translate(-50%, -50%) rotate(0deg); }
     100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes unspin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(-360deg); }
 }
 
 .face_overlay.detection_start.ok {
