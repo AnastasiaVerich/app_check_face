@@ -121,6 +121,7 @@ export const useFaceDetectionNew = (
         let animationFrameId = null;
         let lastDetectionTime = 0;
 
+        console.log(`${humanLoaded}${isCameraOn}${isLoaded}${videoRef.current}${canvasRef.current}${videoBorderRef.current}${humanInstance}${new Date()}`)
         if (humanLoaded &&
             isCameraOn &&
             isLoaded &&
