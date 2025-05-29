@@ -139,7 +139,7 @@ export const useFaceDetectionNew = (
                     if (videoRef.current && canvasRef.current && videoBorderRef.current) { // Если video и canvas элементы существуют
 
                         if (now - lastDetectionTime >= 200) { // Детекция каждые 200 мс
-                            console.log(y+') 1')
+                            console.log(y+') 1' + new Date())
 
                             const video = videoRef.current;
                             const canvas = canvasRef.current;
@@ -160,17 +160,17 @@ export const useFaceDetectionNew = (
                             };
 
                             if (!inputSize.width || !inputSize.height) return;
-                            console.log(y+') 2')
+                            console.log(y+') 2' + new Date())
 
                             let faces: FaceResult[] = [];
                             const result = await humanInstance.detect(video); // Выполняем детекцию
-                            console.log(y+') 3')
+                            console.log(y+') 3' + new Date())
 
                             faces = result.face || []; // Извлекаем массив лиц
                             lastDetectionTime = now;
 
                             const resizedFaces = resizeResults(faces, inputSize, displaySize);
-                            console.log(y+') 4')
+                            console.log(y+') 4' + new Date())
 
                             let ctx: any = null
                             if (isDraw) {
@@ -178,7 +178,7 @@ export const useFaceDetectionNew = (
                                 if (!ctx) return
                                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                             }
-                            console.log(y+') 5')
+                            console.log(y+') 5' + new Date())
 
 
                             // Проверяем, попадает ли лицо в оверлей
