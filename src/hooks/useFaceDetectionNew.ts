@@ -22,6 +22,7 @@ const config: Partial<Config> = {
     backend: "webgl", // Используем WebGL для ускорения (можно заменить на "wasm" или "cpu")
     cacheSensitivity: 0, // Отключаем кэширование для реального времени
 };
+
 // Интерфейс для размеров
 interface Dimensions {
     width: number;
@@ -94,6 +95,7 @@ export const useFaceDetectionNew = (
 ) => {
     const [isFaceDetected, setIsFaceDetected] = useState(false);// Состояние для отслеживания, было ли найдено лицо
     const [humanLoaded, setHumanLoaded] = useState(false);
+    const [detectionStart, setDetectionStart] = useState(false);
     const [humanInstance, setHumanInstance] = useState<Human | null>(null);
     const [isDraw] = useState(false);// Состояние для отслеживания, загружены ли модели
 
@@ -115,12 +117,10 @@ export const useFaceDetectionNew = (
         initHuman();
     }, []);
 
-
     // Детекция лиц
     useEffect(() => {
         let animationFrameId = null;
         let lastDetectionTime = 0;
-
         console.log(`${humanLoaded}${isCameraOn}${isLoaded}${videoRef.current}${canvasRef.current}${videoBorderRef.current}${humanInstance}${new Date()}`)
         if (humanLoaded &&
             isCameraOn &&
@@ -138,9 +138,8 @@ export const useFaceDetectionNew = (
                     i++
                     let y = i
                     if (videoRef.current && canvasRef.current && videoBorderRef.current) { // Если video и canvas элементы существуют
-
+                        setDetectionStart(true)
                         if (now - lastDetectionTime >= 200) { // Детекция каждые 200 мс
-                            console.log(y+') 1' + new Date())
 
                             const video = videoRef.current;
                             const canvas = canvasRef.current;
@@ -161,17 +160,14 @@ export const useFaceDetectionNew = (
                             };
 
                             if (!inputSize.width || !inputSize.height) return;
-                            console.log(y+') 2' + new Date())
 
                             let faces: FaceResult[] = [];
                             const result = await humanInstance.detect(video); // Выполняем детекцию
-                            console.log(y+') 3' + new Date())
 
                             faces = result.face || []; // Извлекаем массив лиц
                             lastDetectionTime = now;
 
                             const resizedFaces = resizeResults(faces, inputSize, displaySize);
-                            console.log(y+') 4' + new Date())
 
                             let ctx: any = null
                             if (isDraw) {
@@ -179,7 +175,6 @@ export const useFaceDetectionNew = (
                                 if (!ctx) return
                                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                             }
-                            console.log(y+') 5' + new Date())
 
 
                             // Проверяем, попадает ли лицо в оверлей
@@ -233,5 +228,5 @@ export const useFaceDetectionNew = (
 
     }, [humanLoaded, isCameraOn, isLoaded, humanInstance]);
 
-    return {isFaceDetected, humanLoaded};
+    return {isFaceDetected, detectionStart};
 };

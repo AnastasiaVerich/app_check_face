@@ -53,14 +53,24 @@
     height: 300px;
     border-radius: 50%;
 }
-
-.face_overlay.ok {
-    border: 4px solid var(--tg-theme-button-color, #3390ec);
-    box-shadow: 0 0 20px var(--tg-theme-button-color, #3390ec);
+.face_overlay.detection_loaded {
+    border: 4px solid transparent;
+    border-top-color: #3498db; /* Blue color for the spinner */
+    border-bottom-color: #3498db;
+    animation: spin 1s linear infinite; /* Spinning animation */
 }
 
-.face_overlay.err {
+/* Keyframes for the spinning animation */
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.face_overlay.detection_start.ok {
+    border: 4px solid var(--tg-theme-button-color, #3390ec);
+}
+
+.face_overlay.detection_start.err {
     border: 4px solid var(--tg-theme-subtitle-text-color, #707579);
-    box-shadow: 0 0 20px var(--tg-theme-subtitle-text-color, #707579);
 }
 

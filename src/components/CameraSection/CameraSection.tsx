@@ -34,6 +34,7 @@ const CameraSection: React.FC<CameraProps> = ({
 
     const {
         isFaceDetected,
+        detectionStart
     } = useFaceDetectionNew(isCameraOn, videoRef, canvasRef, videoBorderRef,isLoaded)
 
     useEffect(() => {
@@ -140,7 +141,7 @@ const CameraSection: React.FC<CameraProps> = ({
                 />
                 {/* Оверлей для отображения информации о распознавании лица */}
                 <div
-                    className={`face_overlay ${isFaceDetected ? 'ok' : 'err'}`}
+                    className={`face_overlay ${isFaceDetected ? 'ok' : 'err'} ${detectionStart ? 'detection_start' : 'detection_loaded'}`}
 
                 />
             </Section>
