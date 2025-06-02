@@ -41,22 +41,19 @@ function App() {
     }, [])
 
     function onGetGeolocation() {
-        setLocation('start   ')
         if ("geolocation" in navigator) {
-            setLocation(e=>e+'navigator_check   ')
-
             navigator.geolocation.getCurrentPosition(
                 (position) => {
                     const {latitude, longitude} = position.coords;
 
-                    setLocation(e=>e+JSON.stringify({latitude, longitude}))
+                    setLocation(JSON.stringify({latitude, longitude}))
                 },
                 (error) => {
-                    setLocation(e=>e+"У пользователя отключен доступ к геолокации на устройстве: " + error.message)
+                    setLocation("У пользователя отключен доступ к геолокации на устройстве")
                 }
             );
         } else {
-            setLocation(e=>e+"Геолокация не поддерживается");
+            setLocation("Геолокация не поддерживается");
         }
     }
 
