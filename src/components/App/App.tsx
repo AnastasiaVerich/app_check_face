@@ -52,7 +52,7 @@ function App() {
                     setLocation(e=>e+JSON.stringify({latitude, longitude}))
                 },
                 (error) => {
-                    setLocation(e=>e+"Ошибка: " + error.message)
+                    setLocation(e=>e+"У пользователя отключен доступ к геолокации на устройстве: " + error.message)
                 }
             );
         } else {
