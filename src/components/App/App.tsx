@@ -1,19 +1,17 @@
-import React, {Suspense, useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import './App.css'
 import '../../styles/variables.css'
 import {ParamsType, Telegram} from "../../types/type";
 import {Text} from "../../shared/ui/Text/Text";
-import {IDENTIFICATION, IS_CAMERA_OFF, ON_CAMERA, PLEASE_ON_CAMERA} from "../../types/const";
+import {IDENTIFICATION, IS_CAMERA_OFF, ON_CAMERA, PLEASE_ON_CAMERA, SEND_GEOLOCATION} from "../../types/const";
 import {Section} from "../../shared/ui/Section/Section";
 import {Svg} from "../../shared/ui/Svg/Svg";
 import {ReactComponent as CameraSvg} from '../../shared/assets/svg/Camea.svg'
+import {ReactComponent as GeolocationSvg} from '../../shared/assets/svg/Geolocation.svg'
 import {ReactComponent as ArrowSvg} from '../../shared/assets/svg/Arrow.svg'
 import {HStack} from "../../shared/ui/HStack/HStack";
 import {CommonSection} from "../../shared/ui/CommonSection/CommonSection";
 import {VStack} from "../../shared/ui/VStack/VStack";
-import {CameraSectionAsync} from "../CameraSection/CameraSection.async";
-import {PhotoSendSectionAsync} from "../PhotoSendSection/PhotoSendSection.async";
-import {Skeleton} from "../../shared/ui/Skeleton/Skeleton";
 import CameraSection from "../CameraSection/CameraSection";
 import PhotoSendSection from "../PhotoSendSection/PhotoSendSection";
 
@@ -41,9 +39,27 @@ function App() {
 
     }, [])
 
+    function onGetGeolocation() {
+
+        if ("geolocation" in navigator ) {
+
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const { latitude, longitude } = position.coords;
+
+                    console.log(JSON.stringify({ latitude, longitude }));
+                },
+                (error) => {
+                    console.log("Ошибка: " + error.message)
+                }
+            );
+        } else {
+            console.log("Геолокация не поддерживается");
+        }
+    }
+
     return (
         <VStack className="app">
-
 
             <CommonSection
                 max
@@ -96,6 +112,18 @@ function App() {
                         <Svg Svg={CameraSvg}/>
                         <Text
                             text={ON_CAMERA}
+                            type={'text'}
+                            max
+                        />
+                        <Svg width={'12px'} height={'12px'} color={'subtitle'} Svg={ArrowSvg}/>
+                    </HStack>
+
+                </Section>
+                <Section clickable max onClick={onGetGeolocation}>
+                    <HStack gap={'10'} max>
+                        <Svg Svg={GeolocationSvg}/>
+                        <Text
+                            text={SEND_GEOLOCATION}
                             type={'text'}
                             max
                         />
