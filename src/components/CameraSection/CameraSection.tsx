@@ -8,7 +8,7 @@ import {Svg} from "../../shared/ui/Svg/Svg";
 import {CommonSection} from "../../shared/ui/CommonSection/CommonSection";
 import {ReactComponent as CameraSvg} from '../../shared/assets/svg/Camea.svg'
 import {ReactComponent as ArrowSvg} from '../../shared/assets/svg/Arrow.svg'
-import {useFaceDetectionNew} from "../../hooks/useFaceDetectionNew";
+import {useFaceDetection} from "../../hooks/useFaceDetection";
 
 
 interface CameraProps {
@@ -34,7 +34,7 @@ const CameraSection: React.FC<CameraProps> = ({
     const {
         isFaceDetected,
         detectionStart
-    } = useFaceDetectionNew(isCameraOn, videoRef, canvasRef, videoBorderRef,isLoaded)
+    } = useFaceDetection(isCameraOn, videoRef, canvasRef, videoBorderRef,isLoaded)
 
     useEffect(() => {
         const startVideo = async () => {
