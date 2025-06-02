@@ -41,21 +41,22 @@ function App() {
     }, [])
 
     function onGetGeolocation() {
-
+        setLocation('start   ')
         if ("geolocation" in navigator) {
+            setLocation(e=>e+'navigator_check   ')
 
             navigator.geolocation.getCurrentPosition(
                 (position) => {
                     const {latitude, longitude} = position.coords;
 
-                    setLocation(JSON.stringify({latitude, longitude}))
+                    setLocation(e=>e+JSON.stringify({latitude, longitude}))
                 },
                 (error) => {
-                    setLocation("Ошибка: " + error.message)
+                    setLocation(e=>e+"Ошибка: " + error.message)
                 }
             );
         } else {
-            setLocation("Геолокация не поддерживается");
+            setLocation(e=>e+"Геолокация не поддерживается");
         }
     }
 
