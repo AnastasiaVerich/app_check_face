@@ -51,11 +51,11 @@ function App() {
                     setLocation(JSON.stringify({latitude, longitude}))
                 },
                 (error) => {
-                    console.log("Ошибка: " + error.message)
+                    setLocation("Ошибка: " + error.message)
                 }
             );
         } else {
-            console.log("Геолокация не поддерживается");
+            setLocation("Геолокация не поддерживается");
         }
     }
 
