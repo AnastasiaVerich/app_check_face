@@ -18,6 +18,7 @@ import PhotoSendSection from "../PhotoSendSection/PhotoSendSection";
 
 function App() {
 
+    const [location, setLocation] = useState<string | null>(null);
     const [params, setParams] = useState<ParamsType>(null); // Параметры приложения
     const [photoUrl, setPhotoUrl] = useState<string | null>(null); // URL фото
     const [error, setError] = useState<string | null>(null);// Сообщение об ошибке
@@ -41,13 +42,13 @@ function App() {
 
     function onGetGeolocation() {
 
-        if ("geolocation" in navigator ) {
+        if ("geolocation" in navigator) {
 
             navigator.geolocation.getCurrentPosition(
                 (position) => {
-                    const { latitude, longitude } = position.coords;
+                    const {latitude, longitude} = position.coords;
 
-                    console.log(JSON.stringify({ latitude, longitude }));
+                    setLocation(JSON.stringify({latitude, longitude}))
                 },
                 (error) => {
                     console.log("Ошибка: " + error.message)
@@ -107,7 +108,7 @@ function App() {
                     </VStack>
                 </Section>
 
-                <Section clickable max onClick={()=>setIsCameraOn(true)}>
+                <Section clickable max onClick={() => setIsCameraOn(true)}>
                     <HStack gap={'10'} max>
                         <Svg Svg={CameraSvg}/>
                         <Text
@@ -133,47 +134,59 @@ function App() {
                 </Section>
 
             </CommonSection>
+            {location && <Section clickable max onClick={onGetGeolocation}>
+                <HStack gap={'10'} max>
+                    <Text
+                        text={location}
+                        type={'hint'}
+                        align={'start'}
+                        max
+                    />
+                </HStack>
+
+            </Section>}
+
 
             {isCameraOn &&
-               /* <Suspense fallback={<CommonSection max>
-                    <Skeleton
-                        width="100%"
-                        height={`calc(var(--tg-viewport-height) / 2 )`}
-                    />
-                </CommonSection>}>*/
-                    <CameraSection
-                        setError={setError}
-                        setPhotoUrl={setPhotoUrl}
-                        setIsCameraOn={setIsCameraOn}
-                        isCameraOn={isCameraOn}
-                    />
-               /* </Suspense>*/
+                /* <Suspense fallback={<CommonSection max>
+                     <Skeleton
+                         width="100%"
+                         height={`calc(var(--tg-viewport-height) / 2 )`}
+                     />
+                 </CommonSection>}>*/
+                <CameraSection
+                    setError={setError}
+                    setPhotoUrl={setPhotoUrl}
+                    setIsCameraOn={setIsCameraOn}
+                    isCameraOn={isCameraOn}
+                />
+                /* </Suspense>*/
 
             }
             {!isCameraOn && photoUrl && (
-             /*   <Suspense fallback={<CommonSection max>
-                    <Skeleton
-                        width="100%"
-                        height={`calc(var(--tg-viewport-height) / 2 )`}
-                    />
-                    <Skeleton
-                        width="100%"
-                        height={`60px`}
-                    />
-                    <Skeleton
-                        width="100%"
-                        height={`65px`}
-                    />
-                </CommonSection>}>*/
-                    <PhotoSendSection
-                        photoUrl={photoUrl}
-                        params={params}
-                        setIsCameraOn={setIsCameraOn}
-                        setError={setError}
-                    />
+                /*   <Suspense fallback={<CommonSection max>
+                       <Skeleton
+                           width="100%"
+                           height={`calc(var(--tg-viewport-height) / 2 )`}
+                       />
+                       <Skeleton
+                           width="100%"
+                           height={`60px`}
+                       />
+                       <Skeleton
+                           width="100%"
+                           height={`65px`}
+                       />
+                   </CommonSection>}>*/
+                <PhotoSendSection
+                    photoUrl={photoUrl}
+                    params={params}
+                    setIsCameraOn={setIsCameraOn}
+                    setError={setError}
+                />
                 /*</Suspense>*/
 
-                )
+            )
 
             }
 
