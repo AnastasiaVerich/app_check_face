@@ -91,7 +91,8 @@ export const useFaceDetection = (
     videoRef: React.RefObject<HTMLVideoElement>, // Ссылка на элемент video, который будет показывать видео с камеры
     canvasRef: React.RefObject<HTMLCanvasElement>, // Ссылка на элемент canvas, на котором будет отображаться сделанное фото
     videoBorderRef: React.RefObject<HTMLDivElement>,
-    isLoaded: boolean
+    isLoaded: boolean,
+    setLog: any
 ) => {
     const [isFaceDetected, setIsFaceDetected] = useState(false);// Состояние для отслеживания, было ли найдено лицо
     const [humanLoaded, setHumanLoaded] = useState(false);
@@ -121,7 +122,9 @@ export const useFaceDetection = (
     useEffect(() => {
         let animationFrameId = null;
         let lastDetectionTime = 0;
-        console.log(`${humanLoaded}${isCameraOn}${isLoaded}${videoRef.current}${canvasRef.current}${videoBorderRef.current}${humanInstance}${new Date()}`)
+        const new_log = `${humanLoaded}${isCameraOn}${isLoaded}${Boolean(videoRef.current)}${Boolean(canvasRef.current)}${Boolean(videoBorderRef.current)}${Boolean(humanInstance)}`
+
+        setLog(new_log)
         if (humanLoaded &&
             isCameraOn &&
             isLoaded &&
@@ -230,3 +233,4 @@ export const useFaceDetection = (
 
     return {isFaceDetected, detectionStart};
 };
+

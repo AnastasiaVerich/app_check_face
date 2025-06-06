@@ -12,7 +12,8 @@ import {useFaceDetection} from "../../hooks/useFaceDetection";
 
 
 interface CameraProps {
-    setError: any,    // Признак, что лицо было обнаружено на видео
+    log: string |null,    // Признак, что лицо было обнаружено на видео
+    setLog: any,    // Признак, что лицо было обнаружено на видео
 
     setPhotoUrl: any, // Функция для установки URL снимка (состояние для изображения)
     setIsCameraOn: any
@@ -23,7 +24,8 @@ const CameraSection: React.FC<CameraProps> = ({
                                                   setPhotoUrl,
                                                   isCameraOn,
                                                   setIsCameraOn,
-                                                  setError,
+                                                  setLog,
+                                                  log,
                                               }) => {
     const [isLoaded, setIsLoaded] = useState(false);
     const videoBorderRef = useRef<HTMLDivElement | null>(null); // Ссылка на элемент video, который будет показывать видео с камеры
@@ -34,7 +36,7 @@ const CameraSection: React.FC<CameraProps> = ({
     const {
         isFaceDetected,
         detectionStart
-    } = useFaceDetection(isCameraOn, videoRef, canvasRef, videoBorderRef,isLoaded)
+    } = useFaceDetection(isCameraOn, videoRef, canvasRef, videoBorderRef,isLoaded,setLog)
 
     useEffect(() => {
         const startVideo = async () => {
@@ -57,7 +59,7 @@ const CameraSection: React.FC<CameraProps> = ({
                             videoRef.current.play()
                                 .catch(err => {
                                     console.error(`Ошибка воспроизведения видео ${new Date().toLocaleTimeString()}:`, err);
-                                    setError("Не удалось воспроизвести видео");
+                                    setLog("Не удалось воспроизвести видео");
                                 });
                         }
 
@@ -67,13 +69,13 @@ const CameraSection: React.FC<CameraProps> = ({
                         setIsLoaded(true);
                     }, {once: true});
                     setPhotoUrl(null);
-                    setError(null);
+                    setLog(null);
                 } else {
                     console.warn("videoRef не готов");
-                    setError("Ошибка инициализации видео");
+                    setLog("Ошибка инициализации видео");
                 }
             } catch (err) {
-                setError("Ошибка доступа к камере");
+                setLog("Ошибка доступа к камере");
                 console.error("Ошибка getUserMedia:", err);
             }
         };
@@ -170,6 +172,18 @@ const CameraSection: React.FC<CameraProps> = ({
                 </HStack>
 
             </Section>
+            {log && <Section
+                max
+            >
+                <HStack gap={'10'} max>
+                    <Text
+                        text={log}
+                        type={'text'}
+                        max
+                    />
+                </HStack>
+
+            </Section>}
         </CommonSection>
     );
 };
