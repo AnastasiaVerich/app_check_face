@@ -5,6 +5,7 @@ import {ParamsType, Telegram} from "../../types/type";
 import {VStack} from "../../shared/ui/VStack/VStack";
 import {PhotoAsync} from "../Photo/Photo.async";
 import {GeolocationAsync} from "../Geolocation/Geolocation.async";
+import Photo from "../Photo/Photo";
 
 
 function App() {
@@ -33,7 +34,7 @@ function App() {
         <VStack className="app">
             {
                 (params?.type === 'registration' || params?.type === 'identification')
-                && <PhotoAsync
+                && <Photo
                     {...params}
                 />
             }
