@@ -14,6 +14,7 @@ import {useFaceDetection} from "../../hooks/useFaceDetection";
 interface CameraProps {
     log: string |null,    // Признак, что лицо было обнаружено на видео
     setLog: any,    // Признак, что лицо было обнаружено на видео
+    setError: any,    // Признак, что лицо было обнаружено на видео
 
     setPhotoUrl: any, // Функция для установки URL снимка (состояние для изображения)
     setIsCameraOn: any
@@ -25,6 +26,7 @@ const CameraSection: React.FC<CameraProps> = ({
                                                   isCameraOn,
                                                   setIsCameraOn,
                                                   setLog,
+                                                  setError,
                                                   log,
                                               }) => {
     const [isLoaded, setIsLoaded] = useState(false);
@@ -59,7 +61,7 @@ const CameraSection: React.FC<CameraProps> = ({
                             videoRef.current.play()
                                 .catch(err => {
                                     console.error(`Ошибка воспроизведения видео ${new Date().toLocaleTimeString()}:`, err);
-                                    setLog("Не удалось воспроизвести видео");
+                                    setError("Не удалось воспроизвести видео");
                                 });
                         }
 
@@ -69,13 +71,13 @@ const CameraSection: React.FC<CameraProps> = ({
                         setIsLoaded(true);
                     }, {once: true});
                     setPhotoUrl(null);
-                    setLog(null);
+                    setError(null);
                 } else {
                     console.warn("videoRef не готов");
-                    setLog("Ошибка инициализации видео");
+                    setError("Ошибка инициализации видео");
                 }
             } catch (err) {
-                setLog("Ошибка доступа к камере");
+                setError("Ошибка доступа к камере");
                 console.error("Ошибка getUserMedia:", err);
             }
         };

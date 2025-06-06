@@ -17,6 +17,7 @@ const Photo: React.FC<ParamsType> = (params) => {
 
     const [photoUrl, setPhotoUrl] = useState<string | null>(null); // URL фото
     const [log, setLog] = useState<string | null>(null);// Сообщение об ошибке
+    const [error, setError] = useState<string | null>(null);// Сообщение об ошибке
     const [isCameraOn, setIsCameraOn] = useState(false);// Состояние, показывающее включена ли камера
 
 
@@ -87,6 +88,7 @@ const Photo: React.FC<ParamsType> = (params) => {
                 <CameraSection
                     log={log}
                     setLog={setLog}
+                    setError={setError}
                     setPhotoUrl={setPhotoUrl}
                     setIsCameraOn={setIsCameraOn}
                     isCameraOn={isCameraOn}
@@ -98,7 +100,7 @@ const Photo: React.FC<ParamsType> = (params) => {
                     photoUrl={photoUrl}
                     params={params}
                     setIsCameraOn={setIsCameraOn}
-                    setError={setLog}
+                    setError={setError}
                 />
 
             )

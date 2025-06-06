@@ -16,13 +16,8 @@ function App() {
         // Получаем параметры из URL
         const urlParams = new URLSearchParams(window.location.search);
         const data = JSON.parse(decodeURIComponent(urlParams?.get('data') ?? '{}'));
-        //setParams(data)
-        setParams({
-            type:'registration',
-            userPhone:'',
-            userId:'',
-            isSavePhoto:'1',
-        })
+        setParams(data)
+
 
         // Синхронизация стилей из Telegram WebApp
         const tg: Telegram | undefined = 'Telegram' in window ? window.Telegram as Telegram : undefined;
