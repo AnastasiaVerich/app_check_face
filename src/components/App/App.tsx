@@ -10,14 +10,18 @@ import Photo from "../Photo/Photo";
 
 function App() {
 
-    const [params, setParams] = useState<ParamsType>(null); // Параметры приложения
+    const [params, setParams] = useState<ParamsType>({
+        type:'registration',
+        isSavePhoto:'1', userId: "", userPhone: ""
+
+    }); // Параметры приложения
 
     useEffect(() => {
 
         // Получаем параметры из URL
         const urlParams = new URLSearchParams(window.location.search);
         const data = JSON.parse(decodeURIComponent(urlParams?.get('data') ?? '{}'));
-        setParams(data)
+        //setParams(data)
 
 
         // Синхронизация стилей из Telegram WebApp

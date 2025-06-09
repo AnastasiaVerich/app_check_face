@@ -95,6 +95,7 @@ export const useFaceDetection = (
     setLog: any
 ) => {
     const [isFaceDetected, setIsFaceDetected] = useState(false);// Состояние для отслеживания, было ли найдено лицо
+    const [step, setStep] = useState('');// Состояние для отслеживания, было ли найдено лицо
     const [humanLoaded, setHumanLoaded] = useState(false);
     const [detectionStart, setDetectionStart] = useState(false);
     const [humanInstance, setHumanInstance] = useState<Human | null>(null);
@@ -105,13 +106,19 @@ export const useFaceDetection = (
         const initHuman = async () => {
             console.log("Начало инициализации Human:", new Date().toISOString());
             try {
+                setStep('1')
                 const human = new Human(config);
-                await human.load(); // Загружаем модели
-                await human.warmup(); // Прогреваем модель для ускорения первого вызова
+                setStep('12')
+                await human.load();
+                setStep('123')
+                await human.warmup();
+                setStep('1234')
                 setHumanInstance(human);
                 setHumanLoaded(true);
+                setStep('12345')
                 console.log("Human инициализирован:", new Date().toISOString());
             } catch (error) {
+                setStep(prev=>prev+error)
                 console.error("Ошибка инициализации Human:", error);
             }
         };
@@ -122,7 +129,7 @@ export const useFaceDetection = (
     useEffect(() => {
         let animationFrameId = null;
         let lastDetectionTime = 0;
-        const new_log = `${humanLoaded}${isCameraOn}${isLoaded}${Boolean(videoRef.current)}${Boolean(canvasRef.current)}${Boolean(videoBorderRef.current)}${Boolean(humanInstance)}`
+        const new_log = `${humanLoaded}${isCameraOn}${isLoaded}${Boolean(videoRef.current)}${Boolean(canvasRef.current)}${Boolean(videoBorderRef.current)}${Boolean(humanInstance)}${step}`
 
         setLog(new_log)
         if (humanLoaded &&
@@ -229,7 +236,7 @@ export const useFaceDetection = (
             detectFace()
         }
 
-    }, [humanLoaded, isCameraOn, isLoaded, humanInstance]);
+    }, [humanLoaded, isCameraOn, isLoaded, humanInstance,step]);
 
     return {isFaceDetected, detectionStart};
 };

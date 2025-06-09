@@ -1,3 +1,7 @@
+.wrap_any{
+    overflow-wrap: anywhere;
+}
+
 .video_box {
     display: flex;
     justify-content: center;

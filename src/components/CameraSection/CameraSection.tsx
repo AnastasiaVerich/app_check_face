@@ -9,6 +9,7 @@ import {CommonSection} from "../../shared/ui/CommonSection/CommonSection";
 import {ReactComponent as CameraSvg} from '../../shared/assets/svg/Camea.svg'
 import {ReactComponent as ArrowSvg} from '../../shared/assets/svg/Arrow.svg'
 import {useFaceDetection} from "../../hooks/useFaceDetection";
+import {useFaceDetectionNew} from "../../hooks/useFaceDetectionNEW";
 
 
 interface CameraProps {
@@ -179,6 +180,7 @@ const CameraSection: React.FC<CameraProps> = ({
             >
                 <HStack gap={'10'} max>
                     <Text
+                        className={'wrap_any'}
                         text={log}
                         type={'text'}
                         max
