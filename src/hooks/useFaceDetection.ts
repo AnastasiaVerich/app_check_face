@@ -19,9 +19,9 @@ const config: Partial<Config> = {
     body: {enabled: false}, // Отключаем детекцию тела
     hand: {enabled: false}, // Отключаем детекцию рук
     gesture: {enabled: false}, // Отключаем детекцию жестов
-    backend: "webgl", // Используем WebGL для ускорения (можно заменить на "wasm" или "cpu")
     cacheSensitivity: 0, // Отключаем кэширование для реального времени
 };
+
 
 // Интерфейс для размеров
 interface Dimensions {
@@ -34,6 +34,17 @@ interface ScaledFaceResult extends FaceResult {
     box: [number, number, number, number]; // [x, y, width, height]
 }
 
+// Функция проверки поддержки WebGL
+const isWebGLSupported = (): boolean => {
+    try {
+        const canvas = document.createElement("canvas");
+        const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+        return !!gl && gl instanceof WebGLRenderingContext;
+    } catch (e) {
+        console.error("WebGL check failed:", e);
+        return false;
+    }
+};
 // Функция масштабирования
 function resizeResults<T extends FaceResult | FaceResult[]>(
     results: T,
@@ -106,8 +117,11 @@ export const useFaceDetection = (
         const initHuman = async () => {
             console.log("Начало инициализации Human:", new Date().toISOString());
             try {
+                const selectedBackend = isWebGLSupported() ? "webgl" : "wasm";
+                const humanConfig: Partial<Config> = { ...config, backend: selectedBackend };
+                console.log(`Выбран backend: ${selectedBackend}`);
                 setStep('1')
-                const human = new Human(config);
+                const human = new Human(humanConfig);
                 setStep('12')
                 await human.load();
                 setStep('123')

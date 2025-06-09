@@ -20,7 +20,7 @@ function App() {
 
         // Получаем параметры из URL
         const urlParams = new URLSearchParams(window.location.search);
-        const data = JSON.parse(decodeURIComponent(urlParams?.get('data') ?? '{}'));
+        const data = JSON.parse(decodeURIComponent(urlParams?.get('data') ?? '{"type":"registration","isSavePhoto":"1","userId":"","userPhone":""}'));
         setParams(data)
 
 
