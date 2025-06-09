@@ -19,7 +19,7 @@ const config: Partial<Config> = {
     body: {enabled: false}, // Отключаем детекцию тела
     hand: {enabled: false}, // Отключаем детекцию рук
     gesture: {enabled: false}, // Отключаем детекцию жестов
-    backend: "webgl", // Используем WebGL для ускорения (можно заменить на "wasm" или "cpu")
+    backend: "cpu", // Используем WebGL для ускорения (можно заменить на "wasm" или "cpu")
     cacheSensitivity: 0, // Отключаем кэширование для реального времени
 };
 
