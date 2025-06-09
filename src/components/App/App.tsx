@@ -21,7 +21,7 @@ function App() {
         // Получаем параметры из URL
         const urlParams = new URLSearchParams(window.location.search);
         const data = JSON.parse(decodeURIComponent(urlParams?.get('data') ?? '{}'));
-        //setParams(data)
+        setParams(data)
 
 
         // Синхронизация стилей из Telegram WebApp
