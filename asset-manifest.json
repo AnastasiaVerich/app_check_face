@@ -1,26 +1,18 @@
 {
   "files": {
-    "main.css": "https://AnastasiaVerich.github.io/app_check_face/static/css/main.f5d451c6.css",
-    "main.js": "https://AnastasiaVerich.github.io/app_check_face/static/js/main.bec20dbc.js",
-    "static/css/119.9927ee55.chunk.css": "https://AnastasiaVerich.github.io/app_check_face/static/css/119.9927ee55.chunk.css",
-    "static/js/119.f81a0fa6.chunk.js": "https://AnastasiaVerich.github.io/app_check_face/static/js/119.f81a0fa6.chunk.js",
-    "static/css/224.6ef2c71b.chunk.css": "https://AnastasiaVerich.github.io/app_check_face/static/css/224.6ef2c71b.chunk.css",
-    "static/js/224.85e2b113.chunk.js": "https://AnastasiaVerich.github.io/app_check_face/static/js/224.85e2b113.chunk.js",
-    "static/js/182.cc7320c3.chunk.js": "https://AnastasiaVerich.github.io/app_check_face/static/js/182.cc7320c3.chunk.js",
+    "main.css": "https://AnastasiaVerich.github.io/app_check_face/static/css/main.e0dbcd95.css",
+    "main.js": "https://AnastasiaVerich.github.io/app_check_face/static/js/main.2497b868.js",
+    "static/js/224.a2e00d59.chunk.js": "https://AnastasiaVerich.github.io/app_check_face/static/js/224.a2e00d59.chunk.js",
     "index.html": "https://AnastasiaVerich.github.io/app_check_face/index.html",
     "static/media/Camea.svg": "https://AnastasiaVerich.github.io/app_check_face/static/media/Camea.9f20b0db6505e8b7520a0e6122529d24.svg",
     "static/media/Geolocation.svg": "https://AnastasiaVerich.github.io/app_check_face/static/media/Geolocation.8ba7c83309c8cb6e5d74e00a4811cc3e.svg",
     "static/media/Arrow.svg": "https://AnastasiaVerich.github.io/app_check_face/static/media/Arrow.cb0a50c25f777dde5217b7f02c5409b3.svg",
-    "main.f5d451c6.css.map": "https://AnastasiaVerich.github.io/app_check_face/static/css/main.f5d451c6.css.map",
-    "main.bec20dbc.js.map": "https://AnastasiaVerich.github.io/app_check_face/static/js/main.bec20dbc.js.map",
-    "119.9927ee55.chunk.css.map": "https://AnastasiaVerich.github.io/app_check_face/static/css/119.9927ee55.chunk.css.map",
-    "119.f81a0fa6.chunk.js.map": "https://AnastasiaVerich.github.io/app_check_face/static/js/119.f81a0fa6.chunk.js.map",
-    "224.6ef2c71b.chunk.css.map": "https://AnastasiaVerich.github.io/app_check_face/static/css/224.6ef2c71b.chunk.css.map",
-    "224.85e2b113.chunk.js.map": "https://AnastasiaVerich.github.io/app_check_face/static/js/224.85e2b113.chunk.js.map",
-    "182.cc7320c3.chunk.js.map": "https://AnastasiaVerich.github.io/app_check_face/static/js/182.cc7320c3.chunk.js.map"
+    "main.e0dbcd95.css.map": "https://AnastasiaVerich.github.io/app_check_face/static/css/main.e0dbcd95.css.map",
+    "main.2497b868.js.map": "https://AnastasiaVerich.github.io/app_check_face/static/js/main.2497b868.js.map",
+    "224.a2e00d59.chunk.js.map": "https://AnastasiaVerich.github.io/app_check_face/static/js/224.a2e00d59.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.f5d451c6.css",
-    "static/js/main.bec20dbc.js"
+    "static/css/main.e0dbcd95.css",
+    "static/js/main.2497b868.js"
   ]
 }
