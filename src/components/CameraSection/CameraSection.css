@@ -12,9 +12,7 @@
     position: relative;
 }
 
-.video_box.hide {
-    opacity: 0;
-}
+
 
 .video_online {
     position: absolute;
@@ -25,7 +23,9 @@
     -webkit-transform: scaleX(-1);
     -moz-transform: scaleX(-1);
 }
-
+.video_online.hide {
+    opacity: 0;
+}
 .video_box__wrapper{
     position: absolute;
     width: 100%;

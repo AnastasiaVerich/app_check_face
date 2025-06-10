@@ -131,7 +131,7 @@ const CameraSection: React.FC<CameraProps> = ({
             <Section className={`video_box`}>
 
                 <video
-                    className="video_online"
+                    className={`video_online ${detectionStart ? '' : 'hide'}`}
                     ref={videoRef}
                     playsInline
                     webkit-playsinline="true"
