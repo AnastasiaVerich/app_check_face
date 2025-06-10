@@ -105,6 +105,7 @@ export const useFaceDetection = (
     isLoaded: boolean,
     setLog: any
 ) => {
+    //https://anastasiaverich.github.io/app_check_face/
     const [isFaceDetected, setIsFaceDetected] = useState(false);// Состояние для отслеживания, было ли найдено лицо
     const [step, setStep] = useState('');// Состояние для отслеживания, было ли найдено лицо
     const [humanLoaded, setHumanLoaded] = useState(false);
@@ -117,7 +118,7 @@ export const useFaceDetection = (
         const initHuman = async () => {
             console.log("Начало инициализации Human:", new Date().toISOString());
             try {
-                const selectedBackend = 'cpu'//isWebGLSupported() ? "webgl" : "wasm";
+                const selectedBackend = isWebGLSupported() ? "webgl" : "wasm";
                 const humanConfig: Partial<Config> = { ...config, backend: selectedBackend };
                 console.log(`Выбран backend: ${selectedBackend}`);
                 setStep(selectedBackend+'1')
@@ -125,8 +126,8 @@ export const useFaceDetection = (
                 setStep(selectedBackend+'12')
                 await human.load();
                 setStep(selectedBackend+'123')
-                const res = await human.warmup();
-                console.log(res)
+                //const res = await human.warmup();
+                //console.log(res)
                 setStep(selectedBackend+'1234')
                 setHumanInstance(human);
                 setHumanLoaded(true);
