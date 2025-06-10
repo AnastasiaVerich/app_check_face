@@ -117,7 +117,7 @@ export const useFaceDetection = (
         const initHuman = async () => {
             console.log("Начало инициализации Human:", new Date().toISOString());
             try {
-                const selectedBackend = isWebGLSupported() ? "webgl" : "wasm";
+                const selectedBackend = 'cpu'//isWebGLSupported() ? "webgl" : "wasm";
                 const humanConfig: Partial<Config> = { ...config, backend: selectedBackend };
                 console.log(`Выбран backend: ${selectedBackend}`);
                 setStep(selectedBackend+'1')
@@ -125,7 +125,8 @@ export const useFaceDetection = (
                 setStep(selectedBackend+'12')
                 await human.load();
                 setStep(selectedBackend+'123')
-                await human.warmup();
+                const res = await human.warmup();
+                console.log(res)
                 setStep(selectedBackend+'1234')
                 setHumanInstance(human);
                 setHumanLoaded(true);
