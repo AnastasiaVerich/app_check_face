@@ -143,7 +143,7 @@ export const useFaceDetection = (
     useEffect(() => {
         let animationFrameId = null;
         let lastDetectionTime = 0;
-        const new_log = `${humanLoaded}${isCameraOn}${isLoaded}${Boolean(videoRef.current)}${Boolean(canvasRef.current)}${Boolean(videoBorderRef.current)}${Boolean(humanInstance)}${step}`
+        const new_log = `logs:${humanLoaded}${isCameraOn}${isLoaded}${Boolean(videoRef.current)}${Boolean(canvasRef.current)}${Boolean(videoBorderRef.current)}${Boolean(humanInstance)}${step}`
 
         setLog(new_log)
         if (humanLoaded &&
