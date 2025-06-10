@@ -103,11 +103,10 @@ export const useFaceDetection = (
     canvasRef: React.RefObject<HTMLCanvasElement>, // Ссылка на элемент canvas, на котором будет отображаться сделанное фото
     videoBorderRef: React.RefObject<HTMLDivElement>,
     isLoaded: boolean,
-    setLog: any
 ) => {
     //https://anastasiaverich.github.io/app_check_face/
     const [isFaceDetected, setIsFaceDetected] = useState(false);// Состояние для отслеживания, было ли найдено лицо
-    const [step, setStep] = useState('');// Состояние для отслеживания, было ли найдено лицо
+    const [selectedBackend, setSelectedBackend] = useState('');// Состояние для отслеживания, было ли найдено лицо
     const [humanLoaded, setHumanLoaded] = useState(false);
     const [detectionStart, setDetectionStart] = useState(false);
     const [humanInstance, setHumanInstance] = useState<Human | null>(null);
@@ -121,20 +120,15 @@ export const useFaceDetection = (
                 const selectedBackend = isWebGLSupported() ? "webgl" : "wasm";
                 const humanConfig: Partial<Config> = { ...config, backend: selectedBackend };
                 console.log(`Выбран backend: ${selectedBackend}`);
-                setStep(selectedBackend+'1')
+                setSelectedBackend(selectedBackend)
                 const human = new Human(humanConfig);
-                setStep(selectedBackend+'12')
                 await human.load();
-                setStep(selectedBackend+'123')
                 //const res = await human.warmup();
                 //console.log(res)
-                setStep(selectedBackend+'1234')
                 setHumanInstance(human);
                 setHumanLoaded(true);
-                setStep(selectedBackend+'12345')
                 console.log("Human инициализирован:", new Date().toISOString());
             } catch (error) {
-                setStep(prev=>prev+error)
                 console.error("Ошибка инициализации Human:", error);
             }
         };
@@ -145,9 +139,7 @@ export const useFaceDetection = (
     useEffect(() => {
         let animationFrameId = null;
         let lastDetectionTime = 0;
-        const new_log = `${humanLoaded}${isCameraOn}${isLoaded}${Boolean(videoRef.current)}${Boolean(canvasRef.current)}${Boolean(videoBorderRef.current)}${Boolean(humanInstance)}${step}`
 
-        setLog(new_log)
         if (humanLoaded &&
             isCameraOn &&
             isLoaded &&
@@ -252,8 +244,8 @@ export const useFaceDetection = (
             detectFace()
         }
 
-    }, [humanLoaded, isCameraOn, isLoaded, humanInstance,step]);
+    }, [humanLoaded, isCameraOn, isLoaded, humanInstance,selectedBackend]);
 
-    return {isFaceDetected, detectionStart};
+    return {isFaceDetected, detectionStart, humanLoaded,humanInstance,selectedBackend};
 };
 

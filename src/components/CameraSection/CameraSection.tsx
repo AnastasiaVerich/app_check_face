@@ -10,11 +10,10 @@ import {ReactComponent as CameraSvg} from '../../shared/assets/svg/Camea.svg'
 import {ReactComponent as ArrowSvg} from '../../shared/assets/svg/Arrow.svg'
 import {useFaceDetection} from "../../hooks/useFaceDetection";
 import {useFaceDetectionNew} from "../../hooks/useFaceDetectionNEW";
+import {StatusBar} from "../../shared/ui/StatusBar/StatusBar";
 
 
 interface CameraProps {
-    log: string |null,    // Признак, что лицо было обнаружено на видео
-    setLog: any,    // Признак, что лицо было обнаружено на видео
     setError: any,    // Признак, что лицо было обнаружено на видео
 
     setPhotoUrl: any, // Функция для установки URL снимка (состояние для изображения)
@@ -26,9 +25,7 @@ const CameraSection: React.FC<CameraProps> = ({
                                                   setPhotoUrl,
                                                   isCameraOn,
                                                   setIsCameraOn,
-                                                  setLog,
                                                   setError,
-                                                  log,
                                               }) => {
     const [isLoaded, setIsLoaded] = useState(false);
     const videoBorderRef = useRef<HTMLDivElement | null>(null); // Ссылка на элемент video, который будет показывать видео с камеры
@@ -38,8 +35,11 @@ const CameraSection: React.FC<CameraProps> = ({
 
     const {
         isFaceDetected,
-        detectionStart
-    } = useFaceDetection(isCameraOn, videoRef, canvasRef, videoBorderRef,isLoaded,setLog)
+        detectionStart,
+        humanLoaded,
+        humanInstance,
+        selectedBackend
+    } = useFaceDetection(isCameraOn, videoRef, canvasRef, videoBorderRef,isLoaded)
 
     useEffect(() => {
         const startVideo = async () => {
@@ -124,6 +124,7 @@ const CameraSection: React.FC<CameraProps> = ({
 
         setIsCameraOn(false);
     };
+
     return (
         <CommonSection
             max
@@ -175,19 +176,23 @@ const CameraSection: React.FC<CameraProps> = ({
                 </HStack>
 
             </Section>
-            {log && <Section
+
+
+             <Section
                 max
             >
-                <HStack gap={'10'} max>
-                    <Text
-                        className={'wrap_any'}
-                        text={log}
-                        type={'text'}
-                        max
-                    />
+                <HStack gap={'5'} max>
+                   <StatusBar isActive={humanLoaded}/>
+                   <StatusBar isActive={isCameraOn}/>
+                   <StatusBar isActive={isLoaded}/>
+                   <StatusBar isActive={Boolean(videoRef.current)}/>
+                   <StatusBar isActive={Boolean(canvasRef.current)}/>
+                   <StatusBar isActive={Boolean(videoBorderRef.current)}/>
+                   <StatusBar isActive={Boolean(humanInstance)}/>
+                   <StatusBar isActive={selectedBackend === 'webgl'}/>
                 </HStack>
 
-            </Section>}
+            </Section>
         </CommonSection>
     );
 };

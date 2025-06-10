@@ -1,0 +1,9 @@
+.statusBar {
+    background-color: var(--tg-theme-subtitle-text-color, #707579); /* Серый цвет по умолчанию */
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.statusBar.active {
+    background-color: var(--tg-theme-button-color, #3390ec); /* Зеленый цвет, когда isActive = true */
+}
