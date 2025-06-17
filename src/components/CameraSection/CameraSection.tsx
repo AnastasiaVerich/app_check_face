@@ -8,9 +8,9 @@ import {Svg} from "../../shared/ui/Svg/Svg";
 import {CommonSection} from "../../shared/ui/CommonSection/CommonSection";
 import {ReactComponent as CameraSvg} from '../../shared/assets/svg/Camea.svg'
 import {ReactComponent as ArrowSvg} from '../../shared/assets/svg/Arrow.svg'
-import {useFaceDetection} from "../../hooks/useFaceDetection";
-import {useFaceDetectionNew} from "../../hooks/useFaceDetectionNEW";
 import {StatusBar} from "../../shared/ui/StatusBar/StatusBar";
+import {useFaceDetection2} from "../../hooks/useFaceDetection2";
+import {VStack} from "../../shared/ui/VStack/VStack";
 
 
 interface CameraProps {
@@ -34,12 +34,12 @@ const CameraSection: React.FC<CameraProps> = ({
     const streamRef = useRef<MediaStream | null>(null); // Ссылка на поток видео
 
     const {
-        isFaceDetected,
         detectionStart,
         humanLoaded,
         humanInstance,
-        selectedBackend
-    } = useFaceDetection(isCameraOn, videoRef, canvasRef, videoBorderRef,isLoaded)
+        selectedBackend,
+        valuesFaceId
+    } = useFaceDetection2(isCameraOn, videoRef, canvasRef, videoBorderRef,isLoaded)
 
     useEffect(() => {
         const startVideo = async () => {
@@ -125,6 +125,8 @@ const CameraSection: React.FC<CameraProps> = ({
         setIsCameraOn(false);
     };
 
+    const isFaceIdOk = Object.values(valuesFaceId).filter(e=>e === false).length >0?false:true
+
     return (
         <CommonSection
             max
@@ -146,9 +148,18 @@ const CameraSection: React.FC<CameraProps> = ({
                 />
                 {/* Оверлей для отображения информации о распознавании лица */}
                 <div
-                    className={`face_overlay ${isFaceDetected ? 'ok' : 'err'} ${detectionStart ? 'detection_start' : 'detection_loaded'}`}
+                    className={`face_overlay ${isFaceIdOk ? 'ok' : 'err'} ${detectionStart ? 'detection_start' : 'detection_loaded'}`}
 
                 />
+                <VStack className={'face_id_status_bar'} gap={'5'}>
+                    <StatusBar isActive={valuesFaceId.blinkDetected || false}/>
+                    <StatusBar isActive={valuesFaceId.antispoofCheck || false}/>
+                    <StatusBar isActive={valuesFaceId.livenessCheck || false}/>
+                    <StatusBar isActive={valuesFaceId.faceConfidence || false}/>
+                    <StatusBar isActive={valuesFaceId.faceSize || false}/>
+                    <StatusBar isActive={valuesFaceId.distance || false}/>
+                    <StatusBar isActive={valuesFaceId.faceInCenter || false}/>
+                </VStack>
             </Section>
             <Section max>
                 <HStack max>
@@ -163,10 +174,10 @@ const CameraSection: React.FC<CameraProps> = ({
                 clickable
                 max
                 onClick={takePhoto}
-                disabled={!isFaceDetected}
+                disabled={!isFaceIdOk}
             >
                 <HStack gap={'10'} max>
-                    <Svg Svg={CameraSvg}/>
+                    <Svg Svg={CameraSvg} color={isFaceIdOk?'accent':'subtitle'}/>
                     <Text
                         text={TAKE_PHOTO}
                         type={'text'}
@@ -174,6 +185,7 @@ const CameraSection: React.FC<CameraProps> = ({
                     />
                     <Svg width={'12px'} height={'12px'} color={'subtitle'} Svg={ArrowSvg}/>
                 </HStack>
+
 
             </Section>
 

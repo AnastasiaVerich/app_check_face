@@ -22,7 +22,6 @@ const config: Partial<Config> = {
     cacheSensitivity: 0, // Отключаем кэширование для реального времени
 };
 
-
 // Интерфейс для размеров
 interface Dimensions {
     width: number;
@@ -211,7 +210,6 @@ export const useFaceDetection = (
                                     if (isDraw && ctx) {
                                         // Рисуем рамку
                                         ctx.lineWidth = 4;
-                                        ctx.lineCap = 'square';
                                         ctx.lineJoin = 'bevel';
                                         ctx.strokeStyle = '#5199d9';
 
