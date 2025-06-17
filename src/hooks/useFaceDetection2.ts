@@ -197,6 +197,7 @@ export const useFaceDetection2 = (
                                 if (gestures.includes('blink left eye') || gestures.includes('blink right eye')) blink.start = humanInstance.now();
                                 if (blink.start > 0 && !gestures.includes('blink left eye') && !gestures.includes('blink right eye')) blink.end = humanInstance.now();
 
+                                console.log(ok.blinkDetected.status)
                                 ok.blinkDetected.status = ok.blinkDetected.status || (
                                     Math.abs(blink.end - blink.start) > options.blinkMin &&
                                     Math.abs(blink.end - blink.start) < options.blinkMax
