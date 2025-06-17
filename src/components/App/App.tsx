@@ -3,9 +3,8 @@ import './App.css'
 import '../../styles/variables.css'
 import {ParamsType, Telegram} from "../../types/type";
 import {VStack} from "../../shared/ui/VStack/VStack";
-import {PhotoAsync} from "../Photo/Photo.async";
-import {GeolocationAsync} from "../Geolocation/Geolocation.async";
 import Photo from "../Photo/Photo";
+import Geolocation from "../Geolocation/Geolocation";
 
 
 function App() {
@@ -30,7 +29,6 @@ function App() {
         tg?.WebApp.ready(); // Уведомляем Telegram, что приложение готово
         tg?.WebApp.expand(); // Разворачиваем приложение
 
-
     }, [])
 
 
@@ -44,7 +42,7 @@ function App() {
             }
             {
                 (params?.type === 'geolocation')
-                && <GeolocationAsync
+                && <Geolocation
                     {...params}
                 />
             }

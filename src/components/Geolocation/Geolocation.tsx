@@ -12,10 +12,11 @@ import {ParamsType} from "../../types/type";
 
 
 const Geolocation: React.FC<ParamsType> = (params) => {
-    const [location, setLocation] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
 
     function onGetGeolocation() {
+        const tg: any = 'Telegram' in window ? window.Telegram : undefined;
+
         setError(null)
         if ("geolocation" in navigator) {
             console.log(1)
@@ -23,7 +24,9 @@ const Geolocation: React.FC<ParamsType> = (params) => {
                 (position) => {
                     const {latitude, longitude} = position.coords;
 
-                    setLocation(JSON.stringify({latitude, longitude}))
+                    if (tg) {
+                        tg.WebApp.sendData(JSON.stringify({latitude, longitude}));
+                    }
                 },
                 (error) => {
                     setError("У вас отключен доступ к геолокации на устройстве")
