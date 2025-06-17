@@ -12,10 +12,6 @@ const config = {
         detector: {rotation: true, return: true, mask: false}, // return tensor is used to get detected face image
         description: {enabled: true}, // default model for face descriptor extraction is faceres
         // mobilefacenet: { enabled: true, modelPath: 'https://vladmandic.github.io/human-models/models/mobilefacenet.json' }, // alternative model
-        insightface: {
-            enabled: true,
-            modelPath: 'https://vladmandic.github.io/insightface/models/insightface-mobilenet-swish.json'
-        }, // alternative model
         iris: {enabled: true}, // needed to determine gaze direction
         emotion: {enabled: false}, // not needed
         antispoof: {enabled: true}, // enable optional antispoof module

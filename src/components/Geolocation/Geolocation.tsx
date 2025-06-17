@@ -29,6 +29,7 @@ const Geolocation: React.FC<ParamsType> = (params) => {
                     }
                 },
                 (error) => {
+                    console.log(error)
                     setError("У вас отключен доступ к геолокации на устройстве")
                 }
             );
