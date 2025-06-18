@@ -244,6 +244,15 @@ export const useFaceDetection = (
 
     }, [humanLoaded, isCameraOn, isLoaded, humanInstance,selectedBackend]);
 
-    return {isFaceDetected, detectionStart, humanLoaded,humanInstance,selectedBackend};
+    const valuesFaceId = {
+        //blinkDetected: blinkDetected,
+        antispoofCheck: true,
+        livenessCheck: true,
+        faceConfidence: true,
+        faceSize: true,
+        distance: true,
+        faceInCenter: true
+    }
+    return {isFaceDetected, detectionStart, humanLoaded,humanInstance,selectedBackend, valuesFaceId};
 };
 
