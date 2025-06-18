@@ -311,7 +311,7 @@ export const useFaceDetection2 = (
     };
 
     const valuesFaceId = {
-        blinkDetected: blinkDetected,
+        //blinkDetected: blinkDetected,
         antispoofCheck: antispoofCheck,
         livenessCheck: livenessCheck,
         faceConfidence: faceConfidence,

@@ -152,7 +152,7 @@ const CameraSection: React.FC<CameraProps> = ({
 
                 />
                 <VStack className={'face_id_status_bar'} gap={'5'}>
-                    <StatusBar isActive={valuesFaceId.blinkDetected || false}/>
+                    {/*<StatusBar isActive={valuesFaceId.blinkDetected || false}/>*/}
                     <StatusBar isActive={valuesFaceId.antispoofCheck || false}/>
                     <StatusBar isActive={valuesFaceId.livenessCheck || false}/>
                     <StatusBar isActive={valuesFaceId.faceConfidence || false}/>
