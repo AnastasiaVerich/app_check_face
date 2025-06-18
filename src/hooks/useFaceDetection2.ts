@@ -108,7 +108,7 @@ export const useFaceDetection2 = (
                 try {
                     if (videoRef.current && canvasRef.current && videoBorderRef.current) {
                         setDetectionStart(true)
-                        if (now - lastDetectionTime >= 200) {
+                        if (now - lastDetectionTime >= 10) {
 
                             const video = videoRef.current;
                             const canvas = canvasRef.current;
@@ -222,6 +222,8 @@ export const useFaceDetection2 = (
 
                             }
 
+                        } else {
+                            console.log(11111111122222222223333333333)
                         }
 
 
