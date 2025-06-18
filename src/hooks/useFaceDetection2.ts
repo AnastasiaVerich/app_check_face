@@ -4,7 +4,7 @@ import {Circle, isRectangleCoveredByCircle, Rectangle} from "../utils/faceUtils"
 
 const config = {
     cacheSensitivity: 0.01,
-    modelBasePath: 'https://cdn.jsdelivr.net/npm/@vladmandic/human/models/',
+    modelBasePath: '/models',
     filter: {enabled: true, equalization: true}, // lets run with histogram equilizer
     debug: true,
     face: {
