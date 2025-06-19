@@ -11,6 +11,7 @@ import {ReactComponent as ArrowSvg} from '../../shared/assets/svg/Arrow.svg'
 import {StatusBar} from "../../shared/ui/StatusBar/StatusBar";
 import {useFaceDetection2} from "../../hooks/useFaceDetection2";
 import {VStack} from "../../shared/ui/VStack/VStack";
+import {useFaceDetection} from "../../hooks/useFaceDetection";
 
 
 interface CameraProps {
@@ -39,7 +40,7 @@ const CameraSection: React.FC<CameraProps> = ({
         humanInstance,
         selectedBackend,
         valuesFaceId
-    } = useFaceDetection2(isCameraOn, videoRef, canvasRef, videoBorderRef,isLoaded)
+    } = useFaceDetection(isCameraOn, videoRef, canvasRef, videoBorderRef,isLoaded)
 
     useEffect(() => {
         const startVideo = async () => {
