@@ -251,7 +251,7 @@ export const useFaceDetection = (
         faceConfidence: true,
         faceSize: true,
         distance: true,
-        faceInCenter: true
+        faceInCenter: isFaceDetected
     }
     return {isFaceDetected, detectionStart, humanLoaded,humanInstance,selectedBackend, valuesFaceId};
 };
