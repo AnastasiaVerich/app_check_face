@@ -8,7 +8,7 @@ import Geolocation from "../Geolocation/Geolocation";
 
 
 function App() {
-
+console.log(1)
     const [params, setParams] = useState<ParamsType>({
         type:'registration',
         isSavePhoto:'1', userId: "", userPhone: ""
